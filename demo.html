@@ -7,34 +7,64 @@
   <style>
     body {
       font-family: Roboto2, 'Helvetica Neue', Helvetica, Arial;
-      font-size: 24px;
+      font-size: 16px;
       text-align: center;
-      padding: 80px 20%;
+      padding: 40px 20%;
+      background: #eee;
     }
-    h2 {
-      font-size: 1.3em;
+    h1 {
+      font-size: 2em;
       margin-bottom: 0.5em;
     }
     .description {
-      font-size: 0.6em;
+      font-size: 0.75em;
       font-style: italic;
       color: #666;
+    }
+    .container {
+      padding: 24px;
+      margin: 24px 0;
+      border-radius: 5px;
     }
     paper-input {
       width: 100%;
     }
+    .dark-theme {
+      background: #333333;
+    }
+    .dark-theme paper-input {
+      color: #666;
+    }
+    .dark-theme ^^ input {
+      color: #fff;
+    }
+    .dark-theme ^^ #underline {
+      background: #666;
+    }
+    .dark-theme ^^ .focusedColor {
+      color: #7d8ad0;
+      background: #7d8ad0;
+    }
   </style>
 </head>
 <body>
-  <h2>&lt;paper-input&gt;</h2>
-  <div class="description">A single-line input field</div>
-  <paper-input style="margin-top:61px;" label="Type something..."></paper-input>
+  <h1>&lt;paper-input&gt;</h1>
+  <div class="description" style="margin-bottom:61px;">A single-line input field</div>
+  <div class="container">
+    <paper-input label="Type something... (light theme)"></paper-input>
+  </div>
+  <div class="container dark-theme">
+    <paper-input label="Type something... (dark theme)"></paper-input>
+  </div>
   <br>
   <br>
   <br>
-  <br>
-  <br>
-  <h2>&lt;paper-input floating&gt;</h2>
-  <div class="description">A single-line input field with a "floating" label</div>
-  <paper-input style="margin-top:40px;" floating label="Label text"></paper-input>
+  <h1>&lt;paper-input floating&gt;</h1>
+  <div class="description" style="margin-bottom:40px;">A single-line input field with a "floating" label</div>
+  <div class="container">
+    <paper-input floating label="Label text (light theme)"></paper-input>
+  </div>
+  <div class="container dark-theme">
+    <paper-input floating label="Label text (dark theme)"></paper-input>
+  </div>
 </body>

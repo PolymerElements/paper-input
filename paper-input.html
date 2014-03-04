@@ -7,6 +7,7 @@
         display: inline-block;
         outline: none;
         text-align: start;
+        color: #ccc;
       }
       :host:hover {
         cursor: text;
@@ -16,6 +17,7 @@
       }
       input {
         font: inherit;
+        color: #000;
         padding: 0.5em 0;
         background-color: transparent;
         border: none;
@@ -32,7 +34,7 @@
       }
       #floatingLabel {
         font-size: 0.75em;
-        color: #ddd;
+        background: transparent;
         white-space: nowrap;
       }
       #floatingLabel.hidden {
@@ -40,7 +42,6 @@
       }
       #floatingLabel.focused {
         visibility: visible;
-        color: #4059a9;
       }
       #label {
         position: absolute;
@@ -50,7 +51,7 @@
         bottom: 0;
         width: 100%;
         padding: 0.5em 0;
-        color: #ddd;
+        background: transparent;
         white-space: nowrap;
         -webkit-transform-origin: 0% 0%;
       }
@@ -58,7 +59,6 @@
         display: none;
       }
       #label.animating {
-        color: #4059a9;
         transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
         -webkit-transform: scale(0.75) translateY(-70%);
       }
@@ -68,7 +68,7 @@
         right: 0;
         bottom: 0;
         height: 2px;
-        background: #ddd;
+        background: #ccc;
       }
       #underlineHighlight {
         position: absolute;
@@ -111,11 +111,10 @@
         left: 0;
         bottom: 0.6em;
         width: 25%;
-        background-color: #4059a9;
       }
     </style>
     <template if="{{floating}}">
-      <div id="floatingLabel" class="hidden">{{label}}</div>
+      <div id="floatingLabel" class="focusedColor hidden">{{label}}</div>
     </template>
     <div id="container" on-transitionend="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}">
       <span id="inputClone">{{value}}</span>
@@ -124,7 +123,7 @@
       <div id="underline"></div>
       <div id="underlineHighlight" class="focusedColor"></div>
       <div id="caret">
-        <div id="caretInner"></div>
+        <div id="focusedColor caretInner"></div>
       </div>
     </div>
   </template>
@@ -205,6 +204,7 @@
           this.$.caret.classList.add('focused');
         }, null, 150);
         if (this.floating) {
+          this.$.label.classList.add('focusedColor');
           this.$.label.classList.add('animating');
         }
       },
@@ -213,6 +213,7 @@
           return;
         }
         this.$.label.classList.add('hidden');
+        this.$.label.classList.remove('focusedColor');
         if (this.floating) {
           this.$.label.classList.remove('animating');
           this.$.floatingLabel.classList.remove('hidden');
