@@ -1,0 +1,7 @@
+{
+  "name": "paper-input",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  }
+}

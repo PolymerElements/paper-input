@@ -1,0 +1,175 @@
+<link href="../polymer/polymer.html" rel="import">
+
+<polymer-element name="paper-input" attributes="autofocus value label floating" tabindex="0" on-tap="{{tapAction}}" on-blur="{{blurAction}}">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        outline: none;
+        text-align: start;
+      }
+      :host:hover {
+        cursor: text;
+      }
+      #container {
+        position: relative;
+      }
+      input {
+        font: inherit;
+        padding: 0.5em 0;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        width: 100%;
+      }
+      #inputClone {
+        position: absolute;
+        left: -99999px;
+      }
+      #floatingLabel {
+        font-size: 0.75em;
+        color: #ddd;
+        visibility: hidden;
+        white-space: nowrap;
+      }
+      #floatingLabel.focused {
+        visibility: visible;
+        color: #4059a9;
+      }
+      #label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        padding: 0.5em 0;
+        color: #ddd;
+        white-space: nowrap;
+        -webkit-transform-origin: 0% 0%;
+      }
+      #label.hidden {
+        display: none;
+      }
+      #label.animating {
+        color: #4059a9;
+        transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
+        -webkit-transform: scale(0.75) translateY(-70%);
+      }
+      #underline {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background: #ddd;
+      }
+      #underlineHighlight {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        -webkit-transform: scale(0,2);
+      }
+      #underlineHighlight.animating {
+        transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
+      }
+      #underlineHighlight.focused {
+        background: #4059a9;
+        -webkit-transform: scale(1);
+      }
+      #caret {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        -webkit-transform-origin-x: 0%;
+        -webkit-transform: scaleX(1) translateX(10%);
+      }
+      #caret.animating {
+        opacity: 0.25;
+        transition: -webkit-transform 0.15s ease-out, opacity 0.15s ease-out;
+      }
+      #caret.focused {
+        opacity: 0.75;
+        -webkit-transform: scaleX(0) translateX(0);
+      }
+      #caretInner {
+        position: absolute;
+        top: 0.6em;
+        left: 0;
+        bottom: 0.6em;
+        width: 33%;
+        background-color: #4059a9;
+      }
+    </style>
+    <template if="{{floating}}">
+      <div id="floatingLabel">{{label}}</div>
+    </template>
+    <div id="container">
+      <span id="inputClone">{{value}}</span>
+      <div id="label">{{label}}</div>
+      <input id="input" value="{{value}}">
+      <div id="underline"></div>
+      <div id="underlineHighlight" on-transitionend="{{transitionEndAction}}" on-webkitTransitionEnd-"{{transitionEndAction}}"></div>
+      <div id="caret">
+        <div id="caretInner"></div>
+      </div>
+    </div>
+  </template>
+  <script>
+    Polymer('paper-input', {
+      autofocus: false,
+      floating: false,
+      label: null,
+      value: null,
+      blurAction: function() {
+        this.$.underlineHighlight.classList.remove('focused');
+        this.$.caret.classList.remove('focused');
+        if (this.floating) {
+          this.$.floatingLabel.classList.remove('focused');
+        }
+        if (!this.value) {
+          this.$.label.classList.remove('hidden');
+        }
+      },
+      tapAction: function(e) {
+        var rect = this.$.underline.getBoundingClientRect();
+        var right = e.x - rect.left;
+        this.$.underlineHighlight.style.webkitTransformOriginX = right + 'px';
+        this.$.underlineHighlight.classList.remove('focused');
+        this.$.underlineHighlight.classList.add('animating');
+        this.async(function() {
+          this.$.underlineHighlight.classList.add('focused');
+        });
+        var width = this.$.inputClone.getBoundingClientRect().width;
+        if (width < right) {
+          this.$.caret.style.left = width + 'px';
+          this.$.caret.classList.remove('focused');
+          this.$.caret.classList.add('animating');
+          this.async(function() {
+            this.$.caret.classList.add('focused');
+          }, 150);
+        }
+        if (this.floating) {
+          this.$.label.classList.add('animating');
+        }
+      },
+      transitionEndAction: function() {
+        this.$.label.classList.add('hidden');
+        if (this.floating) {
+          this.$.label.classList.remove('animating');
+          this.$.floatingLabel.classList.add('focused');
+        }
+        this.async(function() {
+          this.$.underlineHighlight.classList.remove('animating');
+          this.$.caret.classList.remove('animating');
+          this.$.input.focus();
+        }, 100);
+      }
+    });
+  </script>
+</polymer-element>
