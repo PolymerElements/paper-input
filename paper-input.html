@@ -29,8 +29,10 @@
       #floatingLabel {
         font-size: 0.75em;
         color: #ddd;
-        visibility: hidden;
         white-space: nowrap;
+      }
+      #floatingLabel.hidden {
+        visibility: hidden;
       }
       #floatingLabel.focused {
         visibility: visible;
@@ -107,7 +109,7 @@
       }
     </style>
     <template if="{{floating}}">
-      <div id="floatingLabel">{{label}}</div>
+      <div id="floatingLabel" class="hidden">{{label}}</div>
     </template>
     <div id="container">
       <span id="inputClone">{{value}}</span>
@@ -126,11 +128,19 @@
       floating: false,
       label: null,
       value: null,
+      ready: function() {
+        if (this.value) {
+          this.$.floatingLabel.classList.remove('hidden');
+        }
+      },
       blurAction: function() {
         this.$.underlineHighlight.classList.remove('focused');
         this.$.caret.classList.remove('focused');
         if (this.floating) {
           this.$.floatingLabel.classList.remove('focused');
+          if (!this.value) {
+            this.$.floatingLabel.classList.add('hidden');
+          }
         }
         if (!this.value) {
           this.$.label.classList.remove('hidden');
@@ -162,6 +172,7 @@
         this.$.label.classList.add('hidden');
         if (this.floating) {
           this.$.label.classList.remove('animating');
+          this.$.floatingLabel.classList.remove('hidden');
           this.$.floatingLabel.classList.add('focused');
         }
         this.async(function() {
