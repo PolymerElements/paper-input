@@ -1,6 +1,6 @@
 <link href="../polymer/polymer.html" rel="import">
 
-<polymer-element name="paper-input" attributes="autofocus value label floating" tabindex="0" on-tap="{{tapAction}}" on-blur="{{blurAction}}">
+<polymer-element name="paper-input" attributes="autofocus value label floating pressed" tabindex="0" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}" on-blur="{{blurAction}}" on-focus="{{focusAction}}">
   <template>
     <style>
       :host {
@@ -25,6 +25,10 @@
       #inputClone {
         position: absolute;
         left: -99999px;
+      }
+      .focusedColor {
+        color: #4059a9;
+        background: #4059a9;
       }
       #floatingLabel {
         font-size: 0.75em;
@@ -74,11 +78,14 @@
         height: 2px;
         -webkit-transform: scale(0,2);
       }
+      #underlineHighlight.pressed {
+        -webkit-transform: scale(0.1,2);
+        transition: -webkit-transform 0.1s cubic-bezier(0.2, 0, 0.03, 1);
+      }
       #underlineHighlight.animating {
         transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
       }
       #underlineHighlight.focused {
-        background: #4059a9;
         -webkit-transform: scale(1);
       }
       #caret {
@@ -92,7 +99,6 @@
         -webkit-transform: scaleX(1) translateX(10%);
       }
       #caret.animating {
-        opacity: 0.25;
         transition: -webkit-transform 0.15s ease-out, opacity 0.15s ease-out;
       }
       #caret.focused {
@@ -104,19 +110,19 @@
         top: 0.6em;
         left: 0;
         bottom: 0.6em;
-        width: 33%;
+        width: 25%;
         background-color: #4059a9;
       }
     </style>
     <template if="{{floating}}">
       <div id="floatingLabel" class="hidden">{{label}}</div>
     </template>
-    <div id="container">
+    <div id="container" on-transitionend="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}">
       <span id="inputClone">{{value}}</span>
       <div id="label">{{label}}</div>
       <input id="input" value="{{value}}">
       <div id="underline"></div>
-      <div id="underlineHighlight" on-transitionend="{{transitionEndAction}}" on-webkitTransitionEnd-"{{transitionEndAction}}"></div>
+      <div id="underlineHighlight" class="focusedColor"></div>
       <div id="caret">
         <div id="caretInner"></div>
       </div>
@@ -126,12 +132,27 @@
     Polymer('paper-input', {
       autofocus: false,
       floating: false,
+      focused: false,
+      pressed: false,
       label: null,
       value: null,
       ready: function() {
         if (this.value) {
           this.$.floatingLabel.classList.remove('hidden');
         }
+      },
+      focusAction: function(e) {
+        if (!this.pressed) {
+          if (this.floating) {
+            this.$.floatingLabel.classList.remove('hidden');
+            this.$.floatingLabel.classList.add('focused');
+          }
+          this.$.label.classList.add('hidden');
+          this.$.underlineHighlight.classList.add('focused');
+          this.$.caret.classList.add('focused');
+          this.$.input.focus();
+        }
+        this.focused = true;
       },
       blurAction: function() {
         this.$.underlineHighlight.classList.remove('focused');
@@ -145,30 +166,52 @@
         if (!this.value) {
           this.$.label.classList.remove('hidden');
         }
+        this.focused = false;
       },
-      tapAction: function(e) {
+      pointerdownAction: function(e) {
+        if (this.focused) {
+          return;
+        }
+        this.pressed = true;
         var rect = this.$.underline.getBoundingClientRect();
         var right = e.x - rect.left;
         this.$.underlineHighlight.style.webkitTransformOriginX = right + 'px';
         this.$.underlineHighlight.classList.remove('focused');
-        this.$.underlineHighlight.classList.add('animating');
-        this.async(function() {
-          this.$.underlineHighlight.classList.add('focused');
-        });
+        this.underlineAsync = this.async(function() {
+          this.$.underlineHighlight.classList.add('pressed');
+        }, null, 200);
         var width = this.$.inputClone.getBoundingClientRect().width;
         if (width < right) {
           this.$.caret.style.left = width + 'px';
           this.$.caret.classList.remove('focused');
-          this.$.caret.classList.add('animating');
-          this.async(function() {
-            this.$.caret.classList.add('focused');
-          }, 150);
         }
+      },
+      pointerupAction: function() {
+        if (!this.pressed) {
+          return;
+        }
+        if (this.underlineAsync) {
+          clearTimeout(this.underlineAsync);
+          this.underlineAsync = null;
+        }
+        this.pressed = false;
+        this.$.underlineHighlight.classList.remove('pressed');
+        this.$.underlineHighlight.classList.add('animating');
+        this.async(function() {
+          this.$.underlineHighlight.classList.add('focused');
+        });
+        this.$.caret.classList.add('animating');
+        this.async(function() {
+          this.$.caret.classList.add('focused');
+        }, null, 150);
         if (this.floating) {
           this.$.label.classList.add('animating');
         }
       },
-      transitionEndAction: function() {
+      transitionEndAction: function(e) {
+        if (this.pressed) {
+          return;
+        }
         this.$.label.classList.add('hidden');
         if (this.floating) {
           this.$.label.classList.remove('animating');
@@ -179,7 +222,7 @@
           this.$.underlineHighlight.classList.remove('animating');
           this.$.caret.classList.remove('animating');
           this.$.input.focus();
-        }, 100);
+        }, null, 100);
       }
     });
   </script>
