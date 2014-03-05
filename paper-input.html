@@ -145,6 +145,7 @@
           if (this.floating) {
             this.$.floatingLabel.classList.remove('hidden');
             this.$.floatingLabel.classList.add('focused');
+            this.$.floatingLabel.classList.add('focusedColor');
           }
           this.$.label.classList.add('hidden');
           this.$.underlineHighlight.classList.add('focused');
@@ -158,6 +159,7 @@
         this.$.caret.classList.remove('focused');
         if (this.floating) {
           this.$.floatingLabel.classList.remove('focused');
+          this.$.floatingLabel.classList.remove('focusedColor');
           if (!this.value) {
             this.$.floatingLabel.classList.add('hidden');
           }
@@ -218,6 +220,7 @@
           this.$.label.classList.remove('animating');
           this.$.floatingLabel.classList.remove('hidden');
           this.$.floatingLabel.classList.add('focused');
+          this.$.floatingLabel.classList.add('focusedColor');
         }
         this.async(function() {
           this.$.underlineHighlight.classList.remove('animating');
