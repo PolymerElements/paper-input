@@ -114,7 +114,7 @@
       }
     </style>
     <template if="{{floating}}">
-      <div id="floatingLabel" class="focusedColor hidden">{{label}}</div>
+      <div id="floatingLabel" class="hidden">{{label}}</div>
     </template>
     <div id="container" on-transitionend="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}">
       <span id="inputClone">{{value}}</span>
