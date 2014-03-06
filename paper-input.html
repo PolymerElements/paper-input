@@ -1,151 +1,82 @@
 <link href="../polymer/polymer.html" rel="import">
 
-<polymer-element name="paper-input" attributes="autofocus value label floating" tabindex="0" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}" on-blur="{{blurAction}}" on-focus="{{focusAction}}">
+<polymer-element name="paper-input" attributes="value label floatingLabel" tabindex="0" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}" on-blur="{{blurAction}}" on-focus="{{focusAction}}">
+
   <template>
-    <style>
-      :host {
-        display: inline-block;
-        outline: none;
-        text-align: start;
-        color: #ccc;
-      }
-      :host:hover {
-        cursor: text;
-      }
-      #container {
-        position: relative;
-      }
-      input {
-        font: inherit;
-        color: #000;
-        padding: 0.5em 0;
-        background-color: transparent;
-        border: none;
-        outline: none;
-        width: 100%;
-      }
-      #inputClone {
-        position: absolute;
-        left: -99999px;
-      }
-      .focusedColor {
-        color: #4059a9;
-        background: #4059a9;
-      }
-      #floatingLabel {
-        font-size: 0.75em;
-        background: transparent;
-        white-space: nowrap;
-      }
-      #floatingLabel.hidden {
-        visibility: hidden;
-      }
-      #floatingLabel.focused {
-        visibility: visible;
-      }
-      #label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        padding: 0.5em 0;
-        background: transparent;
-        white-space: nowrap;
-        -webkit-transform-origin: 0% 0%;
-      }
-      #label.hidden {
-        display: none;
-      }
-      #label.animating {
-        transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
-        -webkit-transform: scale(0.75) translateY(-70%);
-      }
-      #underline {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 2px;
-        background: #ccc;
-      }
-      #underlineHighlight {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 2px;
-        -webkit-transform: scale(0,2);
-      }
-      #underlineHighlight.pressed {
-        -webkit-transform: scale(0.1,2);
-        transition: -webkit-transform 0.1s cubic-bezier(0.2, 0, 0.03, 1);
-      }
-      #underlineHighlight.animating {
-        transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
-      }
-      #underlineHighlight.focused {
-        -webkit-transform: scale(1);
-      }
-      #caret {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        opacity: 0;
-        -webkit-transform-origin-x: 0%;
-        -webkit-transform: scaleX(1) translateX(10%);
-      }
-      #caret.animating {
-        transition: -webkit-transform 0.15s ease-out, opacity 0.15s ease-out;
-      }
-      #caret.focused {
-        opacity: 0.75;
-        -webkit-transform: scaleX(0) translateX(0);
-      }
-      #caretInner {
-        position: absolute;
-        top: 0.6em;
-        left: 0;
-        bottom: 0.6em;
-        width: 25%;
-      }
-    </style>
-    <template if="{{floating}}">
-      <div id="floatingLabel" class="hidden">{{label}}</div>
+
+    <link href="paper-input.css" rel="stylesheet">
+
+    <template if="{{floatingLabel}}">
+      <div id="floatedLabel" class="hidden">{{label}}</div>
     </template>
+
+    <span id="inputClone">{{value}}</span>
+
     <div id="container" on-transitionend="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}">
-      <span id="inputClone">{{value}}</span>
+
       <div id="label">{{label}}</div>
+
       <input id="input" value="{{value}}">
+
       <div id="underline"></div>
       <div id="underlineHighlight" class="focusedColor"></div>
+
       <div id="caret">
         <div id="caretInner" class="focusedColor"></div>
       </div>
+
     </div>
+
   </template>
+
   <script>
+
     Polymer('paper-input', {
-      autofocus: false,
-      floating: false,
+
+      /**
+       * The label for this input. It normally appears as grey text inside
+       * the text input and disappears once the user enters text.
+       *
+       * @attribute label
+       * @type string
+       * @default ''
+       */
+      label: '',
+
+      /**
+       * If true, the label will "float" above the text input once the
+       * user enters text instead of disappearing.
+       *
+       * @attribute floatingLabel
+       * @type boolean
+       * @default false
+       */
+      floatingLabel: false,
+
+      /**
+       * The value of this input.
+       *
+       * @attribute label
+       * @type string
+       * @default ''
+       */
+      value: '',
+
       focused: false,
       pressed: false,
-      label: null,
-      value: null,
+
       ready: function() {
         if (this.value) {
-          this.$.floatingLabel.classList.remove('hidden');
+          this.$.floatedLabel.classList.remove('hidden');
         }
       },
+
       focusAction: function(e) {
         if (!this.pressed) {
-          if (this.floating) {
-            this.$.floatingLabel.classList.remove('hidden');
-            this.$.floatingLabel.classList.add('focused');
-            this.$.floatingLabel.classList.add('focusedColor');
+          if (this.floatingLabel) {
+            this.$.floatedLabel.classList.remove('hidden');
+            this.$.floatedLabel.classList.add('focused');
+            this.$.floatedLabel.classList.add('focusedColor');
           }
           this.$.label.classList.add('hidden');
           this.$.underlineHighlight.classList.add('focused');
@@ -154,14 +85,15 @@
         }
         this.focused = true;
       },
+
       blurAction: function() {
         this.$.underlineHighlight.classList.remove('focused');
         this.$.caret.classList.remove('focused');
-        if (this.floating) {
-          this.$.floatingLabel.classList.remove('focused');
-          this.$.floatingLabel.classList.remove('focusedColor');
+        if (this.floatingLabel) {
+          this.$.floatedLabel.classList.remove('focused');
+          this.$.floatedLabel.classList.remove('focusedColor');
           if (!this.value) {
-            this.$.floatingLabel.classList.add('hidden');
+            this.$.floatedLabel.classList.add('hidden');
           }
         }
         if (!this.value) {
@@ -169,6 +101,7 @@
         }
         this.focused = false;
       },
+
       pointerdownAction: function(e) {
         if (this.focused) {
           return;
@@ -187,6 +120,7 @@
           this.$.caret.classList.remove('focused');
         }
       },
+
       pointerupAction: function() {
         if (!this.pressed) {
           return;
@@ -204,23 +138,24 @@
         this.$.caret.classList.add('animating');
         this.async(function() {
           this.$.caret.classList.add('focused');
-        }, null, 150);
-        if (this.floating) {
+        }, null, 100);
+        if (this.floatingLabel) {
           this.$.label.classList.add('focusedColor');
           this.$.label.classList.add('animating');
         }
       },
+
       transitionEndAction: function(e) {
         if (this.pressed) {
           return;
         }
         this.$.label.classList.add('hidden');
         this.$.label.classList.remove('focusedColor');
-        if (this.floating) {
+        if (this.floatingLabel) {
           this.$.label.classList.remove('animating');
-          this.$.floatingLabel.classList.remove('hidden');
-          this.$.floatingLabel.classList.add('focused');
-          this.$.floatingLabel.classList.add('focusedColor');
+          this.$.floatedLabel.classList.remove('hidden');
+          this.$.floatedLabel.classList.add('focused');
+          this.$.floatedLabel.classList.add('focusedColor');
         }
         this.async(function() {
           this.$.underlineHighlight.classList.remove('animating');
@@ -228,6 +163,9 @@
           this.$.input.focus();
         }, null, 100);
       }
+
     });
+
   </script>
+
 </polymer-element>

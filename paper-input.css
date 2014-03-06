@@ -1,0 +1,118 @@
+:host {
+  display: inline-block;
+  outline: none;
+  text-align: start;
+  color: #ccc;
+}
+:host:hover {
+  cursor: text;
+}
+
+#container {
+  position: relative;
+}
+
+input {
+  font: inherit;
+  color: #000;
+  padding: 0.5em 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+#inputClone {
+  position: absolute;
+  left: -99999px;
+}
+
+.focusedColor {
+  color: #4059a9;
+  background: #4059a9;
+}
+
+#floatedLabel {
+  font-size: 0.75em;
+  background: transparent;
+  white-space: nowrap;
+}
+#floatedLabel.hidden {
+  visibility: hidden;
+}
+#floatedLabel.focused {
+  visibility: visible;
+}
+
+#label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0.5em 0;
+  background: transparent;
+  white-space: nowrap;
+  -webkit-transform-origin: 0% 0%;
+}
+#label.hidden {
+  display: none;
+}
+#label.animating {
+  transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
+  -webkit-transform: scale(0.75) translateY(-70%);
+}
+
+#underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: #ccc;
+}
+
+#underlineHighlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  -webkit-transform: scale(0,2);
+}
+#underlineHighlight.pressed {
+  -webkit-transform: scale(0.1,2);
+  transition: -webkit-transform 0.1s cubic-bezier(0.2, 0, 0.03, 1);
+}
+#underlineHighlight.animating {
+  transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
+}
+#underlineHighlight.focused {
+  -webkit-transform: scale(1);
+}
+
+#caret {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  -webkit-transform-origin-x: 0%;
+  -webkit-transform: scaleX(1) translateX(10%);
+}
+#caret.animating {
+  transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-out;
+}
+#caret.focused {
+  opacity: 0.75;
+  -webkit-transform: scaleX(0) translateX(0);
+}
+#caretInner {
+  position: absolute;
+  top: 0.6em;
+  left: 0;
+  bottom: 0.6em;
+  width: 25%;
+}
