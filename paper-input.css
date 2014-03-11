@@ -32,6 +32,16 @@ input {
   background: #4059a9;
 }
 
+:host(.invalid) #underline,
+:host(.invalid) #underlineHighlight,
+:host(.invalid) .focusedColor {
+  color: #d34336;
+  background: #d34336;
+}
+:host(.invalid) .floatedLabel {
+  color: #d34336;
+}
+
 #floatedLabel {
   font-size: 0.75em;
   background: transparent;
