@@ -74,6 +74,17 @@ input {
   -webkit-transform: scale(0.75) translateY(-70%);
 }
 
+#error {
+  color: #d34336;
+  font-size: 0.75em;
+  visibility: hidden;
+  padding: 0.5em 0;
+}
+
+:host(.invalid) #error {
+  visibility: visible;
+}
+
 #underline {
   position: absolute;
   left: 0;
