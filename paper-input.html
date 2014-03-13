@@ -22,7 +22,7 @@ license that can be found in the LICENSE file.
 -->
 <link href="../polymer/polymer.html" rel="import">
 
-<polymer-element name="paper-input" attributes="value label floatingLabel validate error" tabindex="0" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}" on-blur="{{blurAction}}" on-focus="{{focusAction}}">
+<polymer-element name="paper-input" attributes="value label floatingLabel validate error" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}">
 
   <template>
 
@@ -38,7 +38,7 @@ license that can be found in the LICENSE file.
 
       <div id="label">{{label}}</div>
 
-      <input id="input" value="{{value}}">
+      <input id="input" value="{{value}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}">
 
       <div id="underline"></div>
       <div id="underlineHighlight" class="focusedColor"></div>
