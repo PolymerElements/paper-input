@@ -32,13 +32,13 @@ license that can be found in the LICENSE file.
       <div id="floatedLabel" class="hidden">{{label}}</div>
     </template>
 
-    <span id="inputClone">{{value}}</span>
+    <span id="inputClone" aria-hidden="true">{{value}}</span>
 
     <div id="container" on-transitionend="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}">
 
       <div id="label">{{label}}</div>
 
-      <input id="input" value="{{value}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}">
+      <input id="input" value="{{value}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
 
       <div id="underline"></div>
       <div id="underlineHighlight" class="focusedColor"></div>
@@ -50,7 +50,7 @@ license that can be found in the LICENSE file.
     </div>
 
     <template if="{{error}}">
-      <div id="error">{{error}}</div>
+      <div id="error" role="alert" aria-hidden="{{!_invalid}}">{{error}}</div>
     </template>
 
   </template>
@@ -131,6 +131,7 @@ license that can be found in the LICENSE file.
         if (this.value) {
           this.$.floatedLabel.classList.remove('hidden');
         }
+        this._invalid = false;
       },
 
       validateValue: function() {
@@ -144,6 +145,7 @@ license that can be found in the LICENSE file.
         } else if (this.validate instanceof Function) {
           valid = this.validate.call(this.value);
         }
+        this._invalid = !valid;
         this.classList.toggle('invalid', !valid);
       },
 
