@@ -198,10 +198,14 @@ license that can be found in the LICENSE file.
         this.underlineAsync = this.async(function() {
           this.$.underlineHighlight.classList.add('pressed');
         }, null, 200);
-        var width = this.$.inputClone.getBoundingClientRect().width;
-        if (width < right) {
-          this.$.caret.style.left = width + 'px';
-          this.$.caret.classList.remove('focused');
+
+        // No caret animation if there is text in the input.
+        if (!this.value) {
+          var width = this.$.inputClone.getBoundingClientRect().width;
+          if (width < right) {
+            this.$.caret.style.left = width + 'px';
+            this.$.caret.classList.remove('focused');
+          }
         }
       },
 
@@ -219,10 +223,15 @@ license that can be found in the LICENSE file.
         this.async(function() {
           this.$.underlineHighlight.classList.add('focused');
         });
-        this.$.caret.classList.add('animating');
-        this.async(function() {
-          this.$.caret.classList.add('focused');
-        }, null, 100);
+
+        // No caret animation if there is text in the input.
+        if (!this.value) {
+          this.$.caret.classList.add('animating');
+          this.async(function() {
+            this.$.caret.classList.add('focused');
+          }, null, 100);
+        }
+
         if (this.floatingLabel) {
           this.$.label.classList.add('focusedColor');
           this.$.label.classList.add('animating');
