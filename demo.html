@@ -1,11 +1,16 @@
 <!doctype html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <script src="../platform/platform.js"></script>
   <link href="../font-roboto2/roboto2.html" rel="import">
   <link href="paper-input.html" rel="import">
   <style>
     body {
+      padding: 0;
+      margin: 0;
+    }
+    section {
       font-family: Roboto2, 'Helvetica Neue', Helvetica, Arial;
       font-size: 16px;
       text-align: center;
@@ -14,15 +19,10 @@
     }
     h1 {
       font-size: 2em;
-      margin-bottom: 0.5em;
-    }
-    .description {
-      font-size: 0.75em;
-      font-style: italic;
-      color: #666;
+      margin-bottom: 2em;
     }
     .container {
-      padding: 24px;
+      height: 87px;
       margin: 24px 0;
       border-radius: 5px;
     }
@@ -31,6 +31,7 @@
     }
     .dark-theme {
       background: #333333;
+      color: #ccc;
     }
     .dark-theme paper-input {
       color: #666;
@@ -58,26 +59,33 @@
   </style>
 </head>
 <body>
-  <h1>&lt;paper-input&gt;</h1>
-  <div class="description" style="margin-bottom:61px;">A single-line input field</div>
-  <div class="container">
-    <paper-input label="Type something... (light theme)"></paper-input>
-  </div>
-  <div class="container">
-    <paper-input label="Type only numbers..." validate="^[0-9]*$" error="Input is not a number!"></paper-input>
-  </div>
-  <div class="container dark-theme">
-    <paper-input label="Type something... (dark theme)"></paper-input>
-  </div>
-  <br>
-  <br>
-  <br>
-  <h1>&lt;paper-input floatingLabel&gt;</h1>
-  <div class="description" style="margin-bottom:40px;">A single-line input field with a "floating" label</div>
-  <div class="container">
-    <paper-input floatingLabel label="Label text (light theme)"></paper-input>
-  </div>
-  <div class="container dark-theme">
-    <paper-input floatingLabel label="Label text (dark theme)"></paper-input>
-  </div>
+  <section>
+    <h1>&lt;paper-input&gt;</h1>
+    <div class="container">
+      <paper-input label="Type something..."></paper-input>
+    </div>
+    <div class="container">
+      <paper-input label="Type only numbers..." validate="^[0-9]*$" error="Input is not a number!"></paper-input>
+    </div>
+    <div class="container">
+      <paper-input floatingLabel label="Floating label"></paper-input>
+    </div>
+    <div class="container">
+      <paper-input floatingLabel label="Type only numbers... (floating)" validate="^[0-9]*$" error="Input is not a number!"></paper-input>
+    </div>
+  </section>
+  <section class="dark-theme">
+    <div class="container">
+      <paper-input label="Type something..."></paper-input>
+    </div>
+    <div class="container">
+      <paper-input label="Type only numbers..." validate="^[0-9]*$" error="Input is not a number!"></paper-input>
+    </div>
+    <div class="container">
+      <paper-input floatingLabel label="Floating label"></paper-input>
+    </div>
+    <div class="container">
+      <paper-input floatingLabel label="Type only numbers... (floating)" validate="^[0-9]*$" error="Input is not a number!"></paper-input>
+    </div>
+  </section>
 </body>

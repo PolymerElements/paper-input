@@ -38,7 +38,7 @@ input {
   color: #d34336;
   background: #d34336;
 }
-:host(.invalid) .floatedLabel {
+:host(.invalid) #floatedLabel {
   color: #d34336;
 }
 
