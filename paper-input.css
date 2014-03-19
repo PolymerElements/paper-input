@@ -92,6 +92,13 @@ input {
   bottom: 0;
   height: 1px;
   background: #ccc;
+  border-bottom-color: #ccc;
+}
+
+:host([disabled]) #underline {
+  border-bottom: 1px dashed;
+  height: 0px;
+  background: transparent;
 }
 
 #underlineHighlight {

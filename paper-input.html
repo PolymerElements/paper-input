@@ -22,7 +22,7 @@ license that can be found in the LICENSE file.
 -->
 <link href="../polymer/polymer.html" rel="import">
 
-<polymer-element name="paper-input" attributes="value label floatingLabel validate error" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}">
+<polymer-element name="paper-input" attributes="value label floatingLabel disabled validate error" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}">
 
   <template>
 
@@ -38,7 +38,7 @@ license that can be found in the LICENSE file.
 
       <div id="label">{{label}}</div>
 
-      <input id="input" value="{{value}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-keypress="{{keypressAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
+      <input id="input" value="{{value}}" disabled?="{{disabled}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-keypress="{{keypressAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
 
       <div id="underline"></div>
       <div id="underlineHighlight" class="focusedColor"></div>
@@ -78,6 +78,16 @@ license that can be found in the LICENSE file.
        * @default false
        */
       floatingLabel: false,
+
+      /**
+       * If true, this input cannot be focused and the user cannot change
+       * its value.
+       *
+       * @attribute disabled
+       * @type boolean
+       * @default false
+       */
+      disabled: false,
 
       /**
        * The value of this input.
@@ -191,9 +201,14 @@ license that can be found in the LICENSE file.
       },
 
       pointerdownAction: function(e) {
+        if (this.disabled) {
+          return;
+        }
+
         if (this.focused) {
           return;
         }
+
         this.pressed = true;
         var rect = this.$.underline.getBoundingClientRect();
         var right = e.x - rect.left;
@@ -214,9 +229,14 @@ license that can be found in the LICENSE file.
       },
 
       pointerupAction: function() {
+        if (this.disabled) {
+          return;
+        }
+
         if (!this.pressed) {
           return;
         }
+        
         if (this.underlineAsync) {
           clearTimeout(this.underlineAsync);
           this.underlineAsync = null;
