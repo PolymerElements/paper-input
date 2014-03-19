@@ -38,7 +38,7 @@ license that can be found in the LICENSE file.
 
       <div id="label">{{label}}</div>
 
-      <input id="input" value="{{value}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
+      <input id="input" value="{{value}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-keypress="{{keypressAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
 
       <div id="underline"></div>
       <div id="underlineHighlight" class="focusedColor"></div>
@@ -217,7 +217,12 @@ license that can be found in the LICENSE file.
           clearTimeout(this.underlineAsync);
           this.underlineAsync = null;
         }
+
+        // Focus the input here to bring up the virtual keyboard.
+        this.$.input.focus();
         this.pressed = false;
+        this.animating = true;
+
         this.$.underlineHighlight.classList.remove('pressed');
         this.$.underlineHighlight.classList.add('animating');
         this.async(function() {
@@ -238,7 +243,14 @@ license that can be found in the LICENSE file.
         }
       },
 
+      keypressAction: function() {
+        if (this.animating) {
+          this.transitionEndAction();
+        }
+      },
+
       transitionEndAction: function(e) {
+        this.animating = false;
         if (this.pressed) {
           return;
         }
@@ -253,7 +265,6 @@ license that can be found in the LICENSE file.
         this.async(function() {
           this.$.underlineHighlight.classList.remove('animating');
           this.$.caret.classList.remove('animating');
-          this.$.input.focus();
         }, null, 100);
       }
 
