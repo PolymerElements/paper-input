@@ -153,6 +153,10 @@ license that can be found in the LICENSE file.
         if (this.validate) {
           this.validateValue();
         }
+
+        if (!this.floatingLabel) {
+          this.$.label.classList.toggle('hidden', this.value);
+        }
       },
 
       focusAction: function(e) {
@@ -254,14 +258,19 @@ license that can be found in the LICENSE file.
         if (this.pressed) {
           return;
         }
-        this.$.label.classList.add('hidden');
-        this.$.label.classList.remove('focusedColor');
+
+        if (this.floatingLabel || this.value) {
+          this.$.label.classList.add('hidden');
+        }
+
         if (this.floatingLabel) {
+          this.$.label.classList.remove('focusedColor');
           this.$.label.classList.remove('animating');
           this.$.floatedLabel.classList.remove('hidden');
           this.$.floatedLabel.classList.add('focused');
           this.$.floatedLabel.classList.add('focusedColor');
         }
+
         this.async(function() {
           this.$.underlineHighlight.classList.remove('animating');
           this.$.caret.classList.remove('animating');
