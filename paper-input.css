@@ -121,6 +121,7 @@ input {
 }
 
 #caret {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -131,9 +132,11 @@ input {
   -webkit-transform: scaleX(1) translateX(10%);
 }
 #caret.animating {
+  display: block;
   transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-out;
 }
 #caret.focused {
+  display: block;
   opacity: 0.75;
   -webkit-transform: scaleX(0) translateX(0);
 }
