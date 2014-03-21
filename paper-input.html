@@ -205,6 +205,10 @@ Example:
         }
         if (!this.value) {
           this.$.label.classList.remove('hidden');
+          this.$.label.classList.add('animating');
+          this.async(function() {
+            this.$.label.style.webkitTransform = 'none';
+          });
         }
         this.focused = false;
       },
@@ -289,22 +293,30 @@ Example:
           return;
         }
 
-        if (this.floatingLabel || this.value) {
-          this.$.label.classList.add('hidden');
-        }
+        if (this.focused) {
 
-        if (this.floatingLabel) {
-          this.$.label.classList.remove('focusedColor');
+          if (this.floatingLabel || this.value) {
+            this.$.label.classList.add('hidden');
+          }
+
+          if (this.floatingLabel) {
+            this.$.label.classList.remove('focusedColor');
+            this.$.label.classList.remove('animating');
+            this.$.floatedLabel.classList.remove('hidden');
+            this.$.floatedLabel.classList.add('focused');
+            this.$.floatedLabel.classList.add('focusedColor');
+          }
+
+          this.async(function() {
+            this.$.underlineHighlight.classList.remove('animating');
+            this.$.caret.classList.remove('animating');
+          }, null, 100);
+
+        } else {
+
           this.$.label.classList.remove('animating');
-          this.$.floatedLabel.classList.remove('hidden');
-          this.$.floatedLabel.classList.add('focused');
-          this.$.floatedLabel.classList.add('focusedColor');
-        }
 
-        this.async(function() {
-          this.$.underlineHighlight.classList.remove('animating');
-          this.$.caret.classList.remove('animating');
-        }, null, 100);
+        }
       }
 
     });
