@@ -71,7 +71,6 @@ input {
 }
 #label.animating {
   transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
-  -webkit-transform: scale(0.773) translateY(-70%);
 }
 
 #error {

@@ -30,14 +30,14 @@ Example:
     <link href="paper-input.css" rel="stylesheet">
 
     <template if="{{floatingLabel}}">
-      <div id="floatedLabel" class="hidden">{{label}}</div>
+      <div id="floatedLabel" class="hidden"><span>{{label}}</span></div>
     </template>
 
     <span id="inputClone" aria-hidden="true">{{value}}</span>
 
     <div id="container" on-transitionend="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}">
 
-      <div id="label">{{label}}</div>
+      <div id="label"><span>{{label}}</span></div>
 
       <input id="input" value="{{value}}" disabled?="{{disabled}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-keypress="{{keypressAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
 
@@ -170,6 +170,15 @@ Example:
         }
       },
 
+      labelChanged: function() {
+        if (this.floatingLabel && this.$.floatedLabel && this.$.label) {
+          var toRect = this.$.floatedLabel.childNodes[0].getBoundingClientRect();
+          var fromRect = this.$.label.childNodes[0].getBoundingClientRect();
+          this.$.label.cachedTransform = 'scale(' + (toRect.width / fromRect.width) + ') ' +
+            'translateY(' + (toRect.bottom - fromRect.bottom) + 'px)'
+        }
+      },
+
       focusAction: function(e) {
         if (!this.pressed) {
           if (this.floatingLabel) {
@@ -265,6 +274,7 @@ Example:
         if (this.floatingLabel) {
           this.$.label.classList.add('focusedColor');
           this.$.label.classList.add('animating');
+          this.$.label.style.webkitTransform = this.$.label.cachedTransform;
         }
       },
 
