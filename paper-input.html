@@ -29,15 +29,13 @@ Example:
 
     <link href="paper-input.css" rel="stylesheet">
 
-    <template if="{{floatingLabel}}">
-      <div id="floatedLabel" class="hidden">{{label}}</div>
-    </template>
+    <div id="floatedLabel" class="hidden"><span>{{label}}</span></div>
 
     <span id="inputClone" aria-hidden="true">{{value}}</span>
 
     <div id="container" on-transitionend="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}">
 
-      <div id="label">{{label}}</div>
+      <div id="label"><span>{{label}}</span></div>
 
       <input id="input" value="{{value}}" disabled?="{{disabled}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-keypress="{{keypressAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
 
@@ -50,9 +48,10 @@ Example:
 
     </div>
 
-    <template if="{{error}}">
+    <div id="errorContainer">
       <div id="error" role="alert" aria-hidden="{{!_invalid}}">{{error}}</div>
-    </template>
+      <div id="errorIcon"></div>
+    </div>
 
   </template>
 
@@ -170,6 +169,15 @@ Example:
         }
       },
 
+      labelChanged: function() {
+        if (this.floatingLabel && this.$.floatedLabel && this.$.label) {
+          var toRect = this.$.floatedLabel.childNodes[0].getBoundingClientRect();
+          var fromRect = this.$.label.childNodes[0].getBoundingClientRect();
+          this.$.label.cachedTransform = 'scale(' + (toRect.width / fromRect.width) + ') ' +
+            'translateY(' + (toRect.bottom - fromRect.bottom) + 'px)'
+        }
+      },
+
       focusAction: function(e) {
         if (!this.pressed) {
           if (this.floatingLabel) {
@@ -197,6 +205,10 @@ Example:
         }
         if (!this.value) {
           this.$.label.classList.remove('hidden');
+          this.$.label.classList.add('animating');
+          this.async(function() {
+            this.$.label.style.webkitTransform = 'none';
+          });
         }
         this.focused = false;
       },
@@ -265,6 +277,7 @@ Example:
         if (this.floatingLabel) {
           this.$.label.classList.add('focusedColor');
           this.$.label.classList.add('animating');
+          this.$.label.style.webkitTransform = this.$.label.cachedTransform;
         }
       },
 
@@ -280,22 +293,30 @@ Example:
           return;
         }
 
-        if (this.floatingLabel || this.value) {
-          this.$.label.classList.add('hidden');
-        }
+        if (this.focused) {
 
-        if (this.floatingLabel) {
-          this.$.label.classList.remove('focusedColor');
+          if (this.floatingLabel || this.value) {
+            this.$.label.classList.add('hidden');
+          }
+
+          if (this.floatingLabel) {
+            this.$.label.classList.remove('focusedColor');
+            this.$.label.classList.remove('animating');
+            this.$.floatedLabel.classList.remove('hidden');
+            this.$.floatedLabel.classList.add('focused');
+            this.$.floatedLabel.classList.add('focusedColor');
+          }
+
+          this.async(function() {
+            this.$.underlineHighlight.classList.remove('animating');
+            this.$.caret.classList.remove('animating');
+          }, null, 100);
+
+        } else {
+
           this.$.label.classList.remove('animating');
-          this.$.floatedLabel.classList.remove('hidden');
-          this.$.floatedLabel.classList.add('focused');
-          this.$.floatedLabel.classList.add('focusedColor');
-        }
 
-        this.async(function() {
-          this.$.underlineHighlight.classList.remove('animating');
-          this.$.caret.classList.remove('animating');
-        }, null, 100);
+        }
       }
 
     });

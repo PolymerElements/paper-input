@@ -71,18 +71,40 @@ input {
 }
 #label.animating {
   transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
-  -webkit-transform: scale(0.773) translateY(-70%);
+}
+
+#errorContainer {
+  visibility: hidden;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+}
+
+:host(.invalid) #errorContainer {
+  visibility: visible;
 }
 
 #error {
+  flex: 1;
+  -webkit-flex: 1;
   color: #d34336;
   font-size: 0.75em;
-  visibility: hidden;
   padding: 0.5em 0;
 }
 
-:host(.invalid) #error {
-  visibility: visible;
+#errorIcon {
+  background-image: url(error-100.png);
+  background-size: 24px 24px;
+  height: 24px;
+  width: 24px;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2) {
+  #errorIcon {
+    background-image: url(error-200.png);
+    background-size: 24px 24px;
+  }
 }
 
 #underline {
@@ -121,6 +143,7 @@ input {
 }
 
 #caret {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -131,9 +154,11 @@ input {
   -webkit-transform: scaleX(1) translateX(10%);
 }
 #caret.animating {
+  display: block;
   transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-out;
 }
 #caret.focused {
+  display: block;
   opacity: 0.75;
   -webkit-transform: scaleX(0) translateX(0);
 }
