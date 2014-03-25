@@ -9,8 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!--
 
-paper-input is a single-line text field where user can enter input. It can optionally have
-a label.
+paper-input is a single- or multi-line text field where user can enter input.
+It can optionally have a label.
 
 Example:
 
@@ -23,24 +23,38 @@ Example:
 -->
 <link href="../polymer/polymer.html" rel="import">
 
-<polymer-element name="paper-input" attributes="value label floatingLabel disabled validate error" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}">
+<polymer-element name="paper-input" attributes="value label floatingLabel disabled multiline validate error" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}">
 
   <template>
 
     <link href="paper-input.css" rel="stylesheet">
 
-    <div id="floatedLabel" class="hidden"><span>{{label}}</span></div>
-
-    <span id="inputClone" aria-hidden="true">{{value}}</span>
+    <div id="floatedLabel" class="hidden"><span id="floatedLabelSpan">{{label}}</span></div>
 
     <div id="container" on-transitionend="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}">
 
-      <div id="label"><span>{{label}}</span></div>
+      <div id="label"><span id="labelSpan">{{label}}</span></div>
 
-      <input id="input" value="{{value}}" disabled?="{{disabled}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-keypress="{{keypressAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
+      <div id="inputContainer">
 
-      <div id="underline"></div>
-      <div id="underlineHighlight" class="focusedColor"></div>
+        <div id="inputClone">
+          <span id="inputCloneSpan" aria-hidden="true">&nbsp;</span>
+        </div>
+
+        <template if="{{multiline}}">
+          <textarea id="input" value="{{value}}" rows="1" disabled?="{{disabled}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-keypress="{{keypressAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}"></textarea>
+        </template>
+
+        <template if="{{!multiline}}">
+          <input id="input" value="{{value}}" disabled?="{{disabled}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-keypress="{{keypressAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
+        </template>
+
+      </div>
+
+      <div id="underlineContainer">
+        <div id="underline"></div>
+        <div id="underlineHighlight" class="focusedColor"></div>
+      </div>
 
       <div id="caret">
         <div id="caretInner" class="focusedColor"></div>
@@ -88,6 +102,15 @@ Example:
        * @default false
        */
       disabled: false,
+
+      /**
+       * If true, this input accepts multi-line input like a <textarea>
+       *
+       * @attribute multiline
+       * @type boolean
+       * @default false
+       */
+      multiline: false,
 
       /**
        * The value of this input.
@@ -142,6 +165,7 @@ Example:
           this.$.floatedLabel.classList.remove('hidden');
         }
         this._invalid = false;
+        this.$.underlineContainer.style.top = this.$.inputClone.getBoundingClientRect().height - 1 + 'px';
       },
 
       validateValue: function() {
@@ -160,6 +184,16 @@ Example:
       },
 
       valueChanged: function() {
+        if (this.multiline) {
+          var escaped = this.value.replace(/\n/gm, '<br>');
+          if (!escaped || escaped.lastIndexOf('<br>') === escaped.length - 4) {
+            escaped += '&nbsp';
+          }
+          this.$.inputCloneSpan.innerHTML = escaped;
+
+          this.$.underlineContainer.style.top = this.$.inputClone.getBoundingClientRect().height - 1 + 'px';
+        }
+
         if (this.validate) {
           this.validateValue();
         }
@@ -171,8 +205,8 @@ Example:
 
       labelChanged: function() {
         if (this.floatingLabel && this.$.floatedLabel && this.$.label) {
-          var toRect = this.$.floatedLabel.childNodes[0].getBoundingClientRect();
-          var fromRect = this.$.label.childNodes[0].getBoundingClientRect();
+          var toRect = this.$.floatedLabelSpan.getBoundingClientRect();
+          var fromRect = this.$.labelSpan.getBoundingClientRect();
           this.$.label.cachedTransform = 'scale(' + (toRect.width / fromRect.width) + ') ' +
             'translateY(' + (toRect.bottom - fromRect.bottom) + 'px)'
         }
@@ -233,7 +267,7 @@ Example:
 
         // No caret animation if there is text in the input.
         if (!this.value) {
-          var width = this.$.inputClone.getBoundingClientRect().width;
+          var width = this.$.inputCloneSpan.getBoundingClientRect().width;
           if (width < right) {
             this.$.caret.style.left = width + 'px';
             this.$.caret.classList.remove('focused');
