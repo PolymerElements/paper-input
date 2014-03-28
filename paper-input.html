@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link href="../polymer/polymer.html" rel="import">
 
-<polymer-element name="paper-input" attributes="value label floatingLabel disabled multiline validate error" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}">
+<polymer-element name="paper-input" attributes="value committedValue label floatingLabel disabled multiline validate error" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}">
 
   <template>
 
@@ -129,11 +129,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /**
        * The value of this input.
        *
-       * @attribute label
+       * @attribute value
        * @type string
        * @default ''
        */
       value: '',
+
+      /**
+       * The value of the input committed by the user, either by changing the
+       * value and blurring the input, or by hitting the <enter> key.
+       *
+       * @attribute committedValue
+       * @type string
+       * @default ''
+       */
+      committedValue: '',
 
       /**
        * If this property is not null, the text input's value will be validated.
@@ -223,6 +233,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (!this.floatingLabel) {
           this.$.label.classList.toggle('hidden', this.value);
+        }
+
+        if (!this.value) {
+          this.committedValue = '';
         }
       },
 
@@ -377,6 +391,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       inputChangeAction: function(e) {
+        this.committedValue = this.value;
         this.fire('change', null, this, false);
       }
 
