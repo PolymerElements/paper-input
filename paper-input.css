@@ -122,6 +122,11 @@ textarea {
   position: absolute;
   left: 0;
   right: 0;
+  bottom: -1;
+}
+
+:host([multiline]) #underlineContainer {
+  bottom: auto;
   -webkit-transition: top 0.2s ease-in;
 }
 

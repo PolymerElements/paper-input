@@ -165,7 +165,10 @@ Example:
           this.$.floatedLabel.classList.remove('hidden');
         }
         this._invalid = false;
-        this.$.underlineContainer.style.top = this.$.inputClone.getBoundingClientRect().height - 1 + 'px';
+      },
+
+      attached: function() {
+        this.multilineChanged();
       },
 
       validateValue: function() {
@@ -181,6 +184,12 @@ Example:
         }
         this._invalid = !valid;
         this.classList.toggle('invalid', !valid);
+      },
+
+      multilineChanged: function() {
+        if (this.multiline) {
+          this.$.underlineContainer.style.top = this.$.inputClone.getBoundingClientRect().height - 1 + 'px';
+        }
       },
 
       valueChanged: function() {
