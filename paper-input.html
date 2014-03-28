@@ -8,18 +8,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <!--
-
-paper-input is a single- or multi-line text field where user can enter input.
-It can optionally have a label.
-
-Example:
-
-    <paper-input label="Your Name"></paper-input>
-
-@group Quantum Paper Elements
-@element paper-input
-@homepage github.io
-
+/**
+ * paper-input is a single- or multi-line text field where user can enter input.
+ * It can optionally have a label.
+ *
+ * Example:
+ *
+ *    <paper-input label="Your Name"></paper-input>
+ *    <paper-input multiline label="Enter multiple lines here"></paper-input>
+ *
+ * @group Quantum Paper Elements
+ * @element paper-input
+ * @homepage github.io
+ */
+/**
+ * Fired when the value of the input is changed. This is the same event as the DOM
+ * "input" event.
+ *
+ * @event input
+ */
+/**
+ * Fired when the user commits the value of the input, either by the hitting the
+ * <enter> key or blurring the input after the changing the value. Also see the
+ * DOM "change" event.
+ *
+ * @event change
+ */
 -->
 <link href="../polymer/polymer.html" rel="import">
 
@@ -46,7 +60,7 @@ Example:
         </template>
 
         <template if="{{!multiline}}">
-          <input id="input" value="{{value}}" disabled?="{{disabled}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-keypress="{{keypressAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
+          <input id="input" value="{{value}}" disabled?="{{disabled}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-keypress="{{keypressAction}}" on-change="{{inputChangeAction}}" aria-labelledby="label" aria-invalid="{{_invalid}}">
         </template>
 
       </div>
@@ -360,6 +374,10 @@ Example:
           this.$.label.classList.remove('animating');
 
         }
+      },
+
+      inputChangeAction: function(e) {
+        this.fire('change', null, this, false);
       }
 
     });
