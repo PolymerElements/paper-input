@@ -187,6 +187,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready: function() {
         if (this.value) {
           this.$.floatedLabel.classList.remove('hidden');
+          this.$.label.classList.add('hidden');
         }
         this._invalid = false;
       },
