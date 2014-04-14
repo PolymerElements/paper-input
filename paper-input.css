@@ -12,29 +12,31 @@
   position: relative;
 }
 
-#inputClone {
+#inputClone,
+#minInputHeight,
+#maxInputHeight {
+  position: absolute;
+  top: 0;
+  left: 0;
   visibility: hidden;
   padding: 0.5em 0;
 }
 
-input,
-textarea {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+:host /deep/ input,
+:host /deep/ textarea {
   font: inherit;
   color: #000;
-  padding: 0.5em 0;
-  margin: 0;
+  padding: 0;
+  /* Important to use margin here so the margin remains visible
+   * when textarea scrolls internally. */
+  margin: 0.5em 0;
   background-color: transparent;
   border: none;
   outline: none;
   width: 100%;
 }
 
-textarea {
+.host /deep/ textarea {
   resize: none;
 }
 
@@ -127,7 +129,10 @@ textarea {
 
 :host([multiline]) #underlineContainer {
   bottom: auto;
-  -webkit-transition: top 0.2s ease-in;
+}
+
+:host([multiline]) #underlineContainer.animating {
+  transition: top 0.2s ease-in;
 }
 
 #underline {
@@ -185,6 +190,6 @@ textarea {
   position: absolute;
   top: 0.6em;
   left: 0;
-  bottom: 0.6em;
+  height: 1.2em;
   width: 25%;
 }
