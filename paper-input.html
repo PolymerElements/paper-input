@@ -110,12 +110,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       pressed: false,
 
       ready: function() {
-        if (this.value) {
+        if (this.inputValue) {
           this.$.floatedLabel.classList.remove('hidden');
           this.$.label.classList.add('hidden');
         }
 
-        this.valueChanged();
+        this.inputValueChanged();
       },
 
       attached: function() {
@@ -159,11 +159,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      valueChanged: function() {
+      inputValueChanged: function() {
         this.super();
 
         if (this.multiline) {
-          var escaped = this.value.replace(/\n/gm, '<br>');
+          var escaped = this.inputValue.replace(/\n/gm, '<br>');
           if (!escaped || escaped.lastIndexOf('<br>') === escaped.length - 4) {
             escaped += '&nbsp';
           }
@@ -172,7 +172,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         if (!this.floatingLabel) {
-          this.$.label.classList.toggle('hidden', this.value);
+          this.$.label.classList.toggle('hidden', this.inputValue);
         }
       },
 
@@ -206,11 +206,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.floatingLabel) {
           this.$.floatedLabel.classList.remove('focused');
           this.$.floatedLabel.classList.remove('focusedColor');
-          if (!this.value) {
+          if (!this.inputValue) {
             this.$.floatedLabel.classList.add('hidden');
           }
         }
-        if (!this.value) {
+        if (!this.inputValue) {
           this.$.label.classList.remove('hidden');
           this.$.label.classList.add('animating');
           this.async(function() {
@@ -239,7 +239,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }, null, 200);
 
         // No caret animation if there is text in the input.
-        if (!this.value) {
+        if (!this.inputValue) {
           var width = this.$.inputCloneSpan.getBoundingClientRect().width;
           if (width < right) {
             this.$.caret.style.left = width + 'px';
@@ -274,7 +274,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         // No caret animation if there is text in the input.
-        if (!this.value) {
+        if (!this.inputValue) {
           this.$.caret.classList.add('animating');
           this.async(function() {
             this.$.caret.classList.add('focused');
@@ -302,7 +302,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (this.focused) {
 
-          if (this.floatingLabel || this.value) {
+          if (this.floatingLabel || this.inputValue) {
             this.$.label.classList.add('hidden');
           }
 
