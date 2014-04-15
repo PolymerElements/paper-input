@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link href="../polymer/polymer.html" rel="import">
 <link href="../core-input/core-input.html" rel="import">
 
-<polymer-element name="paper-input" extends="core-input" attributes="label floatingLabel maxRows error" on-pointerdown="{{pointerdownAction}}" on-pointerup="{{pointerupAction}}">
+<polymer-element name="paper-input" extends="core-input" attributes="label floatingLabel maxRows error" on-down="{{downAction}}" on-up="{{upAction}}">
 
   <template>
 
@@ -220,7 +220,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.focused = false;
       },
 
-      pointerdownAction: function(e) {
+      downAction: function(e) {
         if (this.disabled) {
           return;
         }
@@ -248,7 +248,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      pointerupAction: function() {
+      upAction: function() {
         if (this.disabled) {
           return;
         }
