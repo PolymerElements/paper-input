@@ -76,7 +76,6 @@
   width: 100%;
   padding: 0.5em 0;
   background: transparent;
-  white-space: nowrap;
   -webkit-transform-origin: 0% 0%;
 }
 #label.hidden {
@@ -84,6 +83,14 @@
 }
 #label.animating {
   transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
+}
+
+#labelSpan {
+	overflow: hidden;
+	text-overflow: ellipsis;
+  white-space: nowrap;
+	display: inline-block;
+	width: 100%;
 }
 
 #errorContainer {
