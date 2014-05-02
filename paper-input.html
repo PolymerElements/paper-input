@@ -109,15 +109,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       focused: false,
       pressed: false,
 
-      ready: function() {
-        if (this.inputValue) {
-          this.$.floatedLabel.classList.remove('hidden');
-          this.$.label.classList.add('hidden');
-        }
-
-        this.inputValueChanged();
-      },
-
       attached: function() {
         if (this.multiline) {
           this.resizeInput();
@@ -173,6 +164,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (!this.floatingLabel) {
           this.$.label.classList.toggle('hidden', this.inputValue);
+        }
+
+        if (this.floatingLabel && !this.focused) {
+            this.$.label.classList.toggle('hidden', this.inputValue);
+            this.$.floatedLabel.classList.toggle('hidden', !this.inputValue);
         }
       },
 
