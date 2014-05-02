@@ -181,6 +181,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      placeholderChanged: function() {
+        this.label = this.placeholder;
+      },
+
       focusAction: function(e) {
         if (!this.pressed) {
           if (this.floatingLabel) {
