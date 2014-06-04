@@ -11,6 +11,7 @@
       padding: 0;
       margin: 0;
       -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
     section {
       font-family: Roboto2, 'Helvetica Neue', Helvetica, Arial;
@@ -41,14 +42,14 @@
     .dark-theme input {
       color: #fff;
     }
-    .dark-theme ^^ input {
+    .dark-theme /deep/ input {
       color: #fff;
     }
     .dark-theme #underline {
       background: #666;
       border-bottom-color: #666;
     }
-    .dark-theme ^^ #underline {
+    .dark-theme /deep/ #underline {
       background: #666;
       border-bottom-color: #666;
     }
@@ -56,7 +57,7 @@
       color: #7d8ad0;
       background: #7d8ad0;
     }
-    .dark-theme ^^ .focusedColor {
+    .dark-theme /deep/ .focusedColor {
       color: #7d8ad0;
       background: #7d8ad0;
     }

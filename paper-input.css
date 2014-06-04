@@ -4,7 +4,7 @@
   text-align: inherit;
   color: #ccc;
 }
-:host:hover {
+:host(:hover) {
   cursor: text;
 }
 
@@ -77,28 +77,30 @@
   padding: 0.5em 0;
   background: transparent;
   -webkit-transform-origin: 0% 0%;
+  transform-origin: 0% 0%;
 }
 #label.hidden {
   display: none;
 }
 #label.animating {
+  /* TODO: transforms are unprefixed in M36/ Remove when stable. */
   transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
 }
 
 #labelSpan {
-	overflow: hidden;
-	text-overflow: ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
-	display: inline-block;
-	max-width: 100%;
+  display: inline-block;
+  max-width: 100%;
 }
 
 #errorContainer {
   visibility: hidden;
-  display: flex;
   display: -webkit-flex;
-  align-items: center;
+  display: flex;
   -webkit-align-items: center;
+  align-items: center;
 }
 
 :host(.invalid) #errorContainer {
@@ -106,8 +108,8 @@
 }
 
 #error {
-  flex: 1;
   -webkit-flex: 1;
+  flex: 1;
   color: #d34336;
   font-size: 0.75em;
   padding: 0.5em 0;
@@ -120,7 +122,8 @@
   width: 24px;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2) {
+
+@media (min-resolution: 2dppx) {
   #errorIcon {
     background-image: url(error-200.png);
     background-size: 24px 24px;
@@ -161,16 +164,21 @@
   bottom: 0;
   height: 2px;
   -webkit-transform: scale(0,2);
+  transform: scale(0,2);
 }
 #underlineHighlight.pressed {
   -webkit-transform: scale(0.1,2);
+  transform: scale(0.1,2);
+  /* TODO: transforms are unprefixed in M36/ Remove when stable. */
   transition: -webkit-transform 0.1s cubic-bezier(0.2, 0, 0.03, 1);
 }
 #underlineHighlight.animating {
+  /* TODO: transforms are unprefixed in M36/ Remove when stable. */
   transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
 }
 #underlineHighlight.focused {
   -webkit-transform: scale(1);
+  transform: scale(1);
 }
 
 #caret {
@@ -182,16 +190,20 @@
   bottom: 0;
   opacity: 0;
   -webkit-transform-origin-x: 0%;
+  transform-origin-x: 0%;
   -webkit-transform: scaleX(1) translateX(10%);
+  transform: scaleX(1) translateX(10%);
 }
 #caret.animating {
   display: block;
+   /* TODO: transforms are unprefixed in M36/ Remove when stable. */
   transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-out;
 }
 #caret.focused {
   display: block;
   opacity: 0.75;
   -webkit-transform: scaleX(0) translateX(0);
+  transform: scaleX(0) translateX(0);
 }
 #caretInner {
   position: absolute;
