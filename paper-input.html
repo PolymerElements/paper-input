@@ -247,7 +247,7 @@ Example:
         }
       },
 
-      upAction: function() {
+      upAction: function(e) {
         if (this.disabled) {
           return;
         }
@@ -255,7 +255,13 @@ Example:
         if (!this.pressed) {
           return;
         }
-        
+
+        // if a touch event caused the up, the synthentic mouseevents will blur
+        // the input, make sure to prevent those from being generated.
+        if (e.pointerType === 'touch') {
+          e.preventDefault();
+        }
+
         if (this.underlineAsync) {
           clearTimeout(this.underlineAsync);
           this.underlineAsync = null;
