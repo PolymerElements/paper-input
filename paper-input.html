@@ -256,9 +256,9 @@ Example:
           return;
         }
 
-        // if a touch event caused the up, the synthentic mouseevents will blur
+        // if a touchevent caused the up, the synthentic mouseevents will blur
         // the input, make sure to prevent those from being generated.
-        if (e.pointerType === 'touch') {
+        if (e._source === 'touch') {
           e.preventDefault();
         }
 
