@@ -2,7 +2,7 @@
   display: inline-block;
   outline: none;
   text-align: inherit;
-  color: #ccc;
+  color: #757575;
 }
 :host(:hover) {
   cursor: text;
@@ -147,8 +147,8 @@
 
 #underline {
   height: 1px;
-  background: #ccc;
-  border-bottom-color: #ccc;
+  background: #757575;
+  border-bottom-color: #757575;
 }
 
 :host([disabled]) #underline {
