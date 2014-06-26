@@ -143,6 +143,7 @@
 }
 
 :host([multiline]) #underlineContainer.animating {
+  -webkit-transition: top 0.2s ease-in;
   transition: top 0.2s ease-in;
 }
 
