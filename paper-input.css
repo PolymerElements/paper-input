@@ -40,21 +40,6 @@
   resize: none;
 }
 
-.focusedColor {
-  color: #4059a9;
-  background: #4059a9;
-}
-
-:host(.invalid) #underline,
-:host(.invalid) #underlineHighlight,
-:host(.invalid) .focusedColor {
-  color: #d34336;
-  background: #d34336;
-}
-:host(.invalid) #floatedLabel {
-  color: #d34336;
-}
-
 #floatedLabel {
   font-size: 0.75em;
   background: transparent;
@@ -111,7 +96,6 @@
 #error {
   -webkit-flex: 1;
   flex: 1;
-  color: #d34336;
   font-size: 0.75em;
   padding: 0.5em 0;
 }

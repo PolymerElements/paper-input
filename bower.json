@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "polymer": "Polymer/polymer#master",
-    "core-input": "Polymer/core-input#master"
+    "core-input": "Polymer/core-input#master",
+    "core-style": "Polymer/core-style#master"
   }
 }
