@@ -168,6 +168,15 @@ the focused and invalid states.
         this.$.underlineContainer.style.top = height + 'px';
       },
 
+      prepareLabelTransform: function() {
+        var toRect = this.$.floatedLabelSpan.getBoundingClientRect();
+        var fromRect = this.$.labelSpan.getBoundingClientRect();
+        if (toRect.width !== 0) {
+          this.$.label.cachedTransform = 'scale(' + (toRect.width / fromRect.width) + ') ' +
+            'translateY(' + (toRect.bottom - fromRect.bottom) + 'px)';
+        }
+      },
+
       rowsChanged: function() {
         if (this.multiline && !isNaN(parseInt(this.rows))) {
           this.$.minInputHeight.innerHTML = '';
@@ -212,10 +221,11 @@ the focused and invalid states.
 
       labelChanged: function() {
         if (this.floatingLabel && this.$.floatedLabel && this.$.label) {
-          var toRect = this.$.floatedLabelSpan.getBoundingClientRect();
-          var fromRect = this.$.labelSpan.getBoundingClientRect();
-          this.$.label.cachedTransform = 'scale(' + (toRect.width / fromRect.width) + ') ' +
-            'translateY(' + (toRect.bottom - fromRect.bottom) + 'px)'
+          // If the element is created programmatically, labelChanged is called before
+          // binding. Run the measuring code in async so the DOM is ready.
+          this.async(function() {
+            this.prepareLabelTransform();
+          });
         }
       },
 
@@ -330,6 +340,9 @@ the focused and invalid states.
         if (this.floatingLabel) {
           this.$.label.classList.add('focusedColor');
           this.$.label.classList.add('animating');
+          if (!this.$.label.cachedTransform) {
+            this.prepareLabelTransform();
+          }
           this.$.label.style.webkitTransform = this.$.label.cachedTransform;
           this.$.label.style.transform = this.$.label.cachedTransform;
         }
