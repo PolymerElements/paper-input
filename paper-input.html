@@ -233,7 +233,7 @@ the focused and invalid states.
         this.label = this.placeholder;
       },
 
-      inputFocusAction: function(e) {
+      inputFocusAction: function() {
         if (!this.pressed) {
           if (this.floatingLabel) {
             this.$.floatedLabel.classList.remove('hidden');
@@ -243,7 +243,8 @@ the focused and invalid states.
           this.$.label.classList.add('hidden');
           this.$.underlineHighlight.classList.add('focused');
           this.$.caret.classList.add('focused');
-          this.$.input.focus();
+
+          this.super(arguments);
         }
         this.focused = true;
       },
