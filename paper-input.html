@@ -96,7 +96,7 @@ the focused and invalid states.
     </div>
 
     <div id="errorContainer">
-      <div id="error" role="alert" aria-hidden="{{!invalid}}">{{error}}</div>
+      <div id="error" role="alert" aria-hidden="{{!invalid}}">{{error || validationMessage}}</div>
       <div id="errorIcon"></div>
     </div>
 
@@ -144,6 +144,16 @@ the focused and invalid states.
        */
       maxRows: 0,
 
+      /**
+       * The message to display if the input value fails validation. If this
+       * is unset or the empty string, a default message is displayed depending
+       * on the type of validation error.
+       *
+       * @attribute error
+       * @type string
+       */
+      error: '',
+
       focused: false,
       pressed: false,
 
@@ -174,6 +184,19 @@ the focused and invalid states.
         if (toRect.width !== 0) {
           this.$.label.cachedTransform = 'scale(' + (toRect.width / fromRect.width) + ') ' +
             'translateY(' + (toRect.bottom - fromRect.bottom) + 'px)';
+        }
+      },
+
+      toggleLabel: function(force) {
+        var v = force !== undefined ? force : this.inputValue;
+
+        if (!this.floatingLabel) {
+          this.$.label.classList.toggle('hidden', v);
+        }
+
+        if (this.floatingLabel && !this.focused) {
+          this.$.label.classList.toggle('hidden', v);
+          this.$.floatedLabel.classList.toggle('hidden', !v);
         }
       },
 
@@ -209,14 +232,7 @@ the focused and invalid states.
           this.resizeInput();
         }
 
-        if (!this.floatingLabel) {
-          this.$.label.classList.toggle('hidden', this.inputValue);
-        }
-
-        if (this.floatingLabel && !this.focused) {
-          this.$.label.classList.toggle('hidden', this.inputValue);
-          this.$.floatedLabel.classList.toggle('hidden', !this.inputValue);
-        }
+        this.toggleLabel();
       },
 
       labelChanged: function() {
@@ -249,19 +265,28 @@ the focused and invalid states.
         this.focused = true;
       },
 
+      shouldFloatLabel: function() {
+        // if type = number, the input value is the empty string until a valid number
+        // is entered so we must do some hacks here
+        return this.inputValue || (this.type === 'number' && !this.validity.valid);
+      },
+
       inputBlurAction: function() {
         this.super(arguments);
 
         this.$.underlineHighlight.classList.remove('focused');
         this.$.caret.classList.remove('focused');
+
         if (this.floatingLabel) {
           this.$.floatedLabel.classList.remove('focused');
           this.$.floatedLabel.classList.remove('focusedColor');
-          if (!this.inputValue) {
+          if (!this.shouldFloatLabel()) {
             this.$.floatedLabel.classList.add('hidden');
           }
         }
-        if (!this.inputValue) {
+
+        // type = number hack. see core-input for more info
+        if (!this.shouldFloatLabel()) {
           this.$.label.classList.remove('hidden');
           this.$.label.classList.add('animating');
           this.async(function() {
@@ -269,6 +294,7 @@ the focused and invalid states.
             this.$.label.style.transform = 'none';
           });
         }
+
         this.focused = false;
       },
 
@@ -348,6 +374,19 @@ the focused and invalid states.
           }
           this.$.label.style.webkitTransform = this.$.label.cachedTransform;
           this.$.label.style.transform = this.$.label.cachedTransform;
+        }
+      },
+
+      keydownAction: function() {
+        this.super();
+
+        // more type = number hacks. see core-input for more info
+        if (this.type === 'number') {
+          this.async(function() {
+            if (!this.inputValue) {
+              this.toggleLabel(!this.validity.valid);
+            }
+          });
         }
       },
 
