@@ -36,6 +36,11 @@
   width: 100%;
 }
 
+:host /deep/ input:invalid,
+:host /deep/ textarea:invalid {
+  box-shadow: none;
+}
+
 .host /deep/ textarea {
   resize: none;
 }
@@ -61,6 +66,7 @@
   width: 100%;
   padding: 0.5em 0;
   background: transparent;
+  -moz-transform-origin: 0% 0%;
   -webkit-transform-origin: 0% 0%;
   transform-origin: 0% 0%;
   pointer-events: none;
@@ -178,6 +184,7 @@
   right: 0;
   bottom: 0;
   opacity: 0;
+  -moz-transform-origin: 0%;
   -webkit-transform-origin-x: 0%;
   transform-origin-x: 0%;
   -webkit-transform: scaleX(1) translateX(10%);
