@@ -319,11 +319,7 @@ the focused and invalid states.
 
         // No caret animation if there is text in the input.
         if (!this.inputValue) {
-          var width = this.$.inputCloneSpan.getBoundingClientRect().width;
-          if (width < right) {
-            this.$.caret.style.left = width + 'px';
-            this.$.caret.classList.remove('focused');
-          }
+          this.$.caret.classList.remove('focused');
         }
       },
 
