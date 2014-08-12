@@ -124,8 +124,8 @@ textarea {
 }
 
 .focused-underline[invisible] {
-  -webkit-transform: scaleX(0);
-  transform: scaleX(0);
+  -webkit-transform: scale3d(0,1,1);
+  transform: scale3d(0,1,1);
 }
 
 .error-text {
@@ -137,38 +137,3 @@ textarea {
   height: 20px;
   width: 20px;
 }
-
-/*#caret {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0;
-  -moz-transform-origin: 0%;
-  -webkit-transform-origin-x: 0%;
-  transform-origin-x: 0%;
-  -webkit-transform: scaleX(1) translateX(10%);
-  transform: scaleX(1) translateX(10%);
-}
-#caret.animating {
-  display: block;
-    TODO: transforms are unprefixed in M36/ Remove when stable. 
-  -webkit-transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-out;
-  transition: transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
-}
-#caret.focused {
-  display: block;
-  opacity: 0.75;
-  -webkit-transform: scaleX(0) translateX(0);
-  transform: scaleX(0) translateX(0);
-}
-#caretInner {
-  position: absolute;
-  top: 0.6em;
-  left: 0;
-  height: 1.2em;
-  width: 25%;
-}
-*/
