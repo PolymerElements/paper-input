@@ -24,6 +24,10 @@
       -webkit-tap-highlight-color: rgba(0,0,0,0);
       -webkit-touch-callout: none;
     }
+
+    paper-input.narrow {
+      width: 150px;
+    }
     
   </style>
 
@@ -31,15 +35,23 @@
 <body unresolved>
   <section>
 
-    <paper-input label="Type something..."></paper-input>
+    <paper-input label="Type something"></paper-input>
 
     <br>
 
-    <paper-input label="Type only numbers..." type="number" error="Input is not a number!"></paper-input>
+    <paper-input label="Type something" value="Prefilled value"></paper-input>
 
     <br>
 
-    <paper-input label="Type something..." required error="This input requires a value!"></paper-input>
+    <paper-input class="narrow" label="Long labels get truncated"></paper-input>
+
+    <br>
+
+    <paper-input label="Type only numbers" type="number" error="Input is not a number!"></paper-input>
+
+    <br>
+
+    <paper-input label="Type something" required error="This input requires a value!"></paper-input>
 
     <br>
 
@@ -51,11 +63,15 @@
 
     <br>
 
-    <paper-input floatingLabel label="Type only numbers... (floating)" type="number" error="Input is not a number!"></paper-input>
+    <paper-input floatingLabel label="Type only numbers (floating)" type="number" error="Input is not a number!"></paper-input>
 
     <br>
 
-    <paper-input multiline label="Type multiple lines here..."></paper-input>
+    <paper-input multiline label="Type multiple lines here"></paper-input>
+
+    <br>
+
+    <paper-input floatingLabel multiline label="Type multiple lines here" value="Prefilled multiline input value"></paper-input>
 
     <br>
 
@@ -67,7 +83,29 @@
 
     <br>
 
+    <paper-input multiline label="Sized with CSS, height: 150px;" style="height: 150px;"></paper-input>
+
+    <br>
+
     <paper-input multiline floatingLabel label="Multiple lines and a floating label"></paper-input>
 
+    <br>
+
+    <paper-input multiline floatingLabel rows="2" label="Becomes visible after polymer-ready, min 2 rows" value="Some prefilled value" hidden></paper-input>
+
+    <br>
+
   </section>
+
+  <script>
+
+    document.addEventListener('polymer-ready', function() {
+
+      setTimeout(function() {
+        document.querySelector('paper-input[hidden]').removeAttribute('hidden');
+      }, 500);
+
+    });
+
+  </script>
 </body>

@@ -4,28 +4,17 @@
   text-align: inherit;
   color: #757575;
 }
-:host(:hover) {
-  cursor: text;
-}
-
-#container {
-  position: relative;
-}
-
-#inputClone,
-#minInputHeight,
-#maxInputHeight {
-  position: absolute;
-  top: 0;
-  left: 0;
-  visibility: hidden;
-  padding: 0.5em 0;
-}
 
 :host /deep/ input,
 :host /deep/ textarea {
   font: inherit;
   color: #000;
+  /* fit to the container for auto-resizing */
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   padding: 0;
   /* Important to use margin here so the margin remains visible
    * when textarea scrolls internally. */
@@ -36,147 +25,120 @@
   width: 100%;
 }
 
-:host /deep/ input:invalid,
-:host /deep/ textarea:invalid {
+:host /deep/ input::hover,
+:host /deep/ textarea::hover {
+  cursor: text;
+}
+
+input:invalid,
+textarea:invalid {
   box-shadow: none;
 }
 
-.host /deep/ textarea {
+textarea {
   resize: none;
+  overflow: hidden;
 }
 
-#floatedLabel {
+[invisible] {
+  visibility: hidden;
+}
+
+[animated] {
+  visibility: visible !important;
+  -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floated-label {
   font-size: 0.75em;
   background: transparent;
   white-space: nowrap;
 }
-#floatedLabel.hidden {
-  visibility: hidden;
-}
-#floatedLabel.focused {
-  visibility: visible;
+
+.mirror-text {
+  display: inline-block;
+  padding: 0.5em 0;
+  max-width: 100%;
+  white-space: nowrap;
 }
 
-#label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
+:host([multiline]) .mirror-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.label {
   padding: 0.5em 0;
   background: transparent;
-  -moz-transform-origin: 0% 0%;
-  -webkit-transform-origin: 0% 0%;
-  transform-origin: 0% 0%;
   pointer-events: none;
 }
-#label.hidden {
-  display: none;
-}
-#label.animating {
-  /* TODO: transforms are unprefixed in M36/ Remove when stable. */
-  -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
-  transition: transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
-}
 
-#labelSpan {
+.label-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
   max-width: 100%;
+  -moz-transform-origin: 0% 0%;
+  -webkit-transform-origin: 0% 0%;
+  transform-origin: 0% 0%;
 }
 
-#errorContainer {
-  visibility: hidden;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-align-items: center;
-  align-items: center;
-}
-
-:host(.invalid) #errorContainer {
-  visibility: visible;
-}
-
-#error {
-  -webkit-flex: 1;
-  flex: 1;
-  font-size: 0.75em;
-  padding: 0.5em 0;
-}
-
-#errorIcon {
-  background-image: url(error-100.png);
-  background-size: 24px 24px;
-  height: 24px;
-  width: 24px;
-}
-
-
-@media (min-resolution: 2dppx) {
-  #errorIcon {
-    background-image: url(error-200.png);
-    background-size: 24px 24px;
-  }
-}
-
-#underlineContainer {
+.cursor {
   position: absolute;
+  top: 0.4em;
   left: 0;
-  right: 0;
-  bottom: -1px;
+  width: 1px;
+  height: 1.4em;
+  opacity: 0.4;
+  -moz-transform-origin: 0%;
+  -webkit-transform-origin: 0%;
+  transform-origin: 0%;
+  -webkit-transform: none;
+  transform: none;
 }
 
-:host([multiline]) #underlineContainer {
-  bottom: auto;
+.cursor[invisible] {
+  opacity: 0.75;
+  -webkit-transform: translate3d(3em,0,0) scale3d(50,1,1);
+  transform: translate3d(3em,0,0) scale3d(50,1,1);
 }
 
-:host([multiline]) #underlineContainer.animating {
-  -webkit-transition: top 0.2s ease-in;
-  transition: top 0.2s ease-in;
-}
-
-#underline {
+.underline {
   height: 1px;
   background: #757575;
   border-bottom-color: #757575;
 }
 
-:host([disabled]) #underline {
+:host([disabled]) .underline {
   border-bottom: 1px dashed;
   height: 0px;
   background: transparent;
 }
 
-#underlineHighlight {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.focused-underline {
   height: 2px;
-  -webkit-transform: scale(0,2);
-  transform: scale(0,2);
-}
-#underlineHighlight.pressed {
-  -webkit-transform: scale(0.1,2);
-  transform: scale(0.1,2);
-  /* TODO: transforms are unprefixed in M36/ Remove when stable. */
-  -webkit-transition: -webkit-transform 0.1s cubic-bezier(0.2, 0, 0.03, 1);
-  transition: transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
-}
-#underlineHighlight.animating {
-  /* TODO: transforms are unprefixed in M36/ Remove when stable. */
-  -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
-  transition: transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
-}
-#underlineHighlight.focused {
-  -webkit-transform: scale(1);
-  transform: scale(1);
+  -webkit-transform: none;
+  transform: none;
 }
 
-#caret {
+.focused-underline[invisible] {
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+}
+
+.error-text {
+  font-size: 0.75em;
+  padding: 0.5em 0;
+}
+
+.error-icon {
+  height: 20px;
+  width: 20px;
+}
+
+/*#caret {
   display: none;
   position: absolute;
   top: 0;
@@ -192,7 +154,7 @@
 }
 #caret.animating {
   display: block;
-   /* TODO: transforms are unprefixed in M36/ Remove when stable. */
+    TODO: transforms are unprefixed in M36/ Remove when stable. 
   -webkit-transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-out;
   transition: transform 0.3s cubic-bezier(0.2, 0, 0.03, 1);
 }
@@ -209,3 +171,4 @@
   height: 1.2em;
   width: 25%;
 }
+*/
