@@ -155,7 +155,7 @@ the focused and invalid states.
       },
 
       get inputValueForMirror() {
-        var tokens = this.inputValue ? this.inputValue.replace(/&/gm, '&amp;').replace(/"/gm, '&quot;').replace(/'/gm, '&#39;').replace(/</gm, '&lt;').replace(/>/gm, '&gt;').split('\n') : [''];
+        var tokens = this.inputValue ? String(this.inputValue).replace(/&/gm, '&amp;').replace(/"/gm, '&quot;').replace(/'/gm, '&#39;').replace(/</gm, '&lt;').replace(/>/gm, '&gt;').split('\n') : [''];
 
         // Enforce the min and max heights for a multiline input here to
         // avoid measurement
