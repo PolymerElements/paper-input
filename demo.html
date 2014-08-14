@@ -91,6 +91,8 @@
 
     <br>
 
+    <paper-input label="Becomes visible after polymer-ready" hidden></paper-input>
+
     <paper-input multiline floatingLabel rows="2" label="Becomes visible after polymer-ready, min 2 rows" value="Some prefilled value" hidden></paper-input>
 
     <br>
@@ -102,7 +104,9 @@
     document.addEventListener('polymer-ready', function() {
 
       setTimeout(function() {
-        document.querySelector('paper-input[hidden]').removeAttribute('hidden');
+        Array.prototype.forEach.call(document.querySelectorAll('paper-input[hidden]'), function(node) {
+          node.removeAttribute('hidden');
+        });
       }, 500);
 
     });

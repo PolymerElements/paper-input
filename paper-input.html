@@ -212,11 +212,24 @@ the focused and invalid states.
         }
 
         this.labelAnimated = true;
+        // Handle interrupted animation
+        this.async(function() {
+          this.transitionEndAction();
+        }, null, 250);
 
         if (this.inputHasValue) {
           this.$.labelText.style.webkitTransform = this.$.labelText.cachedTransform;
           this.$.labelText.style.transform = this.$.labelText.cachedTransform;
         } else {
+
+          // Handle if the label started out floating
+          if (!this.$.labelText.style.webkitTransform && !this.$.labelText.style.transform) {
+            this.$.labelText.style.webkitTransform = this.$.labelText.cachedTransform;
+            this.$.labelText.style.transform = this.$.labelText.cachedTransform;
+            this.$.labelText.offsetTop;
+          }
+
+
           this.$.labelText.style.webkitTransform = null;
           this.$.labelText.style.transform = null;
         }
