@@ -57,7 +57,6 @@ textarea {
 }
 
 .mirror-text {
-  display: inline-block;
   padding: 0.5em 0;
   max-width: 100%;
   white-space: nowrap;
