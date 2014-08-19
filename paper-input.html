@@ -70,9 +70,9 @@ the focused and invalid states.
       <span id="floatedLabelText" class="label-text">{{label}}</span>
     </div>
 
-    <div flex relative on-down="{{downAction}}" on-up="{{upAction}}">
+    <div flex auto relative on-down="{{downAction}}" on-up="{{upAction}}">
 
-      <span id="mirror" class="mirror-text" invisible aria-hidden="true"></span>
+      <div id="mirror" class="mirror-text" invisible aria-hidden="true"></div>
 
       <div class="label" fit>
         <!-- needed for floating label animation measurement -->
@@ -91,7 +91,7 @@ the focused and invalid states.
     </div>
 
     <div layout horizontal center invisible?="{{!invalid}}">
-      <div class="error-text" flex role="alert" aria-hidden="{{!invalid}}">{{error || validationMessage}}</div>
+      <div class="error-text" flex auto role="alert" aria-hidden="{{!invalid}}">{{error || validationMessage}}</div>
       <core-icon class="error-icon" icon="warning"></core-icon>
     </div>
 
@@ -221,17 +221,14 @@ the focused and invalid states.
           this.$.labelText.style.webkitTransform = this.$.labelText.cachedTransform;
           this.$.labelText.style.transform = this.$.labelText.cachedTransform;
         } else {
-
           // Handle if the label started out floating
           if (!this.$.labelText.style.webkitTransform && !this.$.labelText.style.transform) {
             this.$.labelText.style.webkitTransform = this.$.labelText.cachedTransform;
             this.$.labelText.style.transform = this.$.labelText.cachedTransform;
             this.$.labelText.offsetTop;
           }
-
-
-          this.$.labelText.style.webkitTransform = null;
-          this.$.labelText.style.transform = null;
+          this.$.labelText.style.webkitTransform = '';
+          this.$.labelText.style.transform = '';
         }
       },
 
