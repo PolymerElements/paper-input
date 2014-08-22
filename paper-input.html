@@ -65,7 +65,7 @@ the focused and invalid states.
     <link href="paper-input.css" rel="stylesheet">
     <core-style ref="paper-input"></core-style>
 
-    <div class="floated-label" hidden?="{{!floatingLabel}}" invisible?="{{!inputValue && !(type === 'number' && !validity.valid) || labelAnimated}}">
+    <div class="floated-label" aria-hidden="true" hidden?="{{!floatingLabel}}" invisible?="{{!inputValue && !(type === 'number' && !validity.valid) || labelAnimated}}">
       <!-- needed for floating label animation measurement -->
       <span id="floatedLabelText" class="label-text">{{label}}</span>
     </div>
@@ -74,7 +74,7 @@ the focused and invalid states.
 
       <div id="mirror" class="mirror-text" invisible aria-hidden="true"></div>
 
-      <div class="label" fit>
+      <div class="label" fit aria-hidden="true">
         <!-- needed for floating label animation measurement -->
         <span id="labelText" class="label-text" invisible?="{{inputValue || !inputValue && type === 'number' && !validity.valid}}" animated?=
         "{{labelAnimated}}">{{label}}</span>
