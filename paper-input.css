@@ -3,6 +3,7 @@
   outline: none;
   text-align: inherit;
   color: #757575;
+  padding: 0.75em 0;
 }
 
 :host /deep/ input,
@@ -18,7 +19,7 @@
   padding: 0;
   /* Important to use margin here so the margin remains visible
    * when textarea scrolls internally. */
-  margin: 0.5em 0;
+  margin: 0.5em 0 0.25em;
   background-color: transparent;
   border: none;
   outline: none;
@@ -57,7 +58,7 @@ textarea {
 }
 
 .mirror-text {
-  padding: 0.5em 0;
+  padding: 0.5em 0 0.25em;
   max-width: 100%;
   white-space: nowrap;
 }
@@ -68,7 +69,7 @@ textarea {
 }
 
 .label {
-  padding: 0.5em 0;
+  padding: 0.5em 0 0.25em;
   background: transparent;
   pointer-events: none;
 }
@@ -105,15 +106,18 @@ textarea {
 }
 
 .underline {
-  height: 1px;
-  background: #757575;
-  border-bottom-color: #757575;
+  height: 0px;
+  overflow: visible;
 }
 
 :host([disabled]) .underline {
   border-bottom: 1px dashed;
-  height: 0px;
-  background: transparent;
+}
+
+.unfocused-underline {
+  height: 1px;
+  background: #757575;
+  border-bottom-color: #757575;
 }
 
 .focused-underline {

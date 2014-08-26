@@ -87,10 +87,11 @@ the focused and invalid states.
     </div>
 
     <div id="underline" class="underline" relative>
+      <div class="unfocused-underline" fit invisible?="{{disabled}}"></div>
       <div id="focusedUnderline" class="focused-underline" fit invisible?="{{!focused}}" animated?="{{underlineAnimated}}"></div>
     </div>
 
-    <div layout horizontal center invisible?="{{!invalid}}">
+    <div layout horizontal center hidden?="{{!invalid}}">
       <div class="error-text" flex auto role="alert" aria-hidden="{{!invalid}}">{{error || validationMessage}}</div>
       <core-icon class="error-icon" icon="warning"></core-icon>
     </div>
