@@ -70,7 +70,7 @@ the focused and invalid states.
       <span id="floatedLabelText" class="label-text">{{label}}</span>
     </div>
 
-    <div flex auto relative on-down="{{downAction}}" on-up="{{upAction}}">
+    <div class="input-container" flex auto relative on-down="{{downAction}}" on-up="{{upAction}}">
 
       <div id="mirror" class="mirror-text" invisible aria-hidden="true"></div>
 
@@ -264,6 +264,10 @@ the focused and invalid states.
         if (this.focused) {
           return;
         }
+
+        this.$.input.focus();
+        // prevent self-focus
+        e.preventDefault();
 
         // The underline spills from the tap location
         var rect = this.$.underline.getBoundingClientRect();
