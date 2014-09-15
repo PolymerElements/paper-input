@@ -55,10 +55,6 @@ textarea {
   white-space: nowrap;
 }
 
-.input-body:hover {
-  cursor: text;
-}
-
 .mirror-text {
   padding: 0.5em 0 0.25em;
   max-width: 100%;
