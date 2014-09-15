@@ -20,20 +20,14 @@
 :host /deep/ textarea {
   font: inherit;
   color: #000;
-  /* fit to the container for auto-resizing */
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
   padding: 0;
-  /* Important to use margin here so the margin remains visible
-   * when textarea scrolls internally. */
-  margin: 0.5em 0 0.25em;
+  margin: 0;
   background-color: transparent;
   border: none;
   outline: none;
+  /* see comments in template */
   width: 100%;
+  height: 100%;
 }
 
 input:invalid,
@@ -43,7 +37,6 @@ textarea:invalid {
 
 textarea {
   resize: none;
-  overflow: hidden;
 }
 
 [invisible] {
@@ -62,7 +55,7 @@ textarea {
   white-space: nowrap;
 }
 
-.input-container:hover {
+.input-body:hover {
   cursor: text;
 }
 
@@ -112,6 +105,15 @@ textarea {
   opacity: 0.75;
   -webkit-transform: translate3d(3em,0,0) scale3d(50,1,1);
   transform: translate3d(3em,0,0) scale3d(50,1,1);
+}
+
+.input-container {
+  position: absolute;
+  /* simulate padding so the input/textarea can use 100% width/height */
+  top: 0.5em;
+  right: 0;
+  bottom: 0.25em;
+  left: 0;
 }
 
 .underline {
