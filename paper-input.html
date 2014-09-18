@@ -22,6 +22,32 @@ Theming
 Set `CoreStyle.g.paperInput.focusedColor` and `CoreStyle.g.paperInput.invalidColor` to theme
 the focused and invalid states.
 
+To add custom styling to only some elements, use these selectors:
+
+    html /deep/ paper-input[focused] .floated-label {
+        /* floating label color when the input has focus */
+        color: green;
+    }
+
+    html /deep/ paper-input .focused-underline,
+    html /deep/ paper-input .cursor {
+        /* line and cursor color when the input has focus */
+        background-color: green;
+    }
+
+    html /deep/ paper-input.invalid[focused] .floated-label,
+    html /deep/ paper-input[focused] .error-text,
+    html /deep/ paper-input[focused] .error-icon {
+        /* error text, icon, and floating label color when input is invalid */
+        color: salmon;
+    }
+
+    html /deep/ paper-input.invalid .focused-underline,
+    html /deep/ paper-input.invalid .cursor {
+        /* line and cursor color when the input is invalid */
+        background-color: salmon;
+    }
+
 @group Paper Elements
 @element paper-input
 @extends core-input
