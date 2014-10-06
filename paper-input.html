@@ -17,34 +17,59 @@ Example:
     <paper-input multiline label="Enter multiple lines here"></paper-input>
 
 Theming
---------
+-------
 
-Set `CoreStyle.g.paperInput.focusedColor` and `CoreStyle.g.paperInput.invalidColor` to theme
-the focused and invalid states.
+`paper-input` uses `core-style` for global theming. The following options are available:
+
+- `CoreStyle.g.paperInput.labelColor` - The inline label, floating label, error message and error icon color when the input does not have focus.
+- `CoreStyle.g.paperInput.focusedColor` - The floating label and the underline color when the input has focus.
+- `CoreStyle.g.paperInput.cursorColor` - The cursor color during the focus animation. Typically this is the same as `focusedColor`.
+- `CoreStyle.g.paperInput.invalidColor` - The error message, the error icon, the cursor, the floating label and the underline's color when the input is invalid and has focus.
+
+The color of the input text is inherited. You can style it by styling the `paper-input`:
+
+    paper-input {
+        /* make the input text blue */
+        color: blue;
+    }
 
 To add custom styling to only some elements, use these selectors:
 
-    html /deep/ paper-input[focused] .floated-label {
-        /* floating label color when the input has focus */
+    paper-input::shadow .label-text,
+    paper-input::shadow .error {
+        /* inline label,  floating label, error message and error icon color when the input is unfocused */
         color: green;
     }
 
-    html /deep/ paper-input .focused-underline,
-    html /deep/ paper-input .cursor {
-        /* line and cursor color when the input has focus */
+    paper-input::shadow .unfocused-underline {
+        /* line color when the input is unfocused */
         background-color: green;
     }
 
-    html /deep/ paper-input.invalid[focused] .floated-label,
-    html /deep/ paper-input[focused] .error-text,
-    html /deep/ paper-input[focused] .error-icon {
-        /* error text, icon, and floating label color when input is invalid */
+    paper-input[focused]::shadow .floating-label .label-text {
+        /* floating label color when the input is focused */
+        color: orange;
+    }
+
+    paper-input::shadow .focused-underline {
+        /* line color when the input is focused */
+        background-color: orange;
+    }
+
+    paper-input::shadow .cursor {
+        /* cursor color during the focus transition */
+        background-color: orange;
+    }
+
+    paper-input.invalid[focused]::shadow .floated-label .label-text,
+    paper-input[focused]::shadow .error {
+        /* floating label, error message nad error icon color when the input is invalid and focused */
         color: salmon;
     }
 
-    html /deep/ paper-input.invalid .focused-underline,
-    html /deep/ paper-input.invalid .cursor {
-        /* line and cursor color when the input is invalid */
+    paper-input.invalid::shadow .focused-underline,
+    paper-input.invalid::shadow .cursor {
+        /* line and cursor color when the input is invalid and focused */
         background-color: salmon;
     }
 
@@ -71,19 +96,29 @@ to submitting a `paper-input`.
 
 <core-style id="paper-input">
 
-:host([focused]) .floated-label {
+.label-text,
+.error {
+  color: {{g.paperInput.labelColor}};
+}
+
+.unfocused-underline {
+  background-color: {{g.paperInput.labelColor}};
+}
+
+:host([focused]) .floated-label .label-text {
   color: {{g.paperInput.focusedColor}};
 }
 
-.focused-underline,
-.cursor {
+.focused-underline {
   background-color: {{g.paperInput.focusedColor}};
 }
 
+.cursor {
+  background-color: {{g.paperInput.cursorColor}};
+}
 
 :host(.invalid[focused]) .floated-label,
-:host([focused]) .error-text,
-:host([focused]) .error-icon {
+:host([focused]) .error {
   color: {{g.paperInput.invalidColor}};
 }
 
@@ -148,7 +183,7 @@ to submitting a `paper-input`.
       <div id="focusedUnderline" class="focused-underline" fit invisible?="{{!focused}}" animated?="{{underlineAnimated}}"></div>
     </div>
 
-    <div layout horizontal center hidden?="{{!invalid}}">
+    <div class="error" layout horizontal center hidden?="{{!invalid}}">
       <div class="error-text" flex auto role="alert" aria-hidden="{{!invalid}}">{{error || validationMessage}}</div>
       <core-icon class="error-icon" icon="warning"></core-icon>
     </div>
@@ -160,6 +195,9 @@ to submitting a `paper-input`.
   (function() {
 
     var paperInput = CoreStyle.g.paperInput = CoreStyle.g.paperInput || {};
+
+    paperInput.labelColor = '#757575';
+    paperInput.cursorColor = '#4059a9';
     paperInput.focusedColor = '#4059a9';
     paperInput.invalidColor = '#d34336';
 

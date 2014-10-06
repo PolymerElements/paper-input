@@ -12,14 +12,13 @@
   display: inline-block;
   outline: none;
   text-align: inherit;
-  color: #757575;
   padding: 0.75em 0;
 }
 
 :host /deep/ input,
 :host /deep/ textarea {
   font: inherit;
-  color: #000;
+  color: inherit;
   padding: 0;
   margin: 0;
   background-color: transparent;
@@ -118,13 +117,11 @@ textarea {
 }
 
 :host([disabled]) .underline {
-  border-bottom: 1px dashed;
+  border-bottom: 1px dashed #757575;
 }
 
 .unfocused-underline {
   height: 1px;
-  background: #757575;
-  border-bottom-color: #757575;
 }
 
 .focused-underline {

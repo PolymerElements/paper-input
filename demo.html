@@ -21,28 +21,73 @@
   <link href="paper-input.html" rel="import">
 
   <style shim-shadowdom>
-  
+
     body {
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+      font-size: 14px;
       margin: 0;
       padding: 24px;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
       -webkit-tap-highlight-color: rgba(0,0,0,0);
       -webkit-touch-callout: none;
+    }
+
+    section {
+      padding: 20px 0;
+    }
+
+    section > div {
+      padding: 14px;
+      font-size: 16px;
     }
 
     paper-input.narrow {
       width: 150px;
     }
-    
+
+    paper-input.custom::shadow .label-text,
+    paper-input.custom::shadow .error {
+      color: #f4b400;
+    }
+
+    paper-input.custom::shadow .unfocused-underline {
+      background-color: #f4b400;
+    }
+
+    paper-input.custom[focused]::shadow .floated-label .label-text {
+      color: #0f9d58;
+    }
+
+    paper-input.custom::shadow .focused-underline {
+      background-color: #0f9d58;
+    }
+
+    paper-input.custom::shadow .cursor {
+      background-color: #1a237e;
+    }
+
+    paper-input.custom.invalid[focused]::shadow .floated-label .label-text,
+    paper-input.custom[focused]::shadow .error {
+      color: #f06292;
+    }
+
+    paper-input.custom.invalid::shadow .focused-underline,
+    paper-input.custom.invalid::shadow .cursor {
+      background-color: #f06292;
+    }
+
+    paper-input.custom {
+      color: #1a237e;
+    }
+
   </style>
 
 </head>
 <body unresolved>
   <section>
+
+    <div>Single line inputs</div>
+
+    <br>
 
     <paper-input label="Type something"></paper-input>
 
@@ -56,31 +101,17 @@
 
     <br>
 
-    <paper-input label="Type only numbers" type="number" error="Input is not a number!"></paper-input>
-
-    <br>
-
-    <paper-input label="Type something" required error="This input requires a value!"></paper-input>
-
-    <br>
-
     <paper-input disabled label="I'm disabled"></paper-input>
 
-    <br>
+  </section>
 
-    <paper-input floatingLabel label="Floating label"></paper-input>
+  <section>
 
-    <br>
-
-    <paper-input floatingLabel label="Type an email here (floating label)" type="email" error="Input is not an email!"></paper-input>
+    <div>Multi line inputs</div>
 
     <br>
 
     <paper-input multiline label="Type multiple lines here"></paper-input>
-
-    <br>
-
-    <paper-input floatingLabel multiline label="Type multiple lines here" value="Prefilled multiline input value"></paper-input>
 
     <br>
 
@@ -94,19 +125,76 @@
 
     <paper-input multiline label="Sized with CSS, height: 150px;" style="height: 150px;"></paper-input>
 
+  </section>
+
+  <section>
+
+    <div>Inputs with floating label</div>
+
     <br>
 
-    <paper-input multiline floatingLabel label="Multiple lines and a floating label"></paper-input>
+    <paper-input floatingLabel label="Single line with floating label"></paper-input>
+
+    <br>
+
+    <paper-input floatingLabel multiline label="Multiple lines with floating label"></paper-input>
+
+    <br>
+
+    <paper-input floatingLabel multiline label="Multiple lines with floating label" value="Prefilled value in multi line"></paper-input>
+
+  </section>
+
+  <section>
+
+    <div>Single line inputs with validation</div>
+
+    <br>
+
+    <paper-input label="Type only numbers" type="number" error="Input is not a number!"></paper-input>
+
+    <br>
+
+    <paper-input label="Type something" required error="This input requires a value!"></paper-input>
+
+    <br>
+
+    <paper-input floatingLabel label="Type an email here (floating label)" type="email" error="Input is not an email!"></paper-input>
+
+  </section>
+
+  <section>
+
+    <div>Custom styling</div>
+
+    <br>
+
+    <paper-input class="custom" label="Custom colors"></paper-input>
+
+    <br>
+
+    <paper-input class="custom" required label="Custom colors with validation"></paper-input>
+
+    <br>
+
+    <paper-input class="custom" floatingLabel label="Custom colors with a floating label"></paper-input>
+
+  </section>
+
+  <section>
+
+    <div>Lazily created inputs</div>
 
     <br>
 
     <paper-input label="Becomes visible after polymer-ready" hidden></paper-input>
 
-    <paper-input multiline floatingLabel rows="2" label="Becomes visible after polymer-ready, min 2 rows" value="Some prefilled value" hidden></paper-input>
-
     <br>
 
+    <paper-input multiline floatingLabel rows="2" label="Becomes visible after polymer-ready, min 2 rows" value="Some prefilled value" hidden></paper-input>
+
   </section>
+
 
   <script>
 
