@@ -48,6 +48,16 @@ To add custom styling to only some elements, use these selectors:
         background-color: salmon;
     }
 
+Form submission
+---------------
+
+`paper-input` does not work out of the box with the native `form` element. This is because
+the native `form` is not aware of shadow DOM and does not treat `paper-input` as a form
+element.
+
+See <a href="https://github.com/garstasio/ajax-form">`ajax-form`</a> for a possible solution
+to submitting a `paper-input`.
+
 @group Paper Elements
 @element paper-input
 @extends core-input
