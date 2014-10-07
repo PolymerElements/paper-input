@@ -18,6 +18,8 @@
   <script src="../webcomponentsjs/webcomponents.js"></script>
 
   <link href="../font-roboto/roboto.html" rel="import">
+  <link href="paper-autogrow-textarea.html" rel="import">
+  <link href="paper-input-decorator.html" rel="import">
   <link href="paper-input.html" rel="import">
 
   <style shim-shadowdom>
@@ -40,42 +42,50 @@
       font-size: 16px;
     }
 
+    paper-input {
+      width: 80%;
+    }
+
+    paper-input-decorator {
+      max-width: 80%;
+    }
+
     paper-input.narrow {
       width: 150px;
     }
 
-    paper-input.custom::shadow .label-text,
-    paper-input.custom::shadow .error {
+    .custom /deep/ .label-text,
+    .custom /deep/ .error {
       color: #f4b400;
     }
 
-    paper-input.custom::shadow .unfocused-underline {
+    .custom /deep/ .unfocused-underline {
       background-color: #f4b400;
     }
 
-    paper-input.custom[focused]::shadow .floated-label .label-text {
+    .custom[focused] /deep/ .floated-label .label-text {
       color: #0f9d58;
     }
 
-    paper-input.custom::shadow .focused-underline {
+    .custom /deep/ .focused-underline {
       background-color: #0f9d58;
     }
 
-    paper-input.custom::shadow .cursor {
+    .custom /deep/ .cursor {
       background-color: #1a237e;
     }
 
-    paper-input.custom.invalid[focused]::shadow .floated-label .label-text,
-    paper-input.custom[focused]::shadow .error {
+    .custom.invalid /deep/ .floated-label .label-text,
+    .custom /deep/ .error {
       color: #f06292;
     }
 
-    paper-input.custom.invalid::shadow .focused-underline,
-    paper-input.custom.invalid::shadow .cursor {
+    .custom.invalid /deep/ .focused-underline,
+    .custom.invalid /deep/ .cursor {
       background-color: #f06292;
     }
 
-    paper-input.custom {
+    .custom {
       color: #1a237e;
     }
 
@@ -83,83 +93,73 @@
 
 </head>
 <body unresolved>
+
   <section>
 
-    <div>Single line inputs</div>
+    <div>Standalone</div>
 
     <br>
 
-    <paper-input label="Type something"></paper-input>
+    <paper-input label="label"></paper-input>
 
     <br>
 
-    <paper-input label="Type something" value="Prefilled value"></paper-input>
-
-    <br>
-
-    <paper-input class="narrow" label="Long labels get truncated"></paper-input>
-
-    <br>
-
-    <paper-input disabled label="I'm disabled"></paper-input>
+    <paper-input label="floating label" floatingLabel></paper-input>
 
   </section>
 
   <section>
 
-    <div>Multi line inputs</div>
+    <div>Decorator</div>
 
     <br>
 
-    <paper-input multiline label="Type multiple lines here"></paper-input>
+    <paper-input-decorator label="with core-input">
+      <input is="core-input">
+    </paper-input-decorator>
 
     <br>
 
-    <paper-input multiline rows="3" label="This input is 3 rows high"></paper-input>
+    <paper-input-decorator label="with core-input + floatingLabel" floatingLabel>
+      <input is="core-input">
+    </paper-input-decorator>
 
     <br>
 
-    <paper-input multiline maxRows="3" label="This input is at most 3 rows high"></paper-input>
+    <paper-input-decorator label="with autogrowing text area">
+      <paper-autogrow-textarea>
+        <textarea></textarea>
+      </paper-autogrow-textarea>
+    </paper-input-decorator>
 
     <br>
 
-    <paper-input multiline label="Sized with CSS, height: 150px;" style="height: 150px;"></paper-input>
+    <paper-input-decorator label="with autogrowing text area + floatingLabel" floatingLabel>
+      <paper-autogrow-textarea>
+        <textarea></textarea>
+      </paper-autogrow-textarea>
+    </paper-input-decorator>
 
   </section>
 
-  <section>
+  <section id="validate">
 
-    <div>Inputs with floating label</div>
+    <div>Validation</div>
 
-    <br>
+    <button onclick="validateAll()">click me to validate all</button>
 
-    <paper-input floatingLabel label="Single line with floating label"></paper-input>
+    <paper-input-decorator label="required" floatingLabel error="input is required!">
+      <input is="core-input" required>
+    </paper-input-decorator>
 
-    <br>
-
-    <paper-input floatingLabel multiline label="Multiple lines with floating label"></paper-input>
-
-    <br>
-
-    <paper-input floatingLabel multiline label="Multiple lines with floating label" value="Prefilled value in multi line"></paper-input>
-
-  </section>
-
-  <section>
-
-    <div>Single line inputs with validation</div>
-
-    <br>
-
-    <paper-input label="Type only numbers" type="number" error="Input is not a number!"></paper-input>
-
-    <br>
-
-    <paper-input label="Type something" required error="This input requires a value!"></paper-input>
-
-    <br>
-
-    <paper-input floatingLabel label="Type an email here (floating label)" type="email" error="Input is not an email!"></paper-input>
+    <script>
+      function validateAll() {
+        var $d = document.getElementById('validate').querySelectorAll('paper-input-decorator');
+        Array.prototype.forEach.call($d, function(d) {
+          d.isInvalid = !d.querySelector('input').validity.valid;
+        });
+      }
+    </script>
 
   </section>
 
@@ -169,44 +169,15 @@
 
     <br>
 
-    <paper-input class="custom" label="Custom colors"></paper-input>
+    <paper-input class="custom" label="paper-input"></paper-input>
 
     <br>
 
-    <paper-input class="custom" required label="Custom colors with validation"></paper-input>
-
-    <br>
-
-    <paper-input class="custom" floatingLabel label="Custom colors with a floating label"></paper-input>
+    <paper-input-decorator class="custom" label="decorator">
+      <input is="core-input">
+    </paper-input-decorator>
 
   </section>
 
-  <section>
-
-    <div>Lazily created inputs</div>
-
-    <br>
-
-    <paper-input label="Becomes visible after polymer-ready" hidden></paper-input>
-
-    <br>
-
-    <paper-input multiline floatingLabel rows="2" label="Becomes visible after polymer-ready, min 2 rows" value="Some prefilled value" hidden></paper-input>
-
-  </section>
-
-
-  <script>
-
-    document.addEventListener('polymer-ready', function() {
-
-      setTimeout(function() {
-        Array.prototype.forEach.call(document.querySelectorAll('paper-input[hidden]'), function(node) {
-          node.removeAttribute('hidden');
-        });
-      }, 500);
-
-    });
-
-  </script>
 </body>
+</html>
