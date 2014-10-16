@@ -15,14 +15,19 @@
   padding: 0.75em 0;
 }
 
+polyfill-next-selector {
+  content: '.input-body > :not(.label):not(.cursor)';
+}
 ::content > *,
 ::content > input[is="core-input"] {
   padding: 0;
   margin: 0.5em 0 0.25em;
   width: 100%;
-  height: 100%;
 }
 
+polyfill-next-selector {
+  content: 'input, textarea';
+}
 ::content input,
 ::content input[is=core-input],
 ::content textarea {
@@ -33,11 +38,17 @@
   outline: none;
 }
 
+polyfill-next-selector {
+  content: ':invalid';
+}
 ::content input:invalid,
 ::content textarea:invalid {
   box-shadow: none;
 }
 
+polyfill-next-selector {
+  content: 'textarea';
+}
 ::content textarea {
   resize: none;
 }
