@@ -89,11 +89,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('honors the rows attribute', function(done) {
         var h1 = a1.offsetHeight;
-        a1.rows = 3;
+        a1.rows = 2;
 
         asyncPlatformFlush(function() {
           var h2 = a1.offsetHeight;
-          assert.equal(h2, 3 * h1);
+          assert.equal(h2, 2 * h1);
           done();
         });
       });
