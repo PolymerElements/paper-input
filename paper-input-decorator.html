@@ -322,6 +322,10 @@ conflict with this element.
         this.classList.toggle('invalid', this.isInvalid);
       },
 
+      focusedChanged: function() {
+        this.updateLabelVisibility(this.input && this.input.value);
+      },
+
       inputChanged: function(old) {
         this.updateLabelVisibility(this.input.value);
         this.updateInputLabel(this.input, this.label);
@@ -347,7 +351,7 @@ conflict with this element.
        * @param {string} value
        */
       updateLabelVisibility: function(value) {
-        this._autoLabelVisible = !value;
+        this._autoLabelVisible = (!this.focused && !value) || (!this.floatingLabel && !value);
       },
 
       updateInputLabel: function(input, label) {
