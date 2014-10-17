@@ -41,6 +41,17 @@ To add custom styling to only some elements, use these selectors:
         color: green;
     }
 
+    paper-input-decorator /deep/ ::-webkit-input-placeholder {
+        /* platform specific rules for placeholder text */
+        color: green;
+    }
+    paper-input-decorator /deep/ ::-moz-placeholder {
+        color: green;
+    }
+    paper-input-decorator /deep/ :-ms-input-placeholder {
+        color: green;
+    }
+
     paper-input-decorator /deep/ .unfocused-underline {
         /* line color when the input is unfocused */
         background-color: green;
@@ -102,6 +113,18 @@ conflict with this element.
   color: {{g.paperInput.labelColor}};
 }
 
+::-webkit-input-placeholder {
+  color: {{g.paperInput.labelColor}};
+}
+
+::-moz-placeholder {
+  color: {{g.paperInput.labelColor}};
+}
+
+:-ms-input-placeholder {
+  color: {{g.paperInput.labelColor}};
+}
+
 .unfocused-underline {
   background-color: {{g.paperInput.labelColor}};
 }
@@ -148,7 +171,7 @@ conflict with this element.
 
     <div class="input-body" flex auto relative>
 
-      <div class="label" fit aria-hidden="true">
+      <div class="label" fit invisible aria-hidden="true">
         <!-- needed for floating label animation measurement -->
         <span id="labelText" class="label-text" invisible?="{{!_labelVisible}}" animated?="{{labelAnimated}}">{{label}}</span>
       </div>
@@ -310,13 +333,21 @@ conflict with this element.
         } else {
           this.$.labelText.style.webkitTransform = this.$.labelText.cachedTransform;
           this.$.labelText.style.transform = this.$.labelText.cachedTransform;
+          this.input.placeholder = '';
         }
+
       },
 
       _labelVisibleChanged: function(old) {
         // do not do the animation on first render
         if (old !== undefined) {
           this.animateFloatingLabel();
+        }
+      },
+
+      labelChanged: function() {
+        if (this.input) {
+          this.updateInputLabel(this.input, this.label);
         }
       },
 
@@ -329,8 +360,10 @@ conflict with this element.
       },
 
       inputChanged: function(old) {
-        this.updateLabelVisibility(this.input.value);
-        this.updateInputLabel(this.input, this.label);
+        if (this.input) {
+          this.updateLabelVisibility(this.input.value);
+          this.updateInputLabel(this.input, this.label);
+        }
         if (old) {
           this.updateInputLabel(old, '');
         }
@@ -358,6 +391,11 @@ conflict with this element.
       },
 
       updateInputLabel: function(input, label) {
+        if (this._labelVisible) {
+          this.input.placeholder = this.label;
+        } else {
+          this.input.placeholder = '';
+        }
         if (label) {
           input.setAttribute('aria-label', label);
         } else {
@@ -407,6 +445,9 @@ conflict with this element.
         this.underlineAnimated = false;
         this.cursorAnimated = false;
         this.labelAnimated = false;
+        if (this._labelVisible) {
+          this.input.placeholder = this.label;
+        }
       }
 
     });

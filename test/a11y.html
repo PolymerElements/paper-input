@@ -41,12 +41,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var d1 = document.getElementById('decorator1');
     var i1 = document.getElementById('input1');
 
-    suite('accessibility', function() {
-
-      test('aria-label set on input', function() {
-        assert.strictEqual(i1.getAttribute('aria-label'), d1.label);
-      });
-
+    test('aria-label set on input', function() {
+      assert.strictEqual(i1.getAttribute('aria-label'), d1.label);
     });
 
   </script>
