@@ -131,7 +131,10 @@ conflict with this element.
 
 </core-style>
 
-<polymer-element name="paper-input-decorator" layout vertical attributes="label floatingLabel labelVisible error" on-transitionEnd="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}" on-input="{{inputAction}}">
+<polymer-element name="paper-input-decorator" layout vertical attributes="label floatingLabel labelVisible error"
+  on-transitionEnd="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}"
+  on-input="{{inputAction}}"
+  on-down="{{downAction}}">
 
   <template>
 
@@ -143,7 +146,7 @@ conflict with this element.
       <span id="floatedLabelText" class="label-text">{{label}}</span>
     </div>
 
-    <div class="input-body" flex auto relative on-down="{{downAction}}" on-up="{{upAction}}">
+    <div class="input-body" flex auto relative>
 
       <div class="label" fit aria-hidden="true">
         <!-- needed for floating label animation measurement -->

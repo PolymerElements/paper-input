@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script src="../../webcomponentsjs/webcomponents.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../polymer-gestures/test/js/fake.js"></script>
 
   <link href="../../core-input/core-input.html" rel="import">
 
@@ -46,6 +47,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </paper-input-decorator>
 
   <script>
+
+    var fake = new Fake();
 
     var d1 = document.getElementById('decorator1');
     var i1 = document.getElementById('input1');
@@ -100,6 +103,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         input.value = 'foobar';
         d2.appendChild(input);
         assert.ok(!d2._labelVisible);
+      });
+
+      test('tapping on floating label focuses input', function(done) {
+        i3.value = 'foobar';
+        asyncPlatformFlush(function() {
+          assert.ok(!d3._labelVisible);
+          fake.downOnNode(d1.shadowRoot.querySelector('.floated-label'));
+          asyncPlatformFlush(function() {
+            assert.strictEqual(document.activeElement, i1);
+            done();
+          })
+        });
       });
 
     });
