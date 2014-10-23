@@ -46,6 +46,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <input id="input3" is="core-input">
   </paper-input-decorator>
 
+  <paper-input-decorator id="decorator4" label="input" floatingLabel isInvalid error="error message">
+    <input id="input4" is="core-input" value="something">
+  </paper-input-decorator>
+
   <script>
 
     var fake = new Fake();
@@ -55,6 +59,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var d2 = document.getElementById('decorator2');
     var d3 = document.getElementById('decorator3');
     var i3 = document.getElementById('input3');
+    var d4 = document.getElementById('decorator4');
+    var i4 = document.getElementById('input4');
 
     function reset(d, i) {
       d.labelVisible = null;
@@ -115,6 +121,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             done();
           })
         });
+      });
+
+      test('floating label and the error message are the same color', function() {
+        var s1 = getComputedStyle(d4.$.floatedLabelText);
+        var s2 = getComputedStyle(d4.shadowRoot.querySelector('.error-text'));
+        assert.strictEqual(s1.color, s2.color);
       });
 
     });
