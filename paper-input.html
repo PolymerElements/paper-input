@@ -56,7 +56,7 @@ to submitting a `paper-input`.
   </style>
 
   <paper-input-decorator id="decorator" label="{{label}}" floatingLabel="{{floatingLabel}}" value="{{value}}">
-    <input is="core-input" value="{{value}}" committedValue="{{committedValue}}">
+    <input is="core-input" value="{{value}}" committedValue="{{committedValue}}" on-change="{{changeAction}}">
   </paper-input-decorator>
 
 </template>
@@ -94,6 +94,13 @@ to submitting a `paper-input`.
 
     valueChanged: function() {
       this.$.decorator.updateLabelVisibility(this.value);
+    },
+
+    changeAction: function(e) {
+      if (!window.ShadowDOMPolyfill) {
+        // re-fire event that does not bubble across shadow roots
+        this.fire('change', null, this);
+      }
     }
 
   });
