@@ -154,7 +154,7 @@ conflict with this element.
 
 </core-style>
 
-<polymer-element name="paper-input-decorator" layout vertical attributes="label floatingLabel labelVisible error"
+<polymer-element name="paper-input-decorator" layout vertical
   on-transitionEnd="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}"
   on-input="{{inputAction}}"
   on-down="{{downAction}}">
@@ -228,6 +228,15 @@ conflict with this element.
          * @default false
          */
         floatingLabel: false,
+
+        /**
+         * Set to true to style the element as disabled.
+         *
+         * @attribute disabled
+         * @type boolean
+         * @default false
+         */
+        disabled: {value: false, reflect: true},
 
         /**
          * Use this property to override the automatic label visibility.

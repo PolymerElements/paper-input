@@ -55,8 +55,8 @@ to submitting a `paper-input`.
     }
   </style>
 
-  <paper-input-decorator id="decorator" label="{{label}}" floatingLabel="{{floatingLabel}}" value="{{value}}">
-    <input is="core-input" value="{{value}}" committedValue="{{committedValue}}" on-change="{{changeAction}}">
+  <paper-input-decorator id="decorator" label="{{label}}" floatingLabel="{{floatingLabel}}" value="{{value}}" disabled?="{{disabled}}">
+    <input is="core-input" value="{{value}}" committedValue="{{committedValue}}" on-change="{{changeAction}}" disabled?="{{disabled}}">
   </paper-input-decorator>
 
 </template>
@@ -85,6 +85,15 @@ to submitting a `paper-input`.
        * @default false
        */
       floatingLabel: false,
+
+      /**
+       * Set to true to style the element as disabled.
+       *
+       * @attribute disabled
+       * @type boolean
+       * @default false
+       */
+      disabled: {value: false, reflect: true},
 
       value: '',
 
