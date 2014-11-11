@@ -117,7 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.ok(!d3._labelVisible);
           fake.downOnNode(d1.shadowRoot.querySelector('.floated-label'));
           flush(function() {
-            assert.strictEqual(document.activeElement, i1);
+            assert.strictEqual(window.ShadowDOMPolyfill ? wrap(document.activeElement) : document.activeElement, i1);
             done();
           })
         });
