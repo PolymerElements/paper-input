@@ -311,7 +311,7 @@ conflict with this element.
 
       animateFloatingLabel: function() {
         if (!this.floatingLabel || this.labelAnimated) {
-          return;
+          return false;
         }
 
         if (!this.$.labelText.cachedTransform) {
@@ -321,7 +321,7 @@ conflict with this element.
         // If there's still no cached transform, the input is invisible so don't
         // do the animation.
         if (!this.$.labelText.cachedTransform) {
-          return;
+          return false;
         }
 
         this.labelAnimated = true;
@@ -345,12 +345,23 @@ conflict with this element.
           this.input.placeholder = '';
         }
 
+        return true;
       },
 
       _labelVisibleChanged: function(old) {
         // do not do the animation on first render
         if (old !== undefined) {
-          this.animateFloatingLabel();
+          if (!this.animateFloatingLabel()) {
+            this.updateInputLabel(this.input, this.label);
+          }
+        }
+      },
+
+      labelVisibleChanged: function() {
+        if (this.labelVisible === 'true') {
+          this.labelVisible = true;
+        } else if (this.labelVisible === 'false') {
+          this.labelVisible = false;
         }
       },
 
