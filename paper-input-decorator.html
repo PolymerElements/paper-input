@@ -89,6 +89,36 @@ Form submission
 
 You can use inputs decorated with this element in a `form` as usual.
 
+Validation
+----------
+
+Because you provide the `input` element to `paper-input-decorator`, you can use any validation library
+or the <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation">HTML5 Constraints Validation API</a>
+to implement validation. Set the `isInvalid` attribute when the input is validated, and provide an
+error message in the `error` attribute.
+
+Example:
+
+    <paper-input-decorator id="paper1" error="Value must start with a number!">
+        <input id="input1" is="core-input" pattern="^[0-9].*">
+    </paper-input-decorator>
+    <button onclick="validate()"></button>
+    <script>
+        function validate() {
+            var decorator = document.getElementById('paper1');
+            var input = document.getElementById('input1');
+            decorator.isInvalid = !input.validity.valid;
+        }
+    </script>
+
+Example to validate as the user types:
+
+    <template is="auto-binding">
+        <paper-input-decorator id="paper2" error="Value must start with a number!" isInvalid="{{$.input2.validity.valid}}">
+            <input id="input2" is="core-input" pattern="^[0-9].*">
+        </paper-input-decorator>
+    </template>
+
 Accessibility
 -------------
 
