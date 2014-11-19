@@ -120,6 +120,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
 
+      test('mirror text is visibility:hidden', function() {
+        assert.equal(getComputedStyle(a1.$.mirror).visibility, 'hidden');
+      });
+
     });
 
   </script>
