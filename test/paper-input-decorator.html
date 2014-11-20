@@ -23,6 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <link href="../paper-input-decorator.html" rel="import">
   <link href="../paper-autogrow-textarea.html" rel="import">
+  <link href="../paper-char-counter.html" rel="import">
 
   <style>
     paper-input-decorator {
@@ -76,6 +77,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template id="auto-validate">
     <paper-input-decorator autoValidate error="input is required">
       <input is="core-input" required>
+    </paper-input-decorator>
+    <br>
+  </template>
+
+  <template id="char-counter">
+    <paper-input-decorator label="character counter">
+      <input is="core-input" maxlength="5">
+      <paper-char-counter class="counter"></paper-char-counter>
     </paper-input-decorator>
     <br>
   </template>
@@ -167,6 +176,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var nodes = cloneAndAppendTemplate('auto-validate');
       flush(function() {
         assert.ok(nodes.d.isInvalid);
+      });
+    });
+
+    test('char-counter is visible', function() {
+      var nodes = cloneAndAppendTemplate('char-counter');
+      var counter = nodes.d.querySelector('.counter');
+      assert.ok(nodes.i.maxLength != 0);
+      assert.ok(nodes.d.error == "");
+
+      nodes.i.id="input";
+      counter.target = "input";
+      counter.ready();
+
+      flush(function() {
+        assert.ok(!counter.shadowRoot.querySelector('.counter-text').hidden);
+      });
+    });
+
+    test('char-counter is invalid when input exceeds maxLength', function() {
+      var nodes = cloneAndAppendTemplate('char-counter');
+      var counter = nodes.d.querySelector('.counter');
+      assert.ok(nodes.i.maxLength == 5);
+
+      nodes.i.id = "input";
+      counter.target = "input";
+      counter.ready();
+
+
+      flush(function() {
+        nodes.i.value = "nanananabatman";
+        var e = new Event('input', {
+          bubbles: true
+        });
+        nodes.i.dispatchEvent(e);
+
+        flush(function() {
+          assert.ok(counter._isCounterInvalid);
+          assert.ok(nodes.d.isInvalid);
+
+          assert.strictEqual(
+            CoreStyle.g.paperInput.invalidColor,
+            counter.shadowRoot.querySelector('.counter-text').color);
+          done();
+        });
       });
     });
 

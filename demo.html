@@ -21,6 +21,7 @@
   <link href="paper-autogrow-textarea.html" rel="import">
   <link href="paper-input-decorator.html" rel="import">
   <link href="paper-input.html" rel="import">
+  <link href="paper-char-counter.html" rel="import">
 
   <style shim-shadowdom>
 
@@ -159,6 +160,40 @@
       <paper-autogrow-textarea>
         <textarea></textarea>
       </paper-autogrow-textarea>
+    </paper-input-decorator>
+
+  </section>
+
+  <section>
+
+    <div>Character counter</div>
+
+    <paper-input-decorator label="input with visible character counter">
+      <input id="i1" is="core-input" maxlength="5">
+      <paper-char-counter class="counter" target="i1"></paper-char-counter>
+    </paper-input-decorator>
+
+    <br>
+
+    <paper-input-decorator label="input with character counter and custom error"
+                           error="maximum characters exceeded">
+      <input id="i2" is="core-input" maxlength="10">
+      <paper-char-counter class="counter" target="i2"></paper-char-counter>
+    </paper-input-decorator>
+
+    <br>
+
+    <paper-input-decorator label="input with hidden character counter"
+                           error="maximum characters exceeded">
+      <input id="i3" is="core-input" maxlength="10">
+      <paper-char-counter class="counter" showCounter="false" target="i3"></paper-char-counter>
+    </paper-input-decorator>
+
+    <paper-input-decorator label="autogrowing text area with character counter">
+      <paper-autogrow-textarea>
+        <textarea id="t1" maxlength="100"></textarea>
+      </paper-autogrow-textarea>
+      <paper-char-counter class="counter" target="t1"></paper-char-counter>
     </paper-input-decorator>
 
   </section>

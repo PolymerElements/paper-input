@@ -176,7 +176,8 @@ conflict with this element.
   on-transitionEnd="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}"
   on-input="{{inputAction}}"
   on-down="{{downAction}}"
-  on-tap="{{tapAction}}">
+  on-tap="{{tapAction}}"
+  on-char-counter-error="{{charCounterErrorAction}}">
 
   <template>
 
@@ -195,7 +196,7 @@ conflict with this element.
         <span id="labelText" class="label-text" invisible?="{{!_labelVisible}}" animated?="{{labelAnimated}}">{{label}}</span>
       </div>
 
-      <content></content>
+      <content select="*:not(.counter)"></content>
 
     </div>
 
@@ -204,9 +205,14 @@ conflict with this element.
       <div id="focusedUnderline" class="focused-underline" fit invisible?="{{!underlineVisible}}" animated?="{{underlineAnimated}}"></div>
     </div>
 
-    <div class="error" layout horizontal center hidden?="{{!isInvalid}}">
-      <div class="error-text" flex auto role="alert" aria-hidden="{{!isInvalid}}">{{error}}</div>
-      <core-icon class="error-icon" icon="warning"></core-icon>
+    <div class="footer" layout horizontal end-justified>
+      <div class="error" flex layout horizontal center hidden?="{{!isInvalid}}">
+        <div class="error-text" flex auto role="alert" aria-hidden="{{!isInvalid}}">{{error}}</div>
+        <core-icon id="errorIcon" class="error-icon" icon="warning"></core-icon>
+      </div>
+      <div aria-hidden="true">
+        <content select=".counter"></content>
+      </div>
     </div>
 
   </template>
@@ -522,6 +528,14 @@ conflict with this element.
         if (this._labelVisible) {
           this.input.placeholder = this.label;
         }
+      },
+
+      charCounterErrorAction: function(e) {
+        this.isInvalid = e.detail.hasError;
+
+        // If the allowed characters have been exceeded, show either the error
+        // icon, or the character counter, but not both.
+        this.$.errorIcon.hidden = e.detail.hideErrorIcon;
       }
 
     });
