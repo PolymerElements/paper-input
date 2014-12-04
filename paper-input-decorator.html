@@ -107,7 +107,7 @@ Example:
 Example to validate as the user types:
 
     <template is="auto-binding">
-        <paper-input-decorator id="paper2" error="Value must start with a number!" isInvalid="{{$.input2.validity.valid}}">
+        <paper-input-decorator id="paper2" error="Value must start with a number!" isInvalid="{{!$.input2.validity.valid}}">
             <input id="input2" is="core-input" pattern="^[0-9].*">
         </paper-input-decorator>
     </template>
