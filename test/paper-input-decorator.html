@@ -17,6 +17,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../polymer-gestures/test/js/fake.js"></script>
 
+  <script src="util.js"></script>
+
   <link href="../../core-input/core-input.html" rel="import">
 
   <link href="../paper-input-decorator.html" rel="import">
@@ -81,30 +83,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
 
     var fake = new Fake();
-
-    var d2 = document.getElementById('decorator2');
-    var d3 = document.getElementById('decorator3');
-    var i3 = document.getElementById('input3');
-    var d4 = document.getElementById('decorator4');
-    var i4 = document.getElementById('input4');
-    var d5 = document.getElementById('decorator5');
-    var d6 = document.getElementById('decorator6');
-
-    function activeElement() {
-      return window.ShadowDOMPolyfill ? wrap(document.activeElement) : document.activeElement;
-    }
-
-    function assertNodeHasFocus(node) {
-      assert.strictEqual(activeElement(), node);
-    }
-
-    function ensureFocus(node, callback) {
-      fake.downOnNode(node);
-      fake.upOnNode(node);
-      waitFor(function() {
-        assertNodeHasFocus(node);
-      }, callback);
-    }
 
     function cloneAndAppendTemplate(templateId) {
       var tmpl = document.getElementById(templateId);
