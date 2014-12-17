@@ -58,6 +58,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <br>
 
+  <paper-input-decorator id="decorator6" autoValidate>
+    <input required>
+  </paper-input-decorator>
+
+  <br>
+
   <script>
 
     var fake = new Fake();
@@ -70,6 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var d4 = document.getElementById('decorator4');
     var i4 = document.getElementById('input4');
     var d5 = document.getElementById('decorator5');
+    var d6 = document.getElementById('decorator6');
 
     function reset(d, i) {
       d.labelVisible = null;
@@ -140,6 +147,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var s1 = getComputedStyle(d4.$.floatedLabelText);
         var s2 = getComputedStyle(d4.shadowRoot.querySelector('.error-text'));
         assert.strictEqual(s1.color, s2.color);
+      });
+
+      test('auto-validate input validates after creation', function() {
+        assert.ok(d6.isInvalid);
       });
 
     });

@@ -159,24 +159,13 @@
 
   </section>
 
-  <section id="validate">
+  <section>
 
-    <div>Validation</div>
+    <div>Auto-Validation</div>
 
-    <button onclick="validateAll()">click me to validate all</button>
-
-    <paper-input-decorator label="required" floatingLabel error="input is required!">
+    <paper-input-decorator label="required" floatingLabel error="input is required!" autoValidate>
       <input is="core-input" required>
     </paper-input-decorator>
-
-    <script>
-      function validateAll() {
-        var $d = document.getElementById('validate').querySelectorAll('paper-input-decorator');
-        Array.prototype.forEach.call($d, function(d) {
-          d.isInvalid = !d.querySelector('input').validity.valid;
-        });
-      }
-    </script>
 
   </section>
 

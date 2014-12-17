@@ -276,6 +276,17 @@ conflict with this element.
         isInvalid: false,
 
         /**
+         * Set this property to true to validate the input as the user types.
+         * This will not validate when changing the input programmatically; call
+         * `validate()` instead.
+         *
+         * @attribute autoValidate
+         * @type boolean
+         * @default false
+         */
+        autoValidate: false,
+
+        /**
          * The message to display if the input value fails validation. If this
          * is unset or the empty string, a default message is displayed depending
          * on the type of validation error.
@@ -377,6 +388,17 @@ conflict with this element.
         }
       },
 
+      /**
+       * Validate the input using HTML5 Constraints.
+       *
+       * @method validate
+       * @return {boolean} True if the input is valid.
+       */
+      validate: function() {
+        this.isInvalid = !this.input.validity.valid;
+        return this.input.validity.valid;
+      },
+
       _labelVisibleChanged: function(old) {
         // do not do the animation on first render
         if (old !== undefined) {
@@ -417,6 +439,10 @@ conflict with this element.
         if (this.input) {
           this.updateLabelVisibility(this.input.value);
           this.updateInputLabel(this.input, this.label);
+
+          if (this.autoValidate) {
+            this.validate();
+          }
         }
         if (old) {
           this.updateInputLabel(old, '');
@@ -459,6 +485,9 @@ conflict with this element.
 
       inputAction: function(e) {
         this.updateLabelVisibility(e.target.value);
+        if (this.autoValidate) {
+          this.validate();
+        }
       },
 
       downAction: function(e) {
