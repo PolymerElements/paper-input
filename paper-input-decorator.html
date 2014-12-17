@@ -483,8 +483,8 @@ conflict with this element.
         }
       },
 
-      inputAction: function(e) {
-        this.updateLabelVisibility(e.target.value);
+      inputAction: function() {
+        this.updateLabelVisibility(this.input.value);
         if (this.autoValidate) {
           this.validate();
         }
