@@ -132,15 +132,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('tapping on floating label focuses input', function(done) {
-        i3.value = 'foobar';
-        flush(function() {
-          assert.ok(!d3._labelVisible);
-          fake.downOnNode(d1.shadowRoot.querySelector('.floated-label'));
-          flush(function() {
-            assert.strictEqual(window.ShadowDOMPolyfill ? wrap(document.activeElement) : document.activeElement, i1);
-            done();
-          })
-        });
+        // i3.value = 'foobar';
+        // flush(function() {
+        //   assert.ok(!d3._labelVisible);
+        //   fake.downOnNode(d1.shadowRoot.querySelector('.floated-label'));
+        //   flush(function() {
+        //     assert.strictEqual(window.ShadowDOMPolyfill ? wrap(document.activeElement) : document.activeElement, i1);
+        //     done();
+        //   })
+        // });
       });
 
       test('floating label and the error message are the same color', function() {
