@@ -61,7 +61,7 @@ Use `paper-input-decorator` if you would like to implement validation.
   </style>
 
   <paper-input-decorator id="decorator" label="{{label}}" floatingLabel="{{floatingLabel}}" value="{{value}}" disabled?="{{disabled}}">
-    <input is="core-input" value="{{value}}" committedValue="{{committedValue}}" on-change="{{changeAction}}" disabled?="{{disabled}}">
+    <input is="core-input" id="input" value="{{value}}" committedValue="{{committedValue}}" on-change="{{changeAction}}" disabled?="{{disabled}}">
   </paper-input-decorator>
 
 </template>
@@ -118,6 +118,15 @@ Use `paper-input-decorator` if you would like to implement validation.
        */
       committedValue: ''
 
+    },
+
+    /**
+     * Focuses the `input`.
+     *
+     * @method focus
+     */
+    focus: function() {
+      this.$.input.focus();
     },
 
     valueChanged: function() {
