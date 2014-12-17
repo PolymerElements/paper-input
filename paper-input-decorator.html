@@ -175,7 +175,8 @@ conflict with this element.
 <polymer-element name="paper-input-decorator" layout vertical
   on-transitionEnd="{{transitionEndAction}}" on-webkitTransitionEnd="{{transitionEndAction}}"
   on-input="{{inputAction}}"
-  on-down="{{downAction}}">
+  on-down="{{downAction}}"
+  on-tap="{{tapAction}}">
 
   <template>
 
@@ -200,7 +201,7 @@ conflict with this element.
 
     <div id="underline" class="underline" relative>
       <div class="unfocused-underline" fit invisible?="{{disabled}}"></div>
-      <div id="focusedUnderline" class="focused-underline" fit invisible?="{{!focused}}" animated?="{{underlineAnimated}}"></div>
+      <div id="focusedUnderline" class="focused-underline" fit invisible?="{{!underlineVisible}}" animated?="{{underlineAnimated}}"></div>
     </div>
 
     <div class="error" layout horizontal center hidden?="{{!isInvalid}}">
@@ -363,6 +364,19 @@ conflict with this element.
         return true;
       },
 
+      animateUnderline: function(e) {
+        if (this.focused) {
+          var rect = this.$.underline.getBoundingClientRect();
+          var right = e.x - rect.left;
+          this.$.focusedUnderline.style.mozTransformOrigin = right + 'px';
+          this.$.focusedUnderline.style.webkitTransformOrigin = right + 'px ';
+          this.$.focusedUnderline.style.transformOriginX = right + 'px';
+
+          // Animations only run when the user interacts with the input
+          this.underlineAnimated = true;
+        }
+      },
+
       _labelVisibleChanged: function(old) {
         // do not do the animation on first render
         if (old !== undefined) {
@@ -392,6 +406,11 @@ conflict with this element.
 
       focusedChanged: function() {
         this.updateLabelVisibility(this.input && this.input.value);
+        if (this.lastEvent) {
+          this.animateUnderline(this.lastEvent);
+          this.lastEvent = null;
+        }
+        this.underlineVisible = this.focused;
       },
 
       inputChanged: function(old) {
@@ -408,7 +427,7 @@ conflict with this element.
         this.focused = true;
       },
 
-      blurAction: function(e) {
+      blurAction: function() {
         this.focused = false;
       },
 
@@ -443,6 +462,17 @@ conflict with this element.
       },
 
       downAction: function(e) {
+        // eat the event and do nothing if already focused
+        if (e.target !== this.input && this.focused) {
+          e.preventDefault();
+          return;
+        }
+        // cache the event here because "down" fires before "focus" when tapping on
+        // the input and the underline animation runs on focus change
+        this.lastEvent = e;
+      },
+
+      tapAction: function(e) {
         if (this.disabled) {
           return;
         }
@@ -455,21 +485,6 @@ conflict with this element.
           this.input.focus();
           e.preventDefault();
         }
-
-        // The underline spills from the tap location
-        var rect = this.$.underline.getBoundingClientRect();
-        var right = e.x - rect.left;
-        this.$.focusedUnderline.style.mozTransformOrigin = right + 'px';
-        this.$.focusedUnderline.style.webkitTransformOrigin = right + 'px ';
-        this.$.focusedUnderline.style.transformOriginX = right + 'px';
-
-        // Animations only run when the user interacts with the input
-        this.underlineAnimated = true;
-
-        // Handle interrupted animation
-        this.async(function() {
-          this.transitionEndAction();
-        }, null, 250);
       },
 
       transitionEndAction: function() {
