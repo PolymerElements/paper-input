@@ -1,145 +1,183 @@
 <!--
-Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE
-The complete set of authors may be found at http://polymer.github.io/AUTHORS
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS
+    @license
+    Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
+
+<link rel="import" href="../polymer/polymer.html">
 
 <!--
-
-Material Design: <a href="http://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field">Single line text field</a>
-
-`paper-input` is a single-line text field for user input. It is a convenience element composed of
-a `paper-input-decorator` and a `input is="core-input"`.
-
-Example:
-
-    <paper-input label="Your Name"></paper-input>
-
-If you need more control over the `input` element, use `paper-input-decorator`.
-
-Theming
--------
-
-`paper-input` can be styled similarly to `paper-input-decorator`.
-
-Form submission
----------------
-
-Unlike inputs using `paper-input-decorator` directly, `paper-input` does not work out of
-the box with the native `form` element. This is because the native `form` is not aware of
-shadow DOM and does not treat `paper-input` as a form element.
-
-Use `paper-input-decorator` directly, or see
-<a href="https://github.com/garstasio/ajax-form">`ajax-form`</a> for a possible solution
-to submitting a `paper-input`.
-
-Validation
-----------
-
-Use `paper-input-decorator` if you would like to implement validation.
-
-@group Paper Elements
 @element paper-input
-@homepage github.io
 -->
-<link href="../polymer/polymer.html" rel="import">
-<link href="../core-input/core-input.html" rel="import">
 
-<link href="paper-input-decorator.html" rel="import">
+<link rel="import" href="paper-input-underline.html">
 
-<polymer-element name="paper-input">
-
-<template>
+<dom-module id="paper-input">
 
   <style>
+
     :host {
-      display: inline-block;
+      display: block;
     }
+
+    .content ::content input,
+    .content ::content textarea {
+      margin: 0;
+      padding: 0.5em 0 0.25em;
+      border: none;
+      font: inherit;
+      width: 100%;
+    }
+
+    ::-webkit-input-placeholder {
+      color: #757575;
+    }
+
+    ::-moz-placeholder {
+      color: #757575;
+      opacity: 1;
+    }
+
+    :-ms-input-placeholder {
+      color: #757575;
+    }
+
+    paper-input-underline {
+      margin-bottom: 0.25em;
+    }
+
+    .add-on {
+      color: #757575;
+    }
+
+    :host([focused]) .add-on {
+      color: #4059a9;
+    }
+
+    :host([invalid][focused]) .add-on {
+      color: #d34336;
+    }
+
   </style>
 
-  <paper-input-decorator id="decorator" label="{{label}}" floatingLabel="{{floatingLabel}}" value="{{value}}" disabled?="{{disabled}}">
-    <input is="core-input" id="input" value="{{value}}" committedValue="{{committedValue}}" on-change="{{changeAction}}" disabled?="{{disabled}}">
-  </paper-input-decorator>
+  <template>
 
-</template>
+    <div class="content">
+      <content select="input,textarea"></content>
+    </div>
+
+    <paper-input-underline id="underline"></paper-input-underline>
+
+    <content select=".add-on"></content>
+
+  </template>
+
+</dom-module>
 
 <script>
 
-  Polymer('paper-input', {
+(function() {
 
-    publish: {
-      /**
-       * The label for this input. It normally appears as grey text inside
-       * the text input and disappears once the user enters text.
-       *
-       * @attribute label
-       * @type string
-       * @default ''
-       */
-      label: '',
+  Polymer({
 
-      /**
-       * If true, the label will "float" above the text input once the
-       * user enters text instead of disappearing.
-       *
-       * @attribute floatingLabel
-       * @type boolean
-       * @default false
-       */
-      floatingLabel: false,
+    is: 'paper-input',
 
-      /**
-       * Set to true to style the element as disabled.
-       *
-       * @attribute disabled
-       * @type boolean
-       * @default false
-       */
-      disabled: {value: false, reflect: true},
+    properties: {
 
-      /**
-       * The current value of the input.
-       *
-       * @attribute value
-       * @type String
-       * @default ''
-       */
-      value: '',
+      type: {
+        type: String,
+        value: 'text'
+      },
 
-      /**
-       * The most recently committed value of the input.
-       *
-       * @attribute committedValue
-       * @type String
-       * @default ''
-       */
-      committedValue: ''
+      invalid: {
+        readOnly: true,
+        reflectToAttribute: true,
+        type: Boolean,
+        value: false
+      },
+
+      vaidateImmediately: {
+        observer: 'validateImmediateChanged',
+        type: Boolean
+      }
 
     },
 
-    /**
-     * Focuses the `input`.
-     *
-     * @method focus
-     */
-    focus: function() {
-      this.$.input.focus();
+    listeners: {
+      'mousedown': 'mousedownAction',
+      'click': 'clickAction',
+      'input': 'inputAction',
+      'addon-register': 'addonRegisterAction'
     },
 
-    valueChanged: function() {
-      this.$.decorator.updateLabelVisibility(this.value);
+    inputSelector: 'input,textarea',
+
+    ready: function() {
+      this.addons = [];
+
+      this.validate();
+
+      this.addEventListener('focus', this.focusAction.bind(this), true);
+      this.addEventListener('blur', this.blurAction.bind(this), true);
     },
 
-    changeAction: function(e) {
-      // re-fire event that does not bubble across shadow roots
-      this.fire('change', null, this);
+    validate: function(inputElement) {
+      // cache the input element
+      if (inputElement) {
+        this.inputElement = inputElement;
+      } else if (this.inputElement) {
+        inputElement = this.inputElement;
+      } else {
+        inputElement = this.inputElement = this.querySelector(this.inputSelector);
+      }
+
+      this.invalid = inputElement && !inputElement.validity.valid;
+    },
+
+    validateImmediatelyChanged: function() {
+      if (this.validateImmediately) {
+        this.validate();
+      }
+    },
+
+    focusAction: function() {
+      this.setAttribute('focused', '');
+      this.$.underline.focused = true;
+    },
+
+    blurAction: function() {
+      this.removeAttribute('focused');
+      this.$.underline.focused = false;
+    },
+
+    mousedownAction: function(e) {
+      var rect = this.$.underline.getBoundingClientRect();
+      var right = e.x - rect.left;
+      this.$.underline.style.mozTransformOrigin = right + 'px';
+      this.$.underline.style.webkitTransformOrigin = right + 'px';
+      this.$.underline.style.transformOriginX = right + 'px';
+    },
+
+    clickAction: function() {
+      this.querySelector(this.inputSelector).focus();
+    },
+
+    inputAction: function(e) {
+      if (this.validateImmediately) {
+        this.validate(e.target);
+      }
+    },
+
+    addonRegisterAction: function(e) {
+      this.addons.push(e.target);
+      e.target.initialize(this.querySelector(this.inputSelector));
     }
 
   });
 
+})();
 </script>
-
-</polymer-element>
