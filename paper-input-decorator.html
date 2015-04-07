@@ -401,6 +401,9 @@ conflict with this element.
        * @return {boolean} True if the input is valid.
        */
       validate: function() {
+        if (!this.input) {
+          return true;
+        }
         this.isInvalid = !this.input.validity.valid;
         return this.input.validity.valid;
       },
