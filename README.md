@@ -1,4 +1,4 @@
 paper-input
 ===================
 
-See the [component page](http://www.polymer-project.org/docs/elements/paper-elements.html#paper-input) for more information.
+See the [component page](https://www.polymer-project.org/0.5/docs/elements/paper-input.html) for more information.
