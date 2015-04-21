@@ -22,6 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../test-fixture/test-fixture-mocha.js"></script>
 
   <link rel="import" href="../../test-fixture/test-fixture.html">
+  <link rel="import" href="../../iron-input/iron-input.html">
   <link rel="import" href="../paper-input-container.html">
 
 </head>
@@ -50,6 +51,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-input-container no-label-float>
         <label id="l">label</label>
         <input id="i" value="value">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="auto-validate-numbers">
+    <template>
+      <paper-input-container auto-validate>
+        <label id="l">label</label>
+        <input is="iron-input" id="i" pattern="[0-9]*">
       </paper-input-container>
     </template>
   </test-fixture>
@@ -113,6 +123,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
         input.focus();
         assert.equal(document.activeElement, input, 'input is focused');
+      });
+
+    });
+
+    suite('validation', function() {
+
+      test('styled when the input is set to an invalid value with auto-validate', function(done) {
+        var container = fixture('auto-validate-numbers');
+        var input = Polymer.dom(container).querySelector('#i');
+        var label = Polymer.dom(container).querySelector('#l');
+        var line = Polymer.dom(container.root).querySelector('.focused-line');
+        var color = getComputedStyle(label).color;
+        line.addEventListener('transitionend', function() {
+          assert.notEqual(getComputedStyle(label).color, color, 'label is colored when input is invalid');
+          assert.equal(getTransform(line), 'none', 'line is colored when input is invalid');
+          done();
+        });
+        input.bindValue = 'foobar';
       });
 
     });

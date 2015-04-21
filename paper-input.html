@@ -7,4 +7,123 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="paper-input-container.html">
+<link rel="import" href="paper-input-error.html">
+<link rel="import" href="paper-input-char-counter.html">
+
+<!--
+`<paper-input>` is a text field.
+-->
+
+<dom-module id="paper-input">
+
+  <template>
+
+    <paper-input-container no-label-float$="[[noLabelFloat]]" auto-validate$="[[autoValidate]]">
+
+      <template is="x-if" if="[[label]]">
+        <label>[[parent.label]]</label>
+      </template>
+
+      <input is="iron-input" id="input" bind-value="{{value}}" pattern$="[[pattern]]" maxlength$="[[maxlength]]">
+
+      <template is="x-if" if="[[errorMessage]]">
+        <paper-input-error>[[parent.errorMessage]]</paper-input-error>
+      </template>
+
+      <template is="x-if" if="[[charCounter]]">
+        <paper-input-char-counter></paper-input-char-counter>
+      </template>
+
+    </paper-input-container>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+(function() {
+
+  Polymer({
+
+    is: 'paper-input',
+
+    properties: {
+
+      /**
+       * The label for this input.
+       */
+      label: {
+        type: String
+      },
+
+      /**
+       * The value for this input.
+       */
+      value: {
+        notify: true,
+        type: String
+      },
+
+      /**
+       * A pattern to validate the `input` with.
+       */
+      pattern: {
+        type: String
+      },
+
+      /**
+       * The maximum length of the input value.
+       */
+      maxlength: {
+        type: Number
+      },
+
+      /**
+       * The error message to display when the input is invalid.
+       */
+      errorMessage: {
+        type: String
+      },
+
+      /**
+       * Set to true to show a character counter.
+       */
+      charCounter: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Set to true to disable the floating label.
+       */
+      noLabelFloat: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Set to true to auto-validate the input value.
+       */
+      autoValidate: {
+        type: Boolean,
+        value: false
+      }
+
+    },
+
+    /**
+     * Returns a reference to the input element.
+     */
+    get inputElement() {
+      return this.$.input;
+    }
+
+  })
+
+})();
+
+</script>

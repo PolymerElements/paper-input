@@ -17,12 +17,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     --paper-input-container-font: var(--paper-font-subhead);
     --paper-input-container-floating-label-font: var(--paper-font-caption);
+    --paper-input-container-add-on-font: var(--paper-font-caption);
 
     --paper-input-container-focus-color: var(--default-primary-color);
     --paper-input-container-color: var(--secondary-text-color);
     --paper-input-container-invalid-color: var(--google-red-500);
     --paper-input-container-input-color: var(--primary-text-color);
 
+    --paper-input-container-add-on: {
+      float: right;
+    }
   }
 
 </style>
@@ -92,10 +96,13 @@ For example:
 
     .input-content ::content label,
     .input-content ::content .paper-input-label {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
       font: inherit;
       color: var(--paper-input-container-color);
 
-      mixin(--fit);
       mixin(--paper-input-container-font);
 
       mixin(--paper-input-container-label);
@@ -129,6 +136,7 @@ For example:
     }
 
     .input-content ::content input,
+    .input-content ::content textarea,
     .input-content ::content .paper-input-input {
       position: relative; /* to make a stacking context */
       outline: none;
@@ -137,7 +145,8 @@ For example:
       mixin(--paper-input-container-floating-label-font);
     }
 
-    .input-content ::content input {
+    .input-content ::content input,
+    .input-content ::content textarea {
       padding: 0;
       width: 100%;
       background: transparent;
@@ -146,6 +155,18 @@ For example:
       mixin(--paper-input-container-font);
 
       mixin(--paper-input-container-input);
+    }
+
+    .input-content ::content textarea {
+      resize: none;
+    }
+
+    .add-on-content.is-invalid ::content * {
+      color: var(--paper-input-container-invalid-color);
+    }
+
+    .add-on-content.is-highlighted ::content * {
+      color: var(--paper-input-container-focus-color);
     }
 
   </style>
@@ -157,7 +178,7 @@ For example:
     </template>
 
     <div class$="[[_computeInputContentClass(noLabelFloat,focused,_inputHasContent,_inputIsInvalid)]]">
-      <content select=":not(.add-on)"></content>
+      <content select=":not([add-on])"></content>
     </div>
 
     <div class$="[[_computeUnderlineClass(focused,_inputIsInvalid)]]">
@@ -165,8 +186,8 @@ For example:
       <div class="focused-line fit"></div>
     </div>
 
-    <div class="add-on-content">
-      <content select=".add-on"></content>
+    <div class$="[[_computeAddOnContentClass(focused,_inputIsInvalid)]]">
+      <content id="addOnContent" select="[add-on]"></content>
     </div>
 
   </template>
@@ -190,6 +211,14 @@ For example:
       noLabelFloat: {
         type: Boolean,
         value: false
+      },
+
+      /**
+       * The attribute to listen for value changes on.
+       */
+      attrForValue: {
+        type: String,
+        value: 'bind-value'
       },
 
       /**
@@ -219,6 +248,11 @@ For example:
         value: false
       },
 
+      _inputSelector: {
+        type: String,
+        value: 'input,textarea,.paper-input-input'
+      },
+
       _boundOnFocus: {
         type: Function,
         value: function() {
@@ -231,30 +265,46 @@ For example:
         value: function() {
           return this._onBlur.bind(this);
         }
+      },
+
+      _boundValueChanged: {
+        type: Function,
+        value: function() {
+          return this._onValueChanged.bind(this);
+        }
       }
 
     },
 
     listeners: {
+      'addon-attached': '_onAddonAttached',
       'input': '_onInput'
     },
 
-    attached: function() {
-      var input = Polymer.dom(this).querySelector('input,.paper-input-input');
-      this._inputHasContent = !!input.value;
-      this._inputIsInvalid = !input.validity.valid;
-
-      this.addEventListener('focus', this._boundOnFocus, true);
-      this.addEventListener('blur', this._boundOnBlur, true);
+    get _valueChangedEvent() {
+      return this.attrForValue + '-changed';
     },
 
-    detached: function() {
-      if (this._boundOnFocus) {
-        this.removeEventListener('focus', this._boundOnFocus, true);
-      }
-      if (this._boundOnBlur) {
-        this.removeEventListener('blur', this._boundOnBlur, true);
-      }
+    get _propertyForValue() {
+      return Polymer.CaseMap.dashToCamelCase(this.attrForValue);
+    },
+
+    get _inputElement() {
+      return Polymer.dom(this).querySelector(this._inputSelector);
+    },
+
+    ready: function() {
+      this.addEventListener('focus', this._boundOnFocus, true);
+      this.addEventListener('blur', this._boundOnBlur, true);
+      this.addEventListener(this._valueChangedEvent, this._boundValueChanged, true);
+    },
+
+    attached: function() {
+      this._handleInput(this._inputElement);
+    },
+
+    _onAddonAttached: function(event) {
+      this._handleInput(this._inputElement);
     },
 
     _onFocus: function() {
@@ -266,13 +316,28 @@ For example:
     },
 
     _onInput: function(event) {
-      if (event.target.value) {
+      this._handleInput(event.target);
+    },
+
+    _onValueChanged: function(event) {
+      this._handleInput(event.target);
+    },
+
+    _handleInput: function(inputElement) {
+      var value = inputElement[this._propertyForValue] || inputElement.value;
+      if (value) {
         this._inputHasContent = true;
       } else {
         this._inputHasContent = false;
       }
       if (this.autoValidate) {
-        this._inputIsInvalid = !event.target.validity.valid;
+        this._inputIsInvalid = !inputElement.checkValidity();
+      }
+      // notify add-ons
+      var addons = Polymer.dom(this.$.addOnContent).getDistributedNodes();
+      for (var a, i = 0; a = addons[i]; i++) {
+        a.inputElement = inputElement;
+        a.value = value;
       }
     },
 
@@ -297,6 +362,16 @@ For example:
 
     _computeUnderlineClass: function(focused, _inputIsInvalid) {
       var cls = 'relative';
+      if (_inputIsInvalid) {
+        cls += ' is-invalid';
+      } else if (focused) {
+        cls += ' is-highlighted'
+      }
+      return cls;
+    },
+
+    _computeAddOnContentClass: function(focused, _inputIsInvalid) {
+      var cls = 'add-on-content';
       if (_inputIsInvalid) {
         cls += ' is-invalid';
       } else if (focused) {
