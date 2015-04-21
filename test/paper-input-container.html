@@ -1,0 +1,123 @@
+<!doctype html>
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+<head>
+
+  <title>paper-input-container tests</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+  <link rel="import" href="../../test-fixture/test-fixture.html">
+  <link rel="import" href="../paper-input-container.html">
+
+</head>
+<body>
+
+  <test-fixture id="basic">
+    <template>
+      <paper-input-container>
+        <label id="l">label</label>
+        <input id="i">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="has-value">
+    <template>
+      <paper-input-container>
+        <label id="l">label</label>
+        <input id="i" value="value">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="no-float-has-value">
+    <template>
+      <paper-input-container no-label-float>
+        <label id="l">label</label>
+        <input id="i" value="value">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <script>
+
+    function getTransform(node) {
+      var style = getComputedStyle(node);
+      return style.transform || style.webkitTransform;
+    }
+
+    suite('label position', function() {
+
+      test('label is visible by default', function() {
+        var container = fixture('basic');
+        assert.equal(getComputedStyle(container.querySelector('#l')).visibility, 'visible', 'label has visibility:visible');
+      });
+
+      test('label is floated if value is initialized to not null', function() {
+        var container = fixture('has-value');
+        assert.notEqual(getTransform(container.querySelector('#l')), 'none', 'label has transform');
+      });
+
+      test('label is invisible if no-label-float and value is initialized to not null', function() {
+        var container = fixture('no-float-has-value');
+        assert.equal(getComputedStyle(container.querySelector('#l')).visibility, 'hidden', 'label has visibility:hidden');
+      });
+
+    });
+
+    suite('focused styling', function() {
+
+      test('label is colored when input is focused and has value', function() {
+        var container = fixture('has-value');
+        var label = Polymer.dom(container).querySelector('#l');
+        var input = Polymer.dom(container).querySelector('#i');
+        var color = getComputedStyle(label).color;
+        input.focus();
+        assert.equal(document.activeElement, input, 'input is focused');
+        assert.notEqual(getComputedStyle(label).color, color, 'label has different color when input has focus');
+      });
+
+      test('label is not colored when input is focused and has null value', function() {
+        var container = fixture('basic');
+        var label = Polymer.dom(container).querySelector('#l');
+        var input = Polymer.dom(container).querySelector('#i');
+        var color = getComputedStyle(label).color;
+        input.focus();
+        assert.equal(document.activeElement, input, 'input is focused');
+        assert.equal(getComputedStyle(label).color, color, 'label has same color when input has focus and has null value');
+      });
+
+      test('underline is colored when input is focused', function(done) {
+        var container = fixture('basic');
+        var input = Polymer.dom(container).querySelector('#i');
+        var line = Polymer.dom(container.root).querySelector('.focused-line');
+        assert.notEqual(getTransform(line), 'none', 'line is not colored when input is not focused');
+        line.addEventListener('transitionend', function() {
+          assert.equal(getTransform(line), 'none', 'line is colored when input is focused');
+          done();
+        });
+        input.focus();
+        assert.equal(document.activeElement, input, 'input is focused');
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>

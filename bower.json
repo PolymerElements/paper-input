@@ -1,14 +1,31 @@
 {
   "name": "paper-input",
+  "version": "0.8.0",
+  "authors": "The Polymer Authors",
+  "keywords": [
+    "web-components",
+    "web-component",
+    "polymer"
+  ],
+  "main": [
+    "paper-input.html"
+  ],
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PolymerElements/paper-input.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/PolymerElements/paper-input",
+  "ignore": [],
   "dependencies": {
-    "polymer": "Polymer/polymer#master",
-    "core-icon": "Polymer/core-icon#master",
-    "core-icons": "Polymer/core-icons#master",
-    "core-input": "Polymer/core-input#master",
-    "core-style": "Polymer/core-style#master"
+    "polymer": "Polymer/polymer#v0.8.0-rc.6",
+    "paper-styles": "PolymerElements/paper-styles#^0.8.0"
   },
   "devDependencies": {
-    "web-component-tester": "Polymer/web-component-tester#^1.0.0"
+    "iron-doc-viewer": "PolymerElements/iron-doc-viewer#^0.8.0",
+    "test-fixture": "PolymerElements/test-fixture#^0.8.0",
+    "web-component-tester": "Polymer/web-component-tester#^2.2.3",
+    "webcomponentsjs": "Polymer/webcomponentsjs#^0.6.0"
   }
 }
