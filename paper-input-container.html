@@ -27,6 +27,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 </style>
 
+<!--
+`<paper-input-container>` wraps an `<input>` and `<label>` element, decorating
+them following the [Material Design spec](http://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field)
+
+For example:
+
+    <paper-input-container>
+      <label>email address</label>
+      <input type="email">
+    </paper-input-container>
+
+-->
 <dom-module id="paper-input-container">
 
   <style>
@@ -210,21 +222,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _boundOnFocus: {
         type: Function,
         value: function() {
-          return this.onFocus.bind(this);
+          return this._onFocus.bind(this);
         }
       },
 
       _boundOnBlur: {
         type: Function,
         value: function() {
-          return this.onBlur.bind(this);
+          return this._onBlur.bind(this);
         }
       }
 
     },
 
     listeners: {
-      'input': 'onInput'
+      'input': '_onInput'
     },
 
     attached: function() {
@@ -245,15 +257,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     },
 
-    onFocus: function() {
+    _onFocus: function() {
       this._setFocused(true);
     },
 
-    onBlur: function() {
+    _onBlur: function() {
       this._setFocused(false);
     },
 
-    onInput: function(event) {
+    _onInput: function(event) {
       if (event.target.value) {
         this._inputHasContent = true;
       } else {
