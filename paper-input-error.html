@@ -31,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       mixin(--paper-input-error);
     }
 
-    :host(.is-invalid) {
+    :host([invalid]) {
       display: inline-block;
     };
 
@@ -63,37 +63,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     properties: {
 
       /**
-       * The associated input element.
+       * Set to true to show the error.
        */
-      inputElement: {
-        observer: '_inputElementChanged',
-        type: Object
-      },
-
-      /**
-       * The current value of the input element.
-       */
-      value: {
-        observer: '_valueChanged',
-        type: String
+      invalid: {
+        reflectToAttribute: true,
+        type: Boolean
       }
 
     },
 
     attached: function() {
       this.fire('addon-attached');
-    },
-
-    _inputElementChanged: function() {
-      this._update();
-    },
-
-    _valueChanged: function() {
-      this._update();
-    },
-
-    _update: function() {
-      this.classList.toggle('is-invalid', !this.inputElement.checkValidity());
     }
 
   })
