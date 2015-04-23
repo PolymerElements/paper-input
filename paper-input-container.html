@@ -338,8 +338,10 @@ For example:
       // notify add-ons
       var addons = Polymer.dom(this.$.addOnContent).getDistributedNodes();
       for (var a, i = 0; a = addons[i]; i++) {
+        // need to set all of these, or call method... thanks input type="number"!
         a.inputElement = inputElement;
         a.value = value;
+        a.invalid = !valid;
       }
     },
 
