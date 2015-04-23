@@ -325,14 +325,19 @@ For example:
 
     _handleInput: function(inputElement) {
       var value = inputElement[this._propertyForValue] || inputElement.value;
-      if (value) {
+      var valid = inputElement.checkValidity();
+
+      // type="number" hack needed because this.value is empty until it's valid
+      if (value || inputElement.type === 'number' && !valid) {
         this._inputHasContent = true;
       } else {
         this._inputHasContent = false;
       }
+
       if (this.autoValidate) {
-        this._inputIsInvalid = !inputElement.checkValidity();
+        this._inputIsInvalid = !valid;
       }
+
       // notify add-ons
       var addons = Polymer.dom(this.$.addOnContent).getDistributedNodes();
       for (var a, i = 0; a = addons[i]; i++) {

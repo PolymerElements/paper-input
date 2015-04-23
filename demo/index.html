@@ -34,6 +34,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-input label="label"></paper-input>
 
+    <paper-input label="password" type="password"></paper-input>
+
     <paper-input no-label-float label="label (no-label-float)"></paper-input>
 
     <paper-input-container>
@@ -47,7 +49,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div>Auto Validation</div>
 
-    <paper-input label="only type letters" auto-validate pattern="[a-zA-Z]*" value="123" error-message="letters only!"></paper-input>
+    <paper-input label="only type letters" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
+
+    <paper-input label="only type numbers" auto-validate type="number" error-message="numbers only!"></paper-input>
 
   </section>
 
