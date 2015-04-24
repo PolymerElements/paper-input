@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <label>[[parent.label]]</label>
       </template>
 
-      <input is="iron-input" id="input" bind-value="{{value}}" prevent-invalid-input="[[preventInvalidInput]]" type$="[[type]]" pattern$="[[pattern]]" maxlength$="[[maxlength]]">
+      <input is="iron-input" id="input" bind-value="{{value}}" prevent-invalid-input="[[preventInvalidInput]]" type$="[[type]]" pattern$="[[pattern]]" maxlength$="[[maxlength]]" required$="[[required]]">
 
       <template is="x-if" if="[[errorMessage]]">
         <paper-input-error>[[parent.errorMessage]]</paper-input-error>
@@ -87,6 +87,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       pattern: {
         type: String
+      },
+
+      /**
+       * Set to true to mark the input as required.
+       */
+      required: {
+        type: Boolean,
+        value: false
       },
 
       /**
