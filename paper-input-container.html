@@ -235,6 +235,13 @@ For example:
         value: false
       },
 
+      _addons: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      },
+
       _inputHasContent: {
         type: Boolean,
         value: false
@@ -301,6 +308,7 @@ For example:
     },
 
     _onAddonAttached: function(event) {
+      this._addons.push(event.target);
       this._handleInput(this._inputElement);
     },
 
@@ -336,12 +344,11 @@ For example:
       }
 
       // notify add-ons
-      var addons = Polymer.dom(this.$.addOnContent).getDistributedNodes();
-      for (var a, i = 0; a = addons[i]; i++) {
+      for (var addon, i = 0; addon = this._addons[i]; i++) {
         // need to set all of these, or call method... thanks input type="number"!
-        a.inputElement = inputElement;
-        a.value = value;
-        a.invalid = !valid;
+        addon.inputElement = inputElement;
+        addon.value = value;
+        addon.invalid = !valid;
       }
     },
 

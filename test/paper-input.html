@@ -21,6 +21,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../test-fixture/test-fixture-mocha.js"></script>
 
+  <script src="../../iron-test-helpers/test-helpers.js"></script>
+
   <link rel="import" href="../../test-fixture/test-fixture.html">
   <link rel="import" href="../paper-input.html">
 
@@ -63,6 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('error message is displayed', function() {
         var input = fixture('error');
+        forceXIfStamp(input);
         var error = Polymer.dom(input.root).querySelector('paper-input-error');
         assert.ok(error, 'paper-input-error exists');
         assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
@@ -77,10 +80,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('character counter is displayed', function() {
         var input = fixture('char-counter');
+        forceXIfStamp(input);
         var counter = Polymer.dom(input.root).querySelector('paper-input-char-counter')
         assert.ok(counter, 'paper-input-char-counter exists');
-        assert.equal(counter.charCounter, input.value, 'character counter shows the value length');
-      })
+        assert.equal(counter.charCounter, input.value.length, 'character counter shows the value length');
+      });
 
     });
 
