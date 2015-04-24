@@ -39,6 +39,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="required">
+    <template>
+      <paper-input auto-validate required error-message="error"></paper-input>
+    </template>
+  </test-fixture>
+
   <test-fixture id="char-counter">
     <template>
       <paper-input char-counter value="foobar"></paper-input>
@@ -57,6 +63,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('error message is displayed', function() {
         var input = fixture('error');
+        var error = Polymer.dom(input.root).querySelector('paper-input-error');
+        assert.ok(error, 'paper-input-error exists');
+        assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
+      });
+
+      test('empty required input shows error', function() {
+        var input = fixture('required');
         var error = Polymer.dom(input.root).querySelector('paper-input-error');
         assert.ok(error, 'paper-input-error exists');
         assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
