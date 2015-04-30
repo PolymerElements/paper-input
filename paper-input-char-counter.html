@@ -81,7 +81,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _computeCharCounter: function(inputElement,value) {
-      var str = value.length;
+      // Account for the textarea's new lines.
+      var str = value.replace(/(\r\n|\n|\r)/g, '--').length;
+
       if (inputElement.hasAttribute('maxlength')) {
         str += '/' + inputElement.maxLength;
       }
