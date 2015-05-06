@@ -24,17 +24,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-input-container no-label-float$="[[noLabelFloat]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]">
 
-      <template is="x-if" if="[[label]]">
-        <label>[[parent.label]]</label>
+      <template is="dom-if" if="[[label]]">
+        <label>[[label]]</label>
       </template>
 
       <input is="iron-input" id="input" bind-value="{{value}}" prevent-invalid-input="[[preventInvalidInput]]" type$="[[type]]" pattern$="[[pattern]]" maxlength$="[[maxlength]]" required$="[[required]]" disabled$="[[disabled]]">
 
-      <template is="x-if" if="[[errorMessage]]">
-        <paper-input-error>[[parent.errorMessage]]</paper-input-error>
+      <template is="dom-if" if="[[errorMessage]]">
+        <paper-input-error>[[errorMessage]]</paper-input-error>
       </template>
 
-      <template is="x-if" if="[[charCounter]]">
+      <template is="dom-if" if="[[charCounter]]">
         <paper-input-char-counter></paper-input-char-counter>
       </template>
 

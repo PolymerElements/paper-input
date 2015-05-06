@@ -25,10 +25,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       color: var(--paper-input-container-invalid-color);
 
-      mixin(--paper-input-container-add-on);
-      mixin(--paper-input-container-add-on-font);
+      @apply(--paper-input-container-add-on);
+      @apply(--paper-input-container-add-on-font);
 
-      mixin(--paper-input-error);
+      @apply(--paper-input-error);
     }
 
     :host([invalid]) {
@@ -52,8 +52,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   Polymer({
 
     is: 'paper-input-error',
-
-    enableCustomStyleProperties: true,
 
     hostAttributes: {
       'add-on': '',
