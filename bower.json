@@ -1,7 +1,9 @@
 {
   "name": "iron-autogrow-textarea",
-  "version": "0.8.0",
-  "authors": "The Polymer Authors",
+  "version": "0.9.0",
+  "authors": [
+    "The Polymer Authors"
+  ],
   "keywords": [
     "web-components",
     "web-component",
@@ -19,14 +21,14 @@
   "homepage": "https://github.com/PolymerElements/iron-autogrow-textarea",
   "ignore": [],
   "dependencies": {
-    "polymer": "Polymer/polymer#v0.8.0-rc.7",
-    "iron-flex-layout": "PolymerElements/iron-flex-layout#v0.8.0"
+    "polymer": "Polymer/polymer#v0.9.0-rc.1",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#v0.9.0"
   },
   "devDependencies": {
-    "iron-doc-viewer": "PolymerElements/iron-doc-viewer#^0.8.6",
-    "test-fixture": "PolymerElements/test-fixture#^0.8.0",
+    "iron-doc-viewer": "PolymerElements/iron-doc-viewer#^0.9.0",
+    "test-fixture": "PolymerElements/test-fixture#^0.9.0",
     "web-component-tester": "Polymer/web-component-tester#^2.2.3",
     "webcomponentsjs": "Polymer/webcomponentsjs#^0.6.0",
-    "paper-styles": "PolymerElements/paper-styles#^0.8.0"
+    "paper-styles": "PolymerElements/paper-styles#^0.9.0"
   }
 }
