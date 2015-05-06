@@ -22,10 +22,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: inline-block;
       float: right;
 
-      mixin(--paper-input-container-add-on);
-      mixin(--paper-input-container-add-on-font);
+      @apply(--paper-input-container-add-on);
+      @apply(--paper-input-container-add-on-font);
 
-      mixin(--paper-input-char-counter);
+      @apply(--paper-input-char-counter);
     }
 
   </style>
@@ -45,8 +45,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   Polymer({
 
     is: 'paper-input-char-counter',
-
-    enableCustomStyleProperties: true,
 
     hostAttributes: {
       'add-on': ''

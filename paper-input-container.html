@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-styles/paper-styles.html">
 
-<style is="x-style">
+<style is="custom-style">
 
   * {
 
@@ -48,7 +48,7 @@ For example:
       display: block;
       padding: 8px 0;
 
-      --mixin(--paper-input-container);
+      @apply(--paper-input-container);
     }
 
     :host([disabled]) {
@@ -57,7 +57,7 @@ For example:
     }
 
     .floated-label-placeholder {
-      mixin(--paper-input-container-label-font);
+      @apply(--paper-input-container-label-font);
     }
 
     .focused-line {
@@ -77,7 +77,7 @@ For example:
       -webkit-transition: -webkit-transform 0.25s;
       transition: transform 0.25s;
 
-      mixin(--paper-transition-easing);
+      @apply(--paper-transition-easing);
     }
 
     .is-invalid .focused-line {
@@ -88,7 +88,7 @@ For example:
       -webkit-transition: -webkit-transform 0.25s;
       transition: transform 0.25s;
 
-      mixin(--paper-transition-easing);
+      @apply(--paper-transition-easing);
     }
 
     .unfocused-line {
@@ -111,9 +111,9 @@ For example:
       font: inherit;
       color: var(--paper-input-container-color);
 
-      mixin(--paper-input-container-font);
+      @apply(--paper-input-container-font);
 
-      mixin(--paper-input-container-label);
+      @apply(--paper-input-container-label);
     }
 
     .input-content.label-is-floating ::content label,
@@ -125,7 +125,7 @@ For example:
       -webkit-transition: -webkit-transform 0.25s;
       transition: transform 0.25s;
 
-      mixin(--paper-transition-easing);
+      @apply(--paper-transition-easing);
     }
 
     .input-content.label-is-highlighted ::content label,
@@ -150,7 +150,7 @@ For example:
       outline: none;
       color: var(--paper-input-container-input-color);
 
-      mixin(--paper-input-container-floating-label-font);
+      @apply(--paper-input-container-floating-label-font);
     }
 
     .input-content ::content input,
@@ -160,9 +160,9 @@ For example:
       background: transparent;
       border: none;
 
-      mixin(--paper-input-container-font);
+      @apply(--paper-input-container-font);
 
-      mixin(--paper-input-container-input);
+      @apply(--paper-input-container-input);
     }
 
     .input-content ::content textarea {
@@ -186,7 +186,7 @@ For example:
 
   <template>
 
-    <template is="x-if" if="[[!noLabelFloat]]">
+    <template is="dom-if" if="[[!noLabelFloat]]">
       <div class="floated-label-placeholder">&nbsp;</div>
     </template>
 
@@ -213,8 +213,6 @@ For example:
   Polymer({
 
     is: 'paper-input-container',
-
-    enableCustomStyleProperties: true,
 
     properties: {
 
