@@ -31,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </style>
 
   <body>
-    <template is="x-autobind">
+    <template is="dom-bind">
       <section>
         <div>Updating the value imperatively</div>
         <iron-autogrow-textarea bind-value="{{bindValue}}" id="a1">
@@ -69,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </section>
 
     <script>
-      var scope = document.querySelector('template[is=x-autobind]');
+      var scope = document.querySelector('template[is=dom-bind]');
 
       scope.setValue = function(event) {
         if (!(event.target instanceof HTMLButtonElement)) {
@@ -85,6 +85,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }
     </script>
-    
+
   </body>
 </html>

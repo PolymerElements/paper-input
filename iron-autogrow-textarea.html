@@ -63,7 +63,7 @@ to notify this element the value has changed.
     }
 
     .textarea-container {
-      mixin(--layout-fit);
+      @apply(--layout-fit);
     }
 
   </style>
@@ -82,8 +82,6 @@ to notify this element the value has changed.
   Polymer({
 
     is: 'iron-autogrow-textarea',
-
-    enableCustomStyleProperties: true,
 
     properties: {
 
