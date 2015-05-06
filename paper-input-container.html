@@ -15,14 +15,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   * {
 
+    /* is there a default argument for @apply? */
     --paper-input-container-font: var(--paper-font-subhead);
     --paper-input-container-floating-label-font: var(--paper-font-caption);
     --paper-input-container-add-on-font: var(--paper-font-caption);
-
-    --paper-input-container-focus-color: var(--default-primary-color);
-    --paper-input-container-color: var(--secondary-text-color);
-    --paper-input-container-invalid-color: var(--google-red-500);
-    --paper-input-container-input-color: var(--primary-text-color);
 
   }
 
@@ -68,7 +64,7 @@ For example:
       -webkit-transform: scale3d(0,1,1);
       transform: scale3d(0,1,1);
 
-      background: var(--paper-input-container-focus-color);
+      background: var(--paper-input-container-focus-color, --default-primary-color);
     }
 
     .is-highlighted .focused-line {
@@ -81,7 +77,7 @@ For example:
     }
 
     .is-invalid .focused-line {
-      background: var(--paper-input-container-invalid-color);
+      background: var(--paper-input-container-invalid-color, --google-red-500);
 
       -webkit-transform: none;
       transform: none;
@@ -93,12 +89,12 @@ For example:
 
     .unfocused-line {
       height: 1px;
-      background: var(--paper-input-container-color);
+      background: var(--paper-input-container-color, --secondary-text-color);
     }
 
     :host([disabled]) .unfocused-line {
       border-bottom: 1px dashed;
-      border-color: var(--paper-input-container-color);
+      border-color: var(--paper-input-container-color, --secondary-text-color);
       background: transparent;
     }
 
@@ -109,7 +105,7 @@ For example:
       right: 0;
       left: 0;
       font: inherit;
-      color: var(--paper-input-container-color);
+      color: var(--paper-input-container-color, --secondary-text-color);
 
       @apply(--paper-input-container-font);
 
@@ -130,12 +126,12 @@ For example:
 
     .input-content.label-is-highlighted ::content label,
     .input-content.label-is-highlighted ::content .paper-input-label {
-      color: var(--paper-input-container-focus-color);
+      color: var(--paper-input-container-focus-color, --default-primary-color);
     }
 
     .input-content.is-invalid ::content label,
     .input-content.is-invalid ::content .paper-input-label {
-      color: var(--paper-input-container-invalid-color);
+      color: var(--paper-input-container-invalid-color, --google-red-500);
     }
 
     .input-content.label-is-hidden ::content label,
@@ -148,7 +144,7 @@ For example:
     .input-content ::content .paper-input-input {
       position: relative; /* to make a stacking context */
       outline: none;
-      color: var(--paper-input-container-input-color);
+      color: var(--paper-input-container-input-color, --primary-text-color);
 
       @apply(--paper-input-container-floating-label-font);
     }
@@ -170,11 +166,11 @@ For example:
     }
 
     .add-on-content.is-invalid ::content * {
-      color: var(--paper-input-container-invalid-color);
+      color: var(--paper-input-container-invalid-color, --google-red-500);
     }
 
     .add-on-content.is-highlighted ::content * {
-      color: var(--paper-input-container-focus-color);
+      color: var(--paper-input-container-focus-color, --default-primary-color);
     }
 
     .input-content,
