@@ -188,7 +188,7 @@ For example:
       <div class="floated-label-placeholder">&nbsp;</div>
     </template>
 
-    <div class$="[[_computeInputContentClass(noLabelFloat,focused,_inputHasContent,_inputIsInvalid)]]">
+    <div class$="[[_computeInputContentClass(noLabelFloat,forceLabelFloat,focused,_inputHasContent,_inputIsInvalid)]]">
       <content select=":not([add-on])"></content>
     </div>
 
@@ -218,6 +218,14 @@ For example:
        * Set to true to disable the floating label.
        */
       noLabelFloat: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Set to true to always enabled the floating label.
+       */
+      forceLabelFloat: {
         type: Boolean,
         value: false
       },
@@ -313,6 +321,10 @@ For example:
       this.addEventListener('focus', this._boundOnFocus, true);
       this.addEventListener('blur', this._boundOnBlur, true);
       this.addEventListener(this._valueChangedEvent, this._boundValueChanged, true);
+
+      // forceLabelFloat overrides noLabelFloat.
+      if (this.forceLabelFloat)
+        this.noLabelFloat = false;
     },
 
     attached: function() {
@@ -364,10 +376,10 @@ For example:
       }
     },
 
-    _computeInputContentClass: function(noLabelFloat, focused, _inputHasContent, _inputIsInvalid) {
+    _computeInputContentClass: function(noLabelFloat, forceLabelFloat, focused, _inputHasContent, _inputIsInvalid) {
       var cls = 'input-content';
       if (!noLabelFloat) {
-        if (_inputHasContent) {
+        if (_inputHasContent || forceLabelFloat) {
           cls += ' label-is-floating';
           if (_inputIsInvalid) {
             cls += ' is-invalid';

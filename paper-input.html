@@ -22,13 +22,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <template>
 
-    <paper-input-container no-label-float$="[[noLabelFloat]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]">
+    <paper-input-container
+        force-label-float$="[[_computeForceLabelFloat(placeholder)]]"
+        no-label-float$="[[noLabelFloat]]"
+        auto-validate$="[[autoValidate]]"
+        disabled$="[[disabled]]">
 
       <template is="dom-if" if="[[label]]">
         <label>[[label]]</label>
       </template>
 
-      <input is="iron-input" id="input" bind-value="{{value}}" prevent-invalid-input="[[preventInvalidInput]]" type$="[[type]]" pattern$="[[pattern]]" maxlength$="[[maxlength]]" required$="[[required]]" disabled$="[[disabled]]">
+      <input is="iron-input" id="input"
+          bind-value="{{value}}"
+          prevent-invalid-input="[[preventInvalidInput]]"
+          type$="[[type]]" pattern$="[[pattern]]"
+          maxlength$="[[maxlength]]"
+          required$="[[required]]"
+          disabled$="[[disabled]]"
+          placeholder$="[[placeholder]]">
 
       <template is="dom-if" if="[[errorMessage]]">
         <paper-input-error>[[errorMessage]]</paper-input-error>
@@ -54,7 +65,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     behaviors: [
       Polymer.PaperInputBehavior
-    ]
+    ],
+
+    _computeForceLabelFloat: function(placeholder) {
+      return placeholder && placeholder.trim() != '';
+    }
 
   })
 
