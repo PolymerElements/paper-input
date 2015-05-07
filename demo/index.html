@@ -23,8 +23,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../paper-input-container.html">
   <link rel="import" href="../paper-input-error.html">
   <link rel="import" href="../paper-input-char-counter.html">
-  <link rel="import" href="../paper-autogrow-textarea.html">
+  <link rel="import" href="../paper-textarea.html">
   <link rel="import" href="../../iron-input/iron-input.html">
+  <link rel="import" href="ssn-input.html">
 
   <link rel="stylesheet" href="../../paper-styles/demo.css">
 
@@ -41,9 +42,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-input label="disabled" disabled></paper-input>
 
-    <paper-autogrow-textarea no-label-float label="textarea label (no-label-float)"></paper-autogrow-textarea>
+    <paper-textarea no-label-float label="textarea label (no-label-float)"></paper-textarea>
 
-    <paper-autogrow-textarea label="textarea label"></paper-autogrow-textarea>
+    <paper-textarea label="textarea label"></paper-textarea>
 
   </section>
 
@@ -57,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-input label="required input" auto-validate required error-message="input required!"></paper-input>
 
-    <paper-autogrow-textarea label="textarea, required input" auto-validate required error-message="input required!"></paper-autogrow-textarea>
+    <paper-textarea label="textarea, required input" auto-validate required error-message="input required!"></paper-textarea>
 
   </section>
 
@@ -69,9 +70,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-input label="at most 5 characters" char-counter maxlength="5"></paper-input>
 
-    <paper-autogrow-textarea label="textarea" char-counter></paper-autogrow-textarea>
+    <paper-textarea label="textarea" char-counter></paper-textarea>
 
-    <paper-autogrow-textarea label="textarea, at most 10 characters" char-counter maxlength="10"></paper-autogrow-textarea>
+    <paper-textarea label="textarea, at most 10 characters" char-counter maxlength="10"></paper-textarea>
+
+  </section>
+
+  <section>
+
+    <div>Complex Inputs</div>
+
+    <template is="dom-bind">
+
+      <paper-input-container always-float-label auto-validate attr-for-value="value">
+        <label>Social Security Number</label>
+        <ssn-input class="paper-input-input"></ssn-input>
+        <paper-input-error>SSN invalid!</paper-input-error>
+      </paper-input-container>
+
+    </template>
 
   </section>
 

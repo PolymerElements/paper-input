@@ -43,6 +43,14 @@ Use `Polymer.PaperInputBehavior` to implement your own `<paper-input>`.
       },
 
       /**
+       * Returns true if the value is invalid.
+       */
+      invalid: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
        * Set to true to prevent the user from entering invalid input.
        */
       preventInvalidInput: {
@@ -107,6 +115,49 @@ Use `Polymer.PaperInputBehavior` to implement your own `<paper-input>`.
       autoValidate: {
         type: Boolean,
         value: false
+      },
+
+      /**
+       * Name of the validator to use.
+       */
+      validator: {
+        type: String
+      },
+
+      // HTMLInputElement attributes for binding if needed
+
+      autocomplete: {
+        type: String,
+        value: 'off'
+      },
+
+      autofocus: {
+        type: Boolean
+      },
+
+      inputmode: {
+        type: String
+      },
+
+      minlength: {
+        type: Number
+      },
+
+      name: {
+        type: String
+      },
+
+      placeholder: {
+        type: String
+      },
+
+      readonly: {
+        type: Boolean,
+        value: false
+      },
+
+      size: {
+        type: Number
       }
 
     },
