@@ -53,6 +53,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="placeholder">
+    <template>
+      <paper-input label="foo" placeholder="bar"></paper-input>
+    </template>
+  </test-fixture>
+
   <script>
 
     suite('basic', function() {
@@ -61,6 +67,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var input = fixture('basic');
         input.value = 'foobar';
         assert.equal(input.inputElement.value, input.value, 'inputElement.value equals input.value');
+      });
+
+      test('placeholder does not overlap label', function() {
+        var input = fixture('placeholder');
+        assert.equal(input.inputElement.placeholder, input.placeholder, 'inputElement.placeholder equals input.placeholder');
+        assert.equal(input.noLabelFloat, false);
+        var floatingLabel = input.querySelector('.label-is-floating');
+        assert.ok(floatingLabel);
       });
 
       test('error message is displayed', function() {

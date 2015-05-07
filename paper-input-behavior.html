@@ -110,6 +110,14 @@ Use `Polymer.PaperInputBehavior` to implement your own `<paper-input>`.
       },
 
       /**
+       * Set to true to always float the label.
+       */
+      alwaysFloatLabel: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
        * Set to true to auto-validate the input value.
        */
       autoValidate: {
@@ -147,6 +155,9 @@ Use `Polymer.PaperInputBehavior` to implement your own `<paper-input>`.
         type: String
       },
 
+      /**
+       * A placeholder string in addition to the label. If this is set, the label will always float.
+       */
       placeholder: {
         type: String
       },
@@ -167,6 +178,10 @@ Use `Polymer.PaperInputBehavior` to implement your own `<paper-input>`.
      */
     get inputElement() {
       return this.$.input;
+    },
+
+    _computeAlwaysFloatLabel: function(alwaysFloatLabel, placeholder) {
+      return placeholder || alwaysFloatLabel;
     }
 
   };
