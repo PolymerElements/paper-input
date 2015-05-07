@@ -141,6 +141,7 @@ For example:
 
     .input-content ::content input,
     .input-content ::content textarea,
+    .input-content ::content iron-autogrow-textarea,
     .input-content ::content .paper-input-input {
       position: relative; /* to make a stacking context */
       outline: none;
@@ -150,7 +151,8 @@ For example:
     }
 
     .input-content ::content input,
-    .input-content ::content textarea {
+    .input-content ::content textarea,
+    .input-content ::content iron-autogrow-textarea {
       padding: 0;
       width: 100%;
       background: transparent;
