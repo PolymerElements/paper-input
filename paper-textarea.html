@@ -15,13 +15,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="paper-input-char-counter.html">
 
 <!--
-`<paper-autogrow-textarea>` is a text area that grows as text is entered.
+`<paper-textarea>` is a text area that grows as text is entered.
 -->
 
-<dom-module id="paper-autogrow-textarea">
+<dom-module id="paper-textarea">
   <template>
 
-    <paper-input-container no-label-float$="[[noLabelFloat]]" auto-validate$="[[autoValidate]]" attr-for-value="bindValue" disabled$="[[disabled]]">
+    <paper-input-container no-label-float$="[[noLabelFloat]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]">
 
       <template is="dom-if" if="[[label]]">
         <label>[[label]]</label>
@@ -51,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   Polymer({
 
-    is: 'paper-autogrow-textarea',
+    is: 'paper-textarea',
 
     behaviors: [
       Polymer.PaperInputBehavior

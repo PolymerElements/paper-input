@@ -25,6 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <link rel="import" href="../../test-fixture/test-fixture.html">
   <link rel="import" href="../paper-input.html">
+  <link rel="import" href="letters-only.html">
 
 </head>
 <body>
@@ -53,6 +54,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="placeholder">
+    <template>
+      <paper-input label="foo" placeholder="bar"></paper-input>
+    </template>
+  </test-fixture>
+
+  <letters-only></letters-only>
+
+  <test-fixture id="validator">
+    <template>
+      <paper-input value="123123" validator="letters-only" auto-validate></paper-input>
+    </template>
+  </test-fixture>
+
   <script>
 
     suite('basic', function() {
@@ -61,6 +76,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var input = fixture('basic');
         input.value = 'foobar';
         assert.equal(input.inputElement.value, input.value, 'inputElement.value equals input.value');
+      });
+
+      test('placeholder does not overlap label', function() {
+        var input = fixture('placeholder');
+        assert.equal(input.inputElement.placeholder, input.placeholder, 'inputElement.placeholder equals input.placeholder');
+        assert.equal(input.noLabelFloat, false);
+        var floatingLabel = input.querySelector('.label-is-floating');
+        assert.ok(floatingLabel);
       });
 
       test('error message is displayed', function() {
@@ -85,6 +108,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var counter = Polymer.dom(input.root).querySelector('paper-input-char-counter')
         assert.ok(counter, 'paper-input-char-counter exists');
         assert.equal(counter.charCounter, input.value.length, 'character counter shows the value length');
+      });
+
+      test('validator is used', function() {
+        var input = fixture('validator');
+        assert.ok(input.inputElement.invalid, 'input is invalid');
       });
 
     });

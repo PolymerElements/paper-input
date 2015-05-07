@@ -188,16 +188,16 @@ For example:
       <div class="floated-label-placeholder">&nbsp;</div>
     </template>
 
-    <div class$="[[_computeInputContentClass(noLabelFloat,focused,_inputHasContent,_inputIsInvalid)]]">
+    <div class$="[[_computeInputContentClass(noLabelFloat,alwaysFloatLabel,focused,invalid,_inputHasContent)]]">
       <content select=":not([add-on])"></content>
     </div>
 
-    <div class$="[[_computeUnderlineClass(focused,_inputIsInvalid)]]">
+    <div class$="[[_computeUnderlineClass(focused,invalid)]]">
       <div class="unfocused-line fit"></div>
       <div class="focused-line fit"></div>
     </div>
 
-    <div class$="[[_computeAddOnContentClass(focused,_inputIsInvalid)]]">
+    <div class$="[[_computeAddOnContentClass(focused,invalid)]]">
       <content id="addOnContent" select="[add-on]"></content>
     </div>
 
@@ -223,17 +223,33 @@ For example:
       },
 
       /**
+       * Set to true to always float the floating label.
+       */
+      alwaysFloatLabel: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
        * The attribute to listen for value changes on.
        */
       attrForValue: {
         type: String,
-        value: 'bind-value'
+        value: ''
       },
 
       /**
        * Set to true to auto-validate the input value.
        */
       autoValidate: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * True if the input is invalid.
+       */
+      invalid: {
         type: Boolean,
         value: false
       },
@@ -259,11 +275,6 @@ For example:
         value: false
       },
 
-      _inputIsInvalid: {
-        type: Boolean,
-        value: false
-      },
-
       _inputSelector: {
         type: String,
         value: 'input,textarea,.paper-input-input'
@@ -283,6 +294,13 @@ For example:
         }
       },
 
+      _boundOnInput: {
+        type: Function,
+        value: function() {
+          this._onInput.bind(this)
+        }
+      },
+
       _boundValueChanged: {
         type: Function,
         value: function() {
@@ -293,8 +311,7 @@ For example:
     },
 
     listeners: {
-      'addon-attached': '_onAddonAttached',
-      'input': '_onInput'
+      'addon-attached': '_onAddonAttached'
     },
 
     get _valueChangedEvent() {
@@ -312,16 +329,20 @@ For example:
     ready: function() {
       this.addEventListener('focus', this._boundOnFocus, true);
       this.addEventListener('blur', this._boundOnBlur, true);
-      this.addEventListener(this._valueChangedEvent, this._boundValueChanged, true);
+      if (this.attrForValue) {
+        this._inputElement.addEventListener(this._valueChangedEvent, this._boundValueChanged);
+      } else {
+        this.addEventListener('input', this._onInput);
+      }
     },
 
     attached: function() {
-      this._handleInput(this._inputElement);
+      this._handleValue(this._inputElement);
     },
 
     _onAddonAttached: function(event) {
       this._addons.push(event.target);
-      this._handleInput(this._inputElement);
+      this._handleValue(this._inputElement);
     },
 
     _onFocus: function() {
@@ -333,16 +354,24 @@ For example:
     },
 
     _onInput: function(event) {
-      this._handleInput(event.target);
+      this._handleValue(event.target);
     },
 
     _onValueChanged: function(event) {
-      this._handleInput(event.target);
+      this._handleValue(event.target);
     },
 
-    _handleInput: function(inputElement) {
+    _handleValue: function(inputElement) {
       var value = inputElement[this._propertyForValue] || inputElement.value;
-      var valid = inputElement.checkValidity();
+
+      var valid;
+      if (inputElement.validate) {
+        valid = inputElement.validate(value);
+      } else if (inputElement.checkValidity) {
+        valid = inputElement.checkValidity();
+      } else {
+        valid = true;
+      }
 
       // type="number" hack needed because this.value is empty until it's valid
       if (value || inputElement.type === 'number' && !valid) {
@@ -352,7 +381,7 @@ For example:
       }
 
       if (this.autoValidate) {
-        this._inputIsInvalid = !valid;
+        this.invalid = !valid;
       }
 
       // notify add-ons
@@ -364,12 +393,12 @@ For example:
       }
     },
 
-    _computeInputContentClass: function(noLabelFloat, focused, _inputHasContent, _inputIsInvalid) {
+    _computeInputContentClass: function(noLabelFloat, alwaysFloatLabel, focused, invalid, _inputHasContent) {
       var cls = 'input-content';
       if (!noLabelFloat) {
-        if (_inputHasContent) {
+        if (alwaysFloatLabel || _inputHasContent) {
           cls += ' label-is-floating';
-          if (_inputIsInvalid) {
+          if (invalid) {
             cls += ' is-invalid';
           } else if (focused) {
             cls += " label-is-highlighted";
@@ -383,9 +412,9 @@ For example:
       return cls;
     },
 
-    _computeUnderlineClass: function(focused, _inputIsInvalid) {
+    _computeUnderlineClass: function(focused, invalid) {
       var cls = 'underline';
-      if (_inputIsInvalid) {
+      if (invalid) {
         cls += ' is-invalid';
       } else if (focused) {
         cls += ' is-highlighted'
@@ -393,9 +422,9 @@ For example:
       return cls;
     },
 
-    _computeAddOnContentClass: function(focused, _inputIsInvalid) {
+    _computeAddOnContentClass: function(focused, invalid) {
       var cls = 'add-on-content';
-      if (_inputIsInvalid) {
+      if (invalid) {
         cls += ' is-invalid';
       } else if (focused) {
         cls += ' is-highlighted'
