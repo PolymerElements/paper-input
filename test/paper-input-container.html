@@ -85,6 +85,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="auto-validate-validator-has-invalid-value">
+    <template>
+      <paper-input-container auto-validate attr-for-value="bind-value">
+        <label id="l">label</label>
+        <input is="iron-input" id="i" validator="letters-only" value="123123">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
   <script>
 
     function getTransform(node) {
@@ -183,6 +192,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           done();
         });
         input.bindValue = '123123';
+      });
+
+      test('styled when the input is set initially to an invalid value with auto-validate, with validator', function() {
+        var container = fixture('auto-validate-validator-has-invalid-value');
+        assert.isTrue(container.invalid, 'invalid is true');
+        assert.isTrue(Polymer.dom(container.root).querySelector('.underline').classList.contains('is-invalid'), 'underline has is-invalid class');
       });
 
     });
