@@ -20,6 +20,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="paper-input">
 
+  <style>
+
+    :host {
+      display: block;
+    }
+
+    :host(.inline) {
+      display: inline-block;
+    }
+
+  </style>
+
   <template>
 
     <paper-input-container no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" attr-for-value="bind-value">
