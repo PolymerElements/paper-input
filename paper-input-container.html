@@ -311,7 +311,8 @@ For example:
     },
 
     listeners: {
-      'addon-attached': '_onAddonAttached'
+      'addon-attached': '_onAddonAttached',
+      'iron-input-validate': '_onInputValidityChanged'
     },
 
     get _valueChangedEvent() {
@@ -365,10 +366,13 @@ For example:
       var value = inputElement[this._propertyForValue] || inputElement.value;
 
       var valid;
-      if (inputElement.validate) {
-        valid = inputElement.validate(value);
-      } else if (inputElement.checkValidity) {
-        valid = inputElement.checkValidity();
+
+      if (this.autoValidate) {
+        if (inputElement.validate) {
+          valid = inputElement.validate(value);
+        } else {
+          valid = inputElement.checkValidity();
+        }
       } else {
         valid = true;
       }
@@ -380,16 +384,21 @@ For example:
         this._inputHasContent = false;
       }
 
-      if (this.autoValidate) {
-        this.invalid = !valid;
-      }
-
       // notify add-ons
       for (var addon, i = 0; addon = this._addons[i]; i++) {
         // need to set all of these, or call method... thanks input type="number"!
         addon.inputElement = inputElement;
         addon.value = value;
         addon.invalid = !valid;
+      }
+    },
+
+    _onInputValidityChanged: function() {
+      this.invalid = this._inputElement.invalid;
+
+      // notify add-ons
+      for (var addon, i = 0; addon = this._addons[i]; i++) {
+        addon.invalid = this.invalid;
       }
     },
 

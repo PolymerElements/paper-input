@@ -180,6 +180,13 @@ Use `Polymer.PaperInputBehavior` to implement your own `<paper-input>`.
       return this.$.input;
     },
 
+    /**
+     * Validates the input element and sets an error style if needed.
+     */
+     validate:function () {
+       return this.inputElement.validate();
+     },
+
     _computeAlwaysFloatLabel: function(alwaysFloatLabel, placeholder) {
       return placeholder || alwaysFloatLabel;
     }
