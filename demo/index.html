@@ -66,6 +66,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <section>
 
+    <div>Manual Validation</div>
+
+    <paper-input id="inputForValidation" required label="only type letters" pattern="[a-zA-Z]*" error-message="letters only, required input!"></paper-input>
+    <br>
+    <button onclick="validate()">Validate!</button>
+
+  </section>
+
+  <section>
+
     <div>Character Counter</div>
 
     <paper-input label="label" char-counter></paper-input>
@@ -94,4 +104,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   </section>
 
+  <script>
+    function validate() {
+      document.getElementById('inputForValidation').validate();
+    }
+  </script>
 </body>
+</html>

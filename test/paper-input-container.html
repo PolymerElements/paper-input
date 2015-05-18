@@ -74,6 +74,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="manual-validate-numbers">
+    <template>
+      <paper-input-container attr-for-value="bind-value">
+        <label id="l">label</label>
+        <input is="iron-input" id="i" pattern="[0-9]*">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
   <letters-only></letters-only>
 
   <test-fixture id="auto-validate-validator">
@@ -198,6 +207,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var container = fixture('auto-validate-validator-has-invalid-value');
         assert.isTrue(container.invalid, 'invalid is true');
         assert.isTrue(Polymer.dom(container.root).querySelector('.underline').classList.contains('is-invalid'), 'underline has is-invalid class');
+      });
+
+      test('styled when the input is set to an invalid value with manual validation', function(done) {
+        var container = fixture('manual-validate-numbers');
+        var input = Polymer.dom(container).querySelector('#i');
+        var label = Polymer.dom(container).querySelector('#l');
+        var line = Polymer.dom(container.root).querySelector('.focused-line');
+        var color = getComputedStyle(label).color;
+        line.addEventListener('transitionend', function() {
+          assert.isTrue(container.invalid, 'invalid is true');
+          assert.notEqual(getComputedStyle(label).color, color, 'label is colored when input is invalid');
+          assert.equal(getTransform(line), 'none', 'line is colored when input is invalid');
+          done();
+        });
+        input.bindValue = 'foobar';
+        input.validate();
       });
 
     });
