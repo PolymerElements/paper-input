@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <label>[[label]]</label>
       </template>
 
-      <input is="iron-input" id="input" bind-value="{{value}}" invalid="{{invalid}}" prevent-invalid-input="[[preventInvalidInput]]" type$="[[type]]" pattern$="[[pattern]]" maxlength$="[[maxlength]]" required$="[[required]]" disabled$="[[disabled]]" validator="[[validator]]" autocomplete$="[[autocomplete]]" autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" minlength$="[[minlength]]" name$="[[name]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]" size$="[[size]]">
+      <input is="iron-input" id="input" bind-value="{{value}}" invalid="{{invalid}}" prevent-invalid-input="[[preventInvalidInput]]" type$="[[type]]" pattern$="[[pattern]]" maxlength$="[[maxlength]]" required$="[[required]]" disabled$="[[disabled]]" validator="[[validator]]" autocomplete$="[[autocomplete]]" autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" minlength$="[[minlength]]" name$="[[name]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]" size$="[[size]]" on-change="_changeAction">
 
       <template is="dom-if" if="[[errorMessage]]">
         <paper-input-error>[[errorMessage]]</paper-input-error>
@@ -54,8 +54,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     behaviors: [
       Polymer.PaperInputBehavior
-    ]
+    ],
 
+    /** Re-fire change event that does not bubble across shadow roots. */
+    _changeAction: function() {
+      this.fire('change');
+    },
   })
 
 })();
