@@ -26,84 +26,75 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../paper-textarea.html">
   <link rel="import" href="../../iron-input/iron-input.html">
   <link rel="import" href="ssn-input.html">
+  <link rel="stylesheet" href="../../paper-styles/paper-styles.html">
+  <link rel="import" href="../../paper-styles/demo-pages.html">
 
-  <link rel="stylesheet" href="../../paper-styles/demo.css">
-
+  <style>
+    body {
+      padding: 40px;
+    }
+  </style>
 </head>
 <body>
+  <div class="vertical center-justified layout">
+    <h4>Text input</h4>
+    <div class="vertical-section">
+      <paper-input label="label"></paper-input>
 
-  <section>
+      <paper-input label="password" type="password"></paper-input>
 
-    <paper-input label="label"></paper-input>
+      <paper-input no-label-float label="label (no-label-float)"></paper-input>
 
-    <paper-input label="password" type="password"></paper-input>
+      <paper-input placeholder="hint-text" label="label"></paper-input>
 
-    <paper-input no-label-float label="label (no-label-float)"></paper-input>
+      <paper-input label="disabled" disabled></paper-input>
+    </div>
 
-    <paper-input placeholder="hint-text" label="label"></paper-input>
+    <h4>Text area</h4>
+    <div class="vertical-section">
+      <paper-textarea no-label-float label="textarea label (no-label-float)"></paper-textarea>
 
-    <paper-input label="disabled" disabled></paper-input>
+      <paper-textarea label="textarea label"></paper-textarea>
+    </div>
 
-    <paper-textarea no-label-float label="textarea label (no-label-float)"></paper-textarea>
+    <h4>Validation</h4>
+    <div class="vertical-section">
+      <paper-input label="only type letters" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
 
-    <paper-textarea label="textarea label"></paper-textarea>
+      <paper-input label="only type numbers" auto-validate type="number" error-message="numbers only!"></paper-input>
 
-  </section>
+      <paper-input label="required input" auto-validate required error-message="input required!"></paper-input>
 
-  <section>
+      <paper-textarea label="textarea, required input" auto-validate required error-message="input required!"></paper-textarea>
 
-    <div>Auto Validation</div>
+      <br>
+      <paper-input id="inputForValidation" required label="only type letters" pattern="[a-zA-Z]*" error-message="letters only, required input!"></paper-input>
+      <br>
+      <button onclick="validate()">Validate!</button>
+    </div>
 
-    <paper-input label="only type letters" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
+    <h4>Character counter</h4>
+    <div class="vertical-section">
+      <paper-input label="label" char-counter></paper-input>
 
-    <paper-input label="only type numbers" auto-validate type="number" error-message="numbers only!"></paper-input>
+      <paper-input label="at most 5 characters" char-counter maxlength="5"></paper-input>
 
-    <paper-input label="required input" auto-validate required error-message="input required!"></paper-input>
+      <paper-textarea label="textarea" char-counter></paper-textarea>
 
-    <paper-textarea label="textarea, required input" auto-validate required error-message="input required!"></paper-textarea>
+      <paper-textarea label="textarea, at most 10 characters" char-counter maxlength="10"></paper-textarea>
+    </div>
 
-  </section>
-
-  <section>
-
-    <div>Manual Validation</div>
-
-    <paper-input id="inputForValidation" required label="only type letters" pattern="[a-zA-Z]*" error-message="letters only, required input!"></paper-input>
-    <br>
-    <button onclick="validate()">Validate!</button>
-
-  </section>
-
-  <section>
-
-    <div>Character Counter</div>
-
-    <paper-input label="label" char-counter></paper-input>
-
-    <paper-input label="at most 5 characters" char-counter maxlength="5"></paper-input>
-
-    <paper-textarea label="textarea" char-counter></paper-textarea>
-
-    <paper-textarea label="textarea, at most 10 characters" char-counter maxlength="10"></paper-textarea>
-
-  </section>
-
-  <section>
-
-    <div>Complex Inputs</div>
-
-    <template is="dom-bind">
-
-      <paper-input-container always-float-label auto-validate attr-for-value="value">
-        <label>Social Security Number</label>
-        <ssn-input class="paper-input-input"></ssn-input>
-        <paper-input-error>SSN invalid!</paper-input-error>
-      </paper-input-container>
-
-    </template>
-
-  </section>
-
+    <h4>Complex inputs</h4>
+    <div class="vertical-section">
+      <template is="dom-bind">
+        <paper-input-container always-float-label auto-validate attr-for-value="value">
+          <label>Social Security Number</label>
+          <ssn-input class="paper-input-input"></ssn-input>
+          <paper-input-error>SSN invalid!</paper-input-error>
+        </paper-input-container>
+      </template>
+    </div>
+  </div>
   <script>
     function validate() {
       document.getElementById('inputForValidation').validate();
