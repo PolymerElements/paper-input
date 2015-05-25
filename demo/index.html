@@ -34,9 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-bind">
       <section>
         <div>Updating the value imperatively</div>
-        <iron-autogrow-textarea bind-value="{{bindValue}}" id="a1">
-          <textarea id="t1">asdfasdfasdfad</textarea>
-        </iron-autogrow-textarea>
+        <iron-autogrow-textarea bind-value="{{bindValue}}" id="a1"></iron-autogrow-textarea>
         <br><br>
 
         <code>bind-value</code>: <span>[[bindValue]]</span>
@@ -56,16 +54,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <section>
       <div>Scrolls after 4 rows</div>
-      <iron-autogrow-textarea max-rows="4">
-        <textarea></textarea>
-      </iron-autogrow-textarea>
+      <iron-autogrow-textarea max-rows="4"></iron-autogrow-textarea>
     </section>
 
     <section>
       <div>Initial height of 4 rows</div>
-      <iron-autogrow-textarea rows="4">
-        <textarea></textarea>
-      </iron-autogrow-textarea>
+      <iron-autogrow-textarea rows="4"></iron-autogrow-textarea>
     </section>
 
     <script>
@@ -79,8 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (event.target.value == "bindValue") {
           document.querySelector('iron-autogrow-textarea').bindValue = inputValue;
         } else {
-          document.querySelector('textarea').value = inputValue;
-          document.querySelector('iron-autogrow-textarea').update();
+          document.querySelector('iron-autogrow-textarea').textarea.value = inputValue;
         }
 
       }
