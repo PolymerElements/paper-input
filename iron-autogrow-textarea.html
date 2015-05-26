@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
 
 <!--
 `iron-autogrow-textarea` is an element containing a textarea that grows in height as more
@@ -23,17 +24,7 @@ Example:
     </iron-autogrow-textarea>
 
 Because the `textarea`'s `value` property is not observable, you should use
-this element's `bind-value` instead for imperative updates. Alternatively, if
-you do set the `textarea`'s `value` imperatively, you must also call `update`
-to notify this element the value has changed.
-
-    Example:
-        /* preferred, using the example HTML above*/
-        a1.bindValue = 'some\ntext';
-
-        /* alternatively, */
-        t1.value = 'some\ntext';
-        a1.update();
+this element's `bind-value` instead for imperative updates.
 
 @group Iron Elements
 @hero hero.svg
@@ -41,11 +32,16 @@ to notify this element the value has changed.
 -->
 
 <dom-module id="iron-autogrow-textarea">
+
   <style>
     :host {
       display: inline-block;
       position: relative;
       width: 400px;
+      border: 1px solid;
+      padding: 2px;
+      -moz-appearance: textarea;
+      -webkit-appearance: textarea;
     }
 
     .mirror-text {
@@ -53,8 +49,12 @@ to notify this element the value has changed.
       word-wrap: break-word;
     }
 
-    ::content textarea {
+    textarea {
+      position: relative;
+      outline: none;
+      border: none;
       resize: none;
+      background: inherit;
       /* see comments in template */
       width: 100%;
       height: 100%;
@@ -73,7 +73,7 @@ to notify this element the value has changed.
 
     <!-- size the input/textarea with a div, because the textarea has intrinsic size in ff -->
     <div class="textarea-container fit">
-      <content id="textarea" select="textarea"></content>
+      <textarea id="textarea" required$="[[required]]" rows$="[[rows]]" maxlength$="[[maxlength]]"></textarea>
     </div>
   </template>
 
@@ -82,6 +82,10 @@ to notify this element the value has changed.
   Polymer({
 
     is: 'iron-autogrow-textarea',
+
+    behaviors: [
+      Polymer.IronValidatableBehavior
+    ],
 
     properties: {
 
@@ -115,10 +119,25 @@ to notify this element the value has changed.
        * @default 0
        */
       maxRows: {
-         type: Number,
-         value: 0,
-         observer: '_updateCached'
+       type: Number,
+       value: 0,
+       observer: '_updateCached'
+      },
+
+      /**
+       * Set to true to mark the textarea as required.
+       */
+      required: {
+        type: Boolean
+      },
+
+      /**
+       * The maximum length of the input value.
+       */
+      maxlength: {
+        type: Number
       }
+
     },
 
     listeners: {
@@ -127,22 +146,12 @@ to notify this element the value has changed.
 
     /**
      * Returns the underlying textarea.
-     *
-     * @property textarea
-     * @type Element
      */
     get textarea() {
-      return Polymer.dom(this.$.textarea).getDistributedNodes()[0];
+      return this.$.textarea;
     },
 
-    /**
-     * Sizes this element to fit the input value. This function is automatically called
-     * when the user types in new input, but you must call this function if the value
-     * is updated imperatively.
-     *
-     * @method update
-     */
-    update: function() {
+    _update: function() {
       this.$.mirror.innerHTML = this._valueForMirror();
 
       var textarea = this.textarea;
@@ -164,14 +173,14 @@ to notify this element the value has changed.
       }
 
       textarea.value = this.bindValue;
-      this.update();
+      this._update();
       // manually notify because we don't want to notify until after setting value
       this.fire('bind-value-changed', {value: this.bindValue});
     },
 
     _onInput: function(event) {
-      this.bindValue = event.target.value;
-      this.update();
+      this.bindValue = event.path ? event.path[0].value : event.target.value;
+      this._update();
     },
 
     _constrain: function(tokens) {
