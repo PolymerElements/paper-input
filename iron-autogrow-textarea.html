@@ -162,10 +162,6 @@ this element's `bind-value` instead for imperative updates.
       }
     },
 
-    attached: function() {
-      this.bindValue = this.value;
-    },
-
     _bindValueChanged: function() {
       var textarea = this.textarea;
       if (!textarea) {

@@ -34,6 +34,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </test-fixture>
 
+    <test-fixture id="has-bindValue">
+      <template>
+        <iron-autogrow-textarea bind-value="foobar"></iron-autogrow-textarea>
+      </template>
+    </test-fixture>
+
     <test-fixture id="rows">
       <template>
         <iron-autogrow-textarea rows="3"></iron-autogrow-textarea>
@@ -50,6 +56,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           autogrow.bindValue = 'batman';
           assert.equal(textarea.value, autogrow.bindValue, 'textarea value equals to bindValue');
+        });
+
+        test('can set an initial bindValue', function() {
+          var autogrow = fixture('has-bindValue');
+          assert.equal(autogrow.textarea.value, 'foobar', 'textarea value equals to initial bindValue');
         });
 
         test('can set an initial number of rows', function() {
