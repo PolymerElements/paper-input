@@ -11,7 +11,12 @@
     "input"
   ],
   "main": [
-    "paper-input.html"
+    "paper-input.html",
+    "paper-textarea.html",
+    "paper-input-behavior.html",
+    "paper-input-container.html",
+    "paper-input-error.html",
+    "paper-input-char-counter.html"
   ],
   "private": true,
   "repository": {
@@ -29,7 +34,7 @@
     "polymer": "Polymer/polymer#^0.9.0"
   },
   "devDependencies": {
-    "iron-doc-viewer": "PolymerElements/iron-doc-viewer#^0.9.0",
+    "iron-component-page": "PolymerElements/iron-component-page#^0.9.0",
     "iron-test-helpers": "PolymerElements/iron-test-helpers#^0.9.0",
     "iron-validator-behavior": "PolymerElements/iron-validator-behavior#^0.9.0",
     "test-fixture": "PolymerElements/test-fixture#^0.9.0",

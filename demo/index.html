@@ -26,6 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../paper-textarea.html">
   <link rel="import" href="../../iron-input/iron-input.html">
   <link rel="import" href="ssn-input.html">
+
   <link rel="stylesheet" href="../../paper-styles/paper-styles.html">
   <link rel="import" href="../../paper-styles/demo-pages.html">
 
@@ -34,8 +35,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       padding: 40px;
     }
   </style>
+
 </head>
 <body>
+
   <div class="vertical center-justified layout">
     <h4>Text input</h4>
     <div class="vertical-section">
@@ -45,30 +48,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <paper-input no-label-float label="label (no-label-float)"></paper-input>
 
-      <paper-input placeholder="hint-text" label="label"></paper-input>
-
       <paper-input label="disabled" disabled></paper-input>
     </div>
 
     <h4>Text area</h4>
     <div class="vertical-section">
-      <paper-textarea no-label-float label="textarea label (no-label-float)"></paper-textarea>
-
       <paper-textarea label="textarea label"></paper-textarea>
     </div>
 
     <h4>Validation</h4>
     <div class="vertical-section">
-      <paper-input label="only type letters" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
+      <paper-input label="only type letters (auto-validate)" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
 
-      <paper-input label="only type numbers" auto-validate type="number" error-message="numbers only!"></paper-input>
-
-      <paper-input label="required input" auto-validate required error-message="input required!"></paper-input>
-
-      <paper-textarea label="textarea, required input" auto-validate required error-message="input required!"></paper-textarea>
-
-      <br>
-      <paper-input id="inputForValidation" required label="only type letters" pattern="[a-zA-Z]*" error-message="letters only, required input!"></paper-input>
+      <paper-input id="inputForValidation" required label="only type letters (no auto validate)" pattern="[a-zA-Z]*" error-message="letters only, required input!"></paper-input>
       <br>
       <button onclick="validate()">Validate!</button>
     </div>
@@ -81,7 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <paper-textarea label="textarea" char-counter></paper-textarea>
 
-      <paper-textarea label="textarea, at most 10 characters" char-counter maxlength="10"></paper-textarea>
+      <paper-textarea label="textarea with maxlength" char-counter maxlength="10"></paper-textarea>
     </div>
 
     <h4>Complex inputs</h4>

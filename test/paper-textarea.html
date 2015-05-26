@@ -41,12 +41,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <test-fixture id="char-counter">
-    <template>
-      <paper-textarea char-counter value="foobar"></paper-textarea>
-    </template>
-  </test-fixture>
-
   <script>
 
     suite('basic', function() {
@@ -54,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('setting value sets the input value', function() {
         var input = fixture('basic');
         input.value = 'foobar';
-        assert.equal(input.inputElement.value, input.value, 'inputElement.value equals input.value');
+        assert.equal(input.inputElement.bindValue, input.value, 'inputElement value equals input.value');
       });
 
       test('empty required input shows error', function() {
@@ -63,26 +57,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var error = Polymer.dom(input.root).querySelector('paper-input-error');
         assert.ok(error, 'paper-input-error exists');
         assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
-      });
-
-      test('character counter is displayed', function() {
-        var input = fixture('char-counter');
-        forceXIfStamp(input);
-        var counter = Polymer.dom(input.root).querySelector('paper-input-char-counter')
-        assert.ok(counter, 'paper-input-char-counter exists');
-        assert.equal(counter.charCounter, input.value.length, 'character counter shows the value length');
-      });
-
-      test('character counter counts new lines correctly', function() {
-        var input = fixture('char-counter');
-        input.value = 'foo\nbar';
-        forceXIfStamp(input);
-
-        var counter = Polymer.dom(input.root).querySelector('paper-input-char-counter')
-        assert.ok(counter, 'paper-input-char-counter exists');
-
-        // A new line counts as two characters.
-        assert.equal(counter.charCounter, input.value.length + 1, 'character counter shows the value length');
       });
 
     });

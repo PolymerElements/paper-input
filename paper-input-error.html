@@ -10,9 +10,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-styles/paper-styles.html">
+<link rel="import" href="paper-input-addon-behavior.html">
 
 <!--
-`<paper-input-error>` is an error message for use with `<paper-input-container>`.
+`<paper-input-error>` is an error message for use with `<paper-input-container>`. The error is
+displayed when the `<paper-input-container>` is `invalid`.
+
+    <paper-input-container>
+      <input is="iron-input" pattern="[0-9]*">
+      <paper-input-error>Only numbers are allowed!</paper-input-error>
+    </paper-input-container>
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-input-container-invalid-color` | The foreground color of the error | `--google-red-500`
+`--paper-input-error`                   | Mixin applied to the error        | `{}`
 -->
 <dom-module id="paper-input-error">
 
@@ -25,9 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       color: var(--paper-input-container-invalid-color, --google-red-500);
 
-      @apply(--paper-input-container-add-on);
-      @apply(--paper-input-container-add-on-font);
-
+      @apply(--paper-font-caption);
       @apply(--paper-input-error);
     }
 
@@ -53,25 +67,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     is: 'paper-input-error',
 
+    behaviors: [
+      Polymer.PaperInputAddonBehavior
+    ],
+
     hostAttributes: {
-      'add-on': '',
       'role': 'alert'
     },
 
     properties: {
 
       /**
-       * Set to true to show the error.
+       * True if the error is showing.
        */
       invalid: {
+        readOnly: true,
         reflectToAttribute: true,
         type: Boolean
       }
 
     },
 
-    attached: function() {
-      this.fire('addon-attached');
+    update: function(state) {
+      this._setInvalid(state.invalid);
     }
 
   })
