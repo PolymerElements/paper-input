@@ -7,10 +7,9 @@
   ],
   "keywords": [
     "web-components",
-    "web-component",
     "polymer",
-    "iron",
-    "input"
+    "input",
+    "textarea"
   ],
   "main": [
     "iron-autogrow-textarea.html"
