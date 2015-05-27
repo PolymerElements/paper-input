@@ -201,6 +201,11 @@ This element is `display:block` by default, but you can set the `inline` attribu
       @apply(--paper-input-container-input);
     }
 
+    /* Firefox sets a min-width on the input, which can cause layout issues */
+    .input-content ::content input {
+      min-width: 0;
+    }
+
     .input-content ::content textarea {
       resize: none;
     }
