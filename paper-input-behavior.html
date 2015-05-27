@@ -228,6 +228,10 @@ or methods that are not exposed.
       return this.$.input;
     },
 
+    attached: function() {
+      this._updateAriaLabelledBy();
+    },
+
     /**
      * Validates the input element and sets an error style if needed.
      */
@@ -237,6 +241,21 @@ or methods that are not exposed.
 
     _computeAlwaysFloatLabel: function(alwaysFloatLabel, placeholder) {
       return placeholder || alwaysFloatLabel;
+    },
+
+    _updateAriaLabelledBy: function() {
+      var label = Polymer.dom(this.root).querySelector('label');
+      if (!label) {
+        this._ariaLabelledBy = '';
+      }
+      var labelledBy;
+      if (label.id) {
+        labelledBy = label.id;
+      } else {
+        labelledBy = 'paper-input-label-' + new Date().getUTCMilliseconds();
+        label.id = labelledBy;
+      }
+      this._ariaLabelledBy = labelledBy;
     }
 
   };

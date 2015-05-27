@@ -186,7 +186,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var line = Polymer.dom(container.root).querySelector('.focused-line');
         var color = getComputedStyle(label).color;
         line.addEventListener('transitionend', function() {
-          console.log('asdasd');
           assert.isTrue(container.invalid, 'invalid is true');
           assert.notEqual(getComputedStyle(label).color, color, 'label is colored when input is invalid');
           var transform = getTransform(line);

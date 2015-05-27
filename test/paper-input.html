@@ -36,6 +36,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="label">
+    <template>
+      <paper-input label="foo"></paper-input>
+    </template>
+  </test-fixture>
+
   <test-fixture id="error">
     <template>
       <paper-input auto-validate pattern="[0-9]*" value="foobar" error-message="error"></paper-input>
@@ -113,6 +119,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('validator is used', function() {
         var input = fixture('validator');
         assert.ok(input.inputElement.invalid, 'input is invalid');
+      });
+
+    });
+
+    suite('a11y', function() {
+
+      test('has aria-labelledby', function() {
+        var input = fixture('label');
+        assert.isTrue(input.inputElement.hasAttribute('aria-labelledby'))
+        assert.equal(input.inputElement.getAttribute('aria-labelledby'), Polymer.dom(input.root).querySelector('label').id, 'aria-labelledby points to the label');
       });
 
     });
