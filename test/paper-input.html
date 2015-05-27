@@ -54,6 +54,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="required-char-counter">
+    <template>
+      <paper-input auto-validate char-counter required error-message="error"></paper-input>
+    </template>
+  </test-fixture>
+
   <test-fixture id="char-counter">
     <template>
       <paper-input char-counter value="foobar"></paper-input>
@@ -129,6 +135,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var input = fixture('label');
         assert.isTrue(input.inputElement.hasAttribute('aria-labelledby'))
         assert.equal(input.inputElement.getAttribute('aria-labelledby'), Polymer.dom(input.root).querySelector('label').id, 'aria-labelledby points to the label');
+      });
+
+      test('has aria-describedby for error message', function() {
+        var input = fixture('required');
+        forceXIfStamp(input);
+        assert.isTrue(input.inputElement.hasAttribute('aria-describedby'));
+        assert.equal(input.inputElement.getAttribute('aria-describedby'), Polymer.dom(input.root).querySelector('paper-input-error').id, 'aria-describedby points to the error message');
+      });
+
+      test('has aria-describedby for character counter', function() {
+        var input = fixture('char-counter');
+        forceXIfStamp(input);
+        assert.isTrue(input.inputElement.hasAttribute('aria-describedby'));
+        assert.equal(input.inputElement.getAttribute('aria-describedby'), Polymer.dom(input.root).querySelector('paper-input-char-counter').id, 'aria-describedby points to the character counter');
+      });
+
+      test('has aria-describedby for character counter and error', function() {
+        var input = fixture('required-char-counter');
+        forceXIfStamp(input);
+        assert.isTrue(input.inputElement.hasAttribute('aria-describedby'));
+        assert.equal(input.inputElement.getAttribute('aria-describedby'), Polymer.dom(input.root).querySelector('paper-input-error').id + ' ' + Polymer.dom(input.root).querySelector('paper-input-char-counter').id, 'aria-describedby points to the error message and character counter');
       });
 
     });
