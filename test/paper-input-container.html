@@ -142,21 +142,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var input = Polymer.dom(container).querySelector('#i');
         var color = getComputedStyle(label).color;
         input.focus();
-        assert.equal(document.activeElement, input, 'input is focused');
         requestAnimationFrame(function() {
+          assert.equal(document.activeElement, input, 'input is focused');
           assert.notEqual(getComputedStyle(label).color, color, 'label has different color when input has focus');
           done();
         });
       });
 
-      test('label is not colored when input is focused and has null value', function() {
+      test('label is not colored when input is focused and has null value', function(done) {
         var container = fixture('basic');
         var label = Polymer.dom(container).querySelector('#l');
         var input = Polymer.dom(container).querySelector('#i');
         var color = getComputedStyle(label).color;
         input.focus();
-        assert.equal(document.activeElement, input, 'input is focused');
-        assert.equal(getComputedStyle(label).color, color, 'label has same color when input has focus and has null value');
+        requestAnimationFrame(function() {
+          assert.equal(getComputedStyle(label).color, color, 'label has same color when input has focus and has null value');
+          done();
+        });
       });
 
       test('underline is colored when input is focused', function(done) {
@@ -165,6 +167,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var line = Polymer.dom(container.root).querySelector('.focused-line');
         assert.notEqual(getTransform(line), 'none', 'line is not colored when input is not focused');
         line.addEventListener('transitionend', function() {
+          assert.equal(document.activeElement, input, 'input is focused');
           requestAnimationFrame(function() {
             var transform = getTransform(line);
             assert.isTrue(transform === 'none' || transform === 'matrix(1, 0, 0, 1, 0, 0)', 'line is colored when input is focused');
@@ -172,7 +175,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
         });
         input.focus();
-        assert.equal(document.activeElement, input, 'input is focused');
       });
 
     });
