@@ -217,8 +217,17 @@ or methods that are not exposed.
        */
       size: {
         type: Number
+      },
+
+      _ariaDescribedBy: {
+        type: String,
+        value: ''
       }
 
+    },
+
+    listeners: {
+      'addon-attached': '_onAddonAttached'
     },
 
     /**
@@ -230,6 +239,26 @@ or methods that are not exposed.
 
     attached: function() {
       this._updateAriaLabelledBy();
+    },
+
+    _appendStringWithSpace: function(str, more) {
+      if (str) {
+        str = str + ' ' + more;
+      } else {
+        str = more;
+      }
+      return str;
+    },
+
+    _onAddonAttached: function(event) {
+      var target = event.path ? event.path[0] : event.target;
+      if (target.id) {
+        this._ariaDescribedBy = this._appendStringWithSpace(this._ariaDescribedBy, target.id);
+      } else {
+        var id = 'paper-input-add-on-' + Math.floor((Math.random() * 100000));
+        target.id = id;
+        this._ariaDescribedBy = this._appendStringWithSpace(this._ariaDescribedBy, id);
+      }
     },
 
     /**
