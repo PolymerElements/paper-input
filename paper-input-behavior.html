@@ -276,6 +276,7 @@ or methods that are not exposed.
       var label = Polymer.dom(this.root).querySelector('label');
       if (!label) {
         this._ariaLabelledBy = '';
+        return;
       }
       var labelledBy;
       if (label.id) {
