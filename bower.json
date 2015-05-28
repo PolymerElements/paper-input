@@ -23,7 +23,7 @@
     "type": "git",
     "url": "git://github.com/PolymerElements/paper-input.git"
   },
-  "license": "MIT",
+  "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/PolymerElements/paper-input",
   "ignore": [],
   "dependencies": {
