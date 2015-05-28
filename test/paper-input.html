@@ -94,7 +94,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var input = fixture('placeholder');
         assert.equal(input.inputElement.placeholder, input.placeholder, 'inputElement.placeholder equals input.placeholder');
         assert.equal(input.noLabelFloat, false);
-        var floatingLabel = input.querySelector('.label-is-floating');
+        var floatingLabel = Polymer.dom(Polymer.dom(input.root).querySelector('paper-input-container').root).querySelector('.label-is-floating');
         assert.ok(floatingLabel);
       });
 
