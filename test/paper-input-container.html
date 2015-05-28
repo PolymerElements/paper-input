@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <test-fixture id="auto-validate-numbers">
     <template>
-      <paper-input-container auto-validate attr-for-value="bind-value">
+      <paper-input-container auto-validate>
         <label id="l">label</label>
         <input is="iron-input" id="i" pattern="[0-9]*">
       </paper-input-container>
@@ -76,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <test-fixture id="manual-validate-numbers">
     <template>
-      <paper-input-container attr-for-value="bind-value">
+      <paper-input-container>
         <label id="l">label</label>
         <input is="iron-input" id="i" pattern="[0-9]*">
       </paper-input-container>
@@ -87,7 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <test-fixture id="auto-validate-validator">
     <template>
-      <paper-input-container auto-validate attr-for-value="bind-value">
+      <paper-input-container auto-validate>
         <label id="l">label</label>
         <input is="iron-input" id="i" pattern="[0-9]*" validator="letters-only">
       </paper-input-container>
@@ -96,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <test-fixture id="auto-validate-validator-has-invalid-value">
     <template>
-      <paper-input-container auto-validate attr-for-value="bind-value">
+      <paper-input-container auto-validate>
         <label id="l">label</label>
         <input is="iron-input" id="i" validator="letters-only" value="123123">
       </paper-input-container>
@@ -136,24 +136,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     suite('focused styling', function() {
 
-      test('label is colored when input is focused and has value', function() {
+      test('label is colored when input is focused and has value', function(done) {
         var container = fixture('has-value');
         var label = Polymer.dom(container).querySelector('#l');
         var input = Polymer.dom(container).querySelector('#i');
         var color = getComputedStyle(label).color;
         input.focus();
-        assert.equal(document.activeElement, input, 'input is focused');
-        assert.notEqual(getComputedStyle(label).color, color, 'label has different color when input has focus');
+        requestAnimationFrame(function() {
+          assert.equal(document.activeElement, input, 'input is focused');
+          assert.notEqual(getComputedStyle(label).color, color, 'label has different color when input has focus');
+          done();
+        });
       });
 
-      test('label is not colored when input is focused and has null value', function() {
+      test('label is not colored when input is focused and has null value', function(done) {
         var container = fixture('basic');
         var label = Polymer.dom(container).querySelector('#l');
         var input = Polymer.dom(container).querySelector('#i');
         var color = getComputedStyle(label).color;
         input.focus();
-        assert.equal(document.activeElement, input, 'input is focused');
-        assert.equal(getComputedStyle(label).color, color, 'label has same color when input has focus and has null value');
+        requestAnimationFrame(function() {
+          assert.equal(getComputedStyle(label).color, color, 'label has same color when input has focus and has null value');
+          done();
+        });
       });
 
       test('underline is colored when input is focused', function(done) {
@@ -162,11 +167,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var line = Polymer.dom(container.root).querySelector('.focused-line');
         assert.notEqual(getTransform(line), 'none', 'line is not colored when input is not focused');
         line.addEventListener('transitionend', function() {
-          assert.equal(getTransform(line), 'none', 'line is colored when input is focused');
-          done();
+          assert.equal(document.activeElement, input, 'input is focused');
+          requestAnimationFrame(function() {
+            var transform = getTransform(line);
+            assert.isTrue(transform === 'none' || transform === 'matrix(1, 0, 0, 1, 0, 0)', 'line is colored when input is focused');
+            done();
+          });
         });
         input.focus();
-        assert.equal(document.activeElement, input, 'input is focused');
       });
 
     });
@@ -182,10 +190,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         line.addEventListener('transitionend', function() {
           assert.isTrue(container.invalid, 'invalid is true');
           assert.notEqual(getComputedStyle(label).color, color, 'label is colored when input is invalid');
-          assert.equal(getTransform(line), 'none', 'line is colored when input is invalid');
+          var transform = getTransform(line);
+          assert.isTrue(transform === 'none' || transform === 'matrix(1, 0, 0, 1, 0, 0)', 'line is colored when input is focused');
           done();
         });
-        input.bindValue = 'foobar';
+        // wait a frame here, because IE seems to want to draw a frame here before the transition
+        // will trigger
+        requestAnimationFrame(function() {
+          input.bindValue = 'foobar';
+        });
       });
 
       test('styled when the input is set to an invalid value with auto-validate, with validator', function(done) {
@@ -197,10 +210,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         line.addEventListener('transitionend', function() {
           assert.isTrue(container.invalid, 'invalid is true');
           assert.notEqual(getComputedStyle(label).color, color, 'label is colored when input is invalid');
-          assert.equal(getTransform(line), 'none', 'line is colored when input is invalid');
+          var transform = getTransform(line);
+          assert.isTrue(transform === 'none' || transform === 'matrix(1, 0, 0, 1, 0, 0)', 'line is colored when input is focused');
           done();
         });
-        input.bindValue = '123123';
+        // wait a frame here, because IE seems to want to draw a frame here before the transition
+        // will trigger
+        requestAnimationFrame(function() {
+          input.bindValue = '123123';
+        });
       });
 
       test('styled when the input is set initially to an invalid value with auto-validate, with validator', function() {
@@ -218,11 +236,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         line.addEventListener('transitionend', function() {
           assert.isTrue(container.invalid, 'invalid is true');
           assert.notEqual(getComputedStyle(label).color, color, 'label is colored when input is invalid');
-          assert.equal(getTransform(line), 'none', 'line is colored when input is invalid');
+          var transform = getTransform(line);
+          assert.isTrue(transform === 'none' || transform === 'matrix(1, 0, 0, 1, 0, 0)', 'line is colored when input is focused');
           done();
         });
-        input.bindValue = 'foobar';
-        input.validate();
+        requestAnimationFrame(function() {
+          input.bindValue = 'foobar';
+          input.validate();
+        });
       });
 
     });

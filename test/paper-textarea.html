@@ -35,15 +35,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="label">
+    <template>
+      <paper-textarea label="foo"></paper-textarea>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="char-counter">
+    <template>
+      <paper-textarea char-counter></paper-textarea>
+    </template>
+  </test-fixture>
+
   <test-fixture id="required">
     <template>
       <paper-textarea auto-validate required error-message="error"></paper-textarea>
     </template>
   </test-fixture>
 
-  <test-fixture id="char-counter">
+  <test-fixture id="required-char-counter">
     <template>
-      <paper-textarea char-counter value="foobar"></paper-textarea>
+      <paper-textarea auto-validate char-counter required error-message="error"></paper-textarea>
     </template>
   </test-fixture>
 
@@ -54,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('setting value sets the input value', function() {
         var input = fixture('basic');
         input.value = 'foobar';
-        assert.equal(input.inputElement.value, input.value, 'inputElement.value equals input.value');
+        assert.equal(input.inputElement.bindValue, input.value, 'inputElement value equals input.value');
       });
 
       test('empty required input shows error', function() {
@@ -65,27 +77,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
       });
 
-      test('character counter is displayed', function() {
-        var input = fixture('char-counter');
-        forceXIfStamp(input);
-        var counter = Polymer.dom(input.root).querySelector('paper-input-char-counter')
-        assert.ok(counter, 'paper-input-char-counter exists');
-        assert.equal(counter.charCounter, input.value.length, 'character counter shows the value length');
+    });
+
+    suite('a11y', function() {
+
+      test('has aria-labelledby', function() {
+        var input = fixture('label');
+        assert.isTrue(input.inputElement.textarea.hasAttribute('aria-labelledby'))
+        assert.equal(input.inputElement.textarea.getAttribute('aria-labelledby'), Polymer.dom(input.root).querySelector('label').id, 'aria-labelledby points to the label');
       });
 
-      test('character counter counts new lines correctly', function() {
-        var input = fixture('char-counter');
-        input.value = 'foo\nbar';
+      test('has aria-describedby for error message', function() {
+        var input = fixture('required');
         forceXIfStamp(input);
-
-        var counter = Polymer.dom(input.root).querySelector('paper-input-char-counter')
-        assert.ok(counter, 'paper-input-char-counter exists');
-
-        // A new line counts as two characters.
-        assert.equal(counter.charCounter, input.value.length + 1, 'character counter shows the value length');
+        assert.isTrue(input.inputElement.textarea.hasAttribute('aria-describedby'));
+        assert.equal(input.inputElement.textarea.getAttribute('aria-describedby'), Polymer.dom(input.root).querySelector('paper-input-error').id, 'aria-describedby points to the error message');
       });
+
+      test('has aria-describedby for character counter', function() {
+        var input = fixture('char-counter');
+        forceXIfStamp(input);
+        assert.isTrue(input.inputElement.textarea.hasAttribute('aria-describedby'));
+        assert.equal(input.inputElement.textarea.getAttribute('aria-describedby'), Polymer.dom(input.root).querySelector('paper-input-char-counter').id, 'aria-describedby points to the character counter');
+      });
+
+      test('has aria-describedby for character counter and error', function() {
+        var input = fixture('required-char-counter');
+        forceXIfStamp(input);
+        assert.isTrue(input.inputElement.textarea.hasAttribute('aria-describedby'));
+        assert.equal(input.inputElement.textarea.getAttribute('aria-describedby'), Polymer.dom(input.root).querySelector('paper-input-error').id + ' ' + Polymer.dom(input.root).querySelector('paper-input-char-counter').id, 'aria-describedby points to the error message and character counter');
+      });
+
 
     });
+
 
   </script>
 
