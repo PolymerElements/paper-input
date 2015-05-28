@@ -1,6 +1,6 @@
 {
   "name": "paper-input",
-  "version": "0.9.6",
+  "version": "1.0.0",
   "description": "Material design text fields",
   "authors": [
     "The Polymer Authors"
@@ -27,18 +27,18 @@
   "homepage": "https://github.com/PolymerElements/paper-input",
   "ignore": [],
   "dependencies": {
-    "iron-input": "PolymerElements/iron-input#^0.9.0",
-    "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#^0.9.0",
-    "paper-styles": "PolymerElements/paper-styles#^0.9.0",
-    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^0.9.0",
-    "polymer": "Polymer/polymer#^0.9.0"
+    "iron-input": "PolymerElements/iron-input#^1.0.0",
+    "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#^1.0.0",
+    "paper-styles": "PolymerElements/paper-styles#^1.0.0",
+    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^1.0.0",
+    "polymer": "Polymer/polymer#^1.0.0"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^0.9.0",
-    "iron-test-helpers": "PolymerElements/iron-test-helpers#^0.9.0",
-    "iron-validator-behavior": "PolymerElements/iron-validator-behavior#^0.9.0",
-    "test-fixture": "PolymerElements/test-fixture#^0.9.0",
-    "web-component-tester": "Polymer/web-component-tester#^2.2.3",
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-test-helpers": "PolymerElements/iron-test-helpers#^1.0.0",
+    "iron-validator-behavior": "PolymerElements/iron-validator-behavior#^1.0.0",
+    "test-fixture": "PolymerElements/test-fixture#^1.0.0",
+    "web-component-tester": "*",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   }
 }
