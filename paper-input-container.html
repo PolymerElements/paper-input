@@ -455,11 +455,11 @@ This element is `display:block` by default, but you can set the `inline` attribu
       if (!noLabelFloat) {
         if (alwaysFloatLabel || _inputHasContent) {
           cls += ' label-is-floating';
-          if (invalid) {
-            cls += ' is-invalid';
-          } else if (focused) {
-            cls += " label-is-highlighted";
-          }
+        }
+        if (invalid) {
+          cls += ' is-invalid';
+        } else if (focused) {
+          cls += " label-is-highlighted";
         }
       } else {
         if (_inputHasContent) {
