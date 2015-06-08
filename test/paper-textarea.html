@@ -77,6 +77,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
       });
 
+      test('caret position is preserved', function() {
+        var input = fixture('basic');
+        var ironTextarea = Polymer.dom(input.root).querySelector('iron-autogrow-textarea');
+        input.value = 'nananana';
+        ironTextarea.selectionStart = 2;
+        ironTextarea.selectionEnd = 2;
+
+        input.updateValueAndPreserveCaret('nanananabatman');
+
+        assert.equal(ironTextarea.selectionStart, 2, 'selectionStart is preserved');
+        assert.equal(ironTextarea.selectionEnd, 2, 'selectionEnd is preserved');
+      });
+
     });
 
     suite('a11y', function() {

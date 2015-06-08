@@ -127,6 +127,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.ok(input.inputElement.invalid, 'input is invalid');
       });
 
+      test('caret position is preserved', function() {
+        var input = fixture('basic');
+        var ironInput = Polymer.dom(input.root).querySelector('input[is="iron-input"]');
+        input.value = 'nananana';
+        ironInput.selectionStart = 2;
+        ironInput.selectionEnd = 2;
+
+        input.updateValueAndPreserveCaret('nanananabatman');
+
+        assert.equal(ironInput.selectionStart, 2, 'selectionStart is preserved');
+        assert.equal(ironInput.selectionEnd, 2, 'selectionEnd is preserved');
+      });
+
     });
 
     suite('a11y', function() {

@@ -264,9 +264,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     /**
      * Validates the input element and sets an error style if needed.
      */
-     validate: function () {
+     validate: function() {
        return this.inputElement.validate();
      },
+
+    /**
+     * Restores the cursor to its original position after updating the value.
+     * @param {String} newValue The value that should be saved.
+     */
+    updateValueAndPreserveCaret: function(newValue) {
+      // Not all elements might have selection, and even if they have the
+      // right properties, accessing them might throw an exception (like for
+      // <input type=number>)
+      try {
+        var start = this.inputElement.selectionStart;
+        this.value = newValue;
+
+        // The cursor automatically jumps to the end after re-setting the value,
+        // so restore it to its original position.
+        this.inputElement.selectionStart = start;
+        this.inputElement.selectionEnd = start;
+      } catch (e) {
+        // Just set the value and give up on the caret.
+        this.value = newValue;
+      }
+    },
 
     _computeAlwaysFloatLabel: function(alwaysFloatLabel, placeholder) {
       return placeholder || alwaysFloatLabel;
