@@ -66,6 +66,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="always-float-label">
+    <template>
+      <paper-input always-float-label label="foo"></paper-input>
+    </template>
+  </test-fixture>
+
   <test-fixture id="placeholder">
     <template>
       <paper-input label="foo" placeholder="bar"></paper-input>
@@ -96,6 +102,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.equal(input.noLabelFloat, false);
         var floatingLabel = Polymer.dom(Polymer.dom(input.root).querySelector('paper-input-container').root).querySelector('.label-is-floating');
         assert.ok(floatingLabel);
+      });
+
+      test('always-float-label attribute works without placeholder', function() {
+        var input = fixture('always-float-label');
+        var container = Polymer.dom(input.root).querySelector('paper-input-container');
+        var inputContent = Polymer.dom(container.root).querySelector('.input-content');
+        assert.isTrue(inputContent.classList.contains('label-is-floating'), 'label is floating');
       });
 
       test('error message is displayed', function() {

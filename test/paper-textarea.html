@@ -59,6 +59,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="always-float-label">
+    <template>
+      <paper-textarea always-float-label label="label"></paper-textarea>
+    </template>
+  </test-fixture>
+
   <script>
 
     suite('basic', function() {
@@ -113,6 +119,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             assert.equal(inputAttr, attrs[attr], 'attribute "' + attr + '" is equal to property (' + attrs[attr] + ', ' + inputAttr + ')');
           }
         }
+      });
+
+      test('always-float-label attribute works', function() {
+        var input = fixture('always-float-label');
+        var container = Polymer.dom(input.root).querySelector('paper-input-container');
+        var inputContent = Polymer.dom(container.root).querySelector('.input-content');
+        assert.isTrue(inputContent.classList.contains('label-is-floating'), 'label is floating');
       });
 
     });
