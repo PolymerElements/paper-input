@@ -140,11 +140,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var container = fixture('has-value');
         var label = Polymer.dom(container).querySelector('#l');
         var input = Polymer.dom(container).querySelector('#i');
-        var color = getComputedStyle(label).color;
+        var inputContent = Polymer.dom(container.root).querySelector('.input-content');
         input.focus();
+        // 'focus' event isn't firing on windows ff for some reason when you call focus()
+        container._onFocus();
         requestAnimationFrame(function() {
           assert.equal(document.activeElement, input, 'input is focused');
-          assert.notEqual(getComputedStyle(label).color, color, 'label has different color when input has focus');
+          assert.isTrue(container.focused, 'focused is true');
+          assert.isTrue(inputContent.classList.contains('label-is-highlighted'), 'label is highlighted when input has focus');
           done();
         });
       });
@@ -153,10 +156,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var container = fixture('basic');
         var label = Polymer.dom(container).querySelector('#l');
         var input = Polymer.dom(container).querySelector('#i');
-        var color = getComputedStyle(label).color;
+        var inputContent = Polymer.dom(container.root).querySelector('.input-content');
         input.focus();
+        container._onFocus();
         requestAnimationFrame(function() {
-          assert.equal(getComputedStyle(label).color, color, 'label has same color when input has focus and has null value');
+          assert.isFalse(inputContent.classList.contains('label-is-highlighted'), 'label is not highlighted when input has focus and has null value');
           done();
         });
       });
@@ -164,61 +168,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('underline is colored when input is focused', function(done) {
         var container = fixture('basic');
         var input = Polymer.dom(container).querySelector('#i');
-        var line = Polymer.dom(container.root).querySelector('.focused-line');
-        assert.notEqual(getTransform(line), 'none', 'line is not colored when input is not focused');
-        line.addEventListener('transitionend', function() {
-          assert.equal(document.activeElement, input, 'input is focused');
-          requestAnimationFrame(function() {
-            var transform = getTransform(line);
-            assert.isTrue(transform === 'none' || transform === 'matrix(1, 0, 0, 1, 0, 0)', 'line is colored when input is focused');
-            done();
-          });
-        });
+        var line = Polymer.dom(container.root).querySelector('.underline');
+        assert.isFalse(line.classList.contains('is-highlighted'), 'line is not highlighted when input is not focused');
         input.focus();
+        container._onFocus();
+        requestAnimationFrame(function() {
+          assert.equal(document.activeElement, input, 'input is focused');
+          assert.isTrue(line.classList.contains('is-highlighted'), 'line is highlighted when input is focused');
+          done();
+        });
       });
 
     });
 
     suite('validation', function() {
 
-      test('styled when the input is set to an invalid value with auto-validate', function(done) {
+      test('styled when the input is set to an invalid value with auto-validate', function() {
         var container = fixture('auto-validate-numbers');
         var input = Polymer.dom(container).querySelector('#i');
-        var label = Polymer.dom(container).querySelector('#l');
-        var line = Polymer.dom(container.root).querySelector('.focused-line');
-        var color = getComputedStyle(label).color;
-        line.addEventListener('transitionend', function() {
-          assert.isTrue(container.invalid, 'invalid is true');
-          assert.notEqual(getComputedStyle(label).color, color, 'label is colored when input is invalid');
-          var transform = getTransform(line);
-          assert.isTrue(transform === 'none' || transform === 'matrix(1, 0, 0, 1, 0, 0)', 'line is colored when input is focused');
-          done();
-        });
-        // wait a frame here, because IE seems to want to draw a frame here before the transition
-        // will trigger
-        requestAnimationFrame(function() {
-          input.bindValue = 'foobar';
-        });
+        var inputContent = Polymer.dom(container.root).querySelector('.input-content');
+        var line = Polymer.dom(container.root).querySelector('.underline');
+
+        input.bindValue = 'foobar';
+
+        assert.isTrue(container.invalid, 'invalid is true');
+        assert.isTrue(inputContent.classList.contains('is-invalid'), 'label has invalid styling when input is invalid');
+        assert.isTrue(line.classList.contains('is-invalid'), 'underline has invalid styling when input is invalid');
       });
 
-      test('styled when the input is set to an invalid value with auto-validate, with validator', function(done) {
+      test('styled when the input is set to an invalid value with auto-validate, with validator', function() {
         var container = fixture('auto-validate-validator');
         var input = Polymer.dom(container).querySelector('#i');
-        var label = Polymer.dom(container).querySelector('#l');
-        var line = Polymer.dom(container.root).querySelector('.focused-line');
-        var color = getComputedStyle(label).color;
-        line.addEventListener('transitionend', function() {
-          assert.isTrue(container.invalid, 'invalid is true');
-          assert.notEqual(getComputedStyle(label).color, color, 'label is colored when input is invalid');
-          var transform = getTransform(line);
-          assert.isTrue(transform === 'none' || transform === 'matrix(1, 0, 0, 1, 0, 0)', 'line is colored when input is focused');
-          done();
-        });
-        // wait a frame here, because IE seems to want to draw a frame here before the transition
-        // will trigger
-        requestAnimationFrame(function() {
-          input.bindValue = '123123';
-        });
+        var inputContent = Polymer.dom(container.root).querySelector('.input-content');
+        var line = Polymer.dom(container.root).querySelector('.underline');
+
+        input.bindValue = '123123';
+
+        assert.isTrue(container.invalid, 'invalid is true');
+        assert.isTrue(inputContent.classList.contains('is-invalid'), 'label has invalid styling when input is invalid');
+        assert.isTrue(line.classList.contains('is-invalid'), 'underline has invalid styling when input is invalid');
       });
 
       test('styled when the input is set initially to an invalid value with auto-validate, with validator', function() {
@@ -227,23 +215,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.isTrue(Polymer.dom(container.root).querySelector('.underline').classList.contains('is-invalid'), 'underline has is-invalid class');
       });
 
-      test('styled when the input is set to an invalid value with manual validation', function(done) {
+      test('styled when the input is set to an invalid value with manual validation', function() {
         var container = fixture('manual-validate-numbers');
         var input = Polymer.dom(container).querySelector('#i');
-        var label = Polymer.dom(container).querySelector('#l');
-        var line = Polymer.dom(container.root).querySelector('.focused-line');
-        var color = getComputedStyle(label).color;
-        line.addEventListener('transitionend', function() {
-          assert.isTrue(container.invalid, 'invalid is true');
-          assert.notEqual(getComputedStyle(label).color, color, 'label is colored when input is invalid');
-          var transform = getTransform(line);
-          assert.isTrue(transform === 'none' || transform === 'matrix(1, 0, 0, 1, 0, 0)', 'line is colored when input is focused');
-          done();
-        });
-        requestAnimationFrame(function() {
-          input.bindValue = 'foobar';
-          input.validate();
-        });
+        var inputContent = Polymer.dom(container.root).querySelector('.input-content');
+        var line = Polymer.dom(container.root).querySelector('.underline');
+
+        input.bindValue = 'foobar';
+        input.validate();
+
+        assert.isTrue(container.invalid, 'invalid is true');
+        assert.isTrue(inputContent.classList.contains('is-invalid'), 'label has invalid styling when input is invalid');
+        assert.isTrue(line.classList.contains('is-invalid'), 'underline has invalid styling when input is invalid');
       });
 
     });
