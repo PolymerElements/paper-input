@@ -201,7 +201,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * A placeholder string in addition to the label. If this is set, the label will always float.
        */
       placeholder: {
-        type: String
+        type: String,
+        // need to set a default so _computeAlwaysFloatLabel is run
+        value: ''
       },
 
       /**
