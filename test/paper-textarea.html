@@ -90,6 +90,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.equal(ironTextarea.selectionEnd, 2, 'selectionEnd is preserved');
       });
 
+      test('input attributes are bound to textarea', function() {
+        var input = fixture('basic');
+        var attrs = {
+          'autocomplete': 'true',
+          'autofocus': true,
+          'inputmode': 'number',
+          'name': 'foo',
+          'placeholder': 'bar',
+          'readonly': true,
+          'required': true,
+          'maxlength': 3
+        };
+        for (var attr in attrs) {
+          input[attr] = attrs[attr];
+        }
+        for (var attr in attrs) {
+          var inputAttr = input.inputElement.getAttribute(attr);
+          if (typeof attrs[attr] === 'boolean') {
+            assert.equal(inputAttr !== null, attrs[attr], 'attribute "' + attr + '" is equal to property (' + attrs[attr] + ', ' + inputAttr !== null + ')');
+          } else {
+            assert.equal(inputAttr, attrs[attr], 'attribute "' + attr + '" is equal to property (' + attrs[attr] + ', ' + inputAttr + ')');
+          }
+        }
+      });
+
     });
 
     suite('a11y', function() {
