@@ -54,6 +54,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="required-no-auto-validate">
+    <template>
+      <paper-input required error-message="error"></paper-input>
+    </template>
+  </test-fixture>
+
+
   <test-fixture id="required-char-counter">
     <template>
       <paper-input auto-validate char-counter required error-message="error"></paper-input>
@@ -151,6 +158,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         assert.equal(ironInput.selectionStart, 2, 'selectionStart is preserved');
         assert.equal(ironInput.selectionEnd, 2, 'selectionEnd is preserved');
+      });
+
+    });
+
+    suite('validation', function() {
+
+      test('invalid attribute updated after calling validate()', function() {
+        var input = fixture('required-no-auto-validate');
+        forceXIfStamp(input);
+        input.validate();
+        var error = Polymer.dom(input.root).querySelector('paper-input-error');
+        assert.ok(error, 'paper-input-error exists');
+        assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
+        assert.isTrue(input.invalid, 'invalid is true');
       });
 
     });
