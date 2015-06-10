@@ -29,6 +29,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </head>
 <body>
 
+  <paper-input-container id="container">
+    <input is="iron-input">
+    <paper-input-error>error</paper-input-error>
+  </paper-input-container>
+
   <test-fixture id="auto-validate-numbers">
     <template>
       <paper-input-container auto-validate attr-for-value="bind-value">
@@ -50,6 +55,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.equal(getComputedStyle(error).display, 'none', 'error is display:none');
         input.bindValue = 'foobar';
         assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
+      });
+
+      test('error message add on is registered', function() {
+        var container = document.getElementById('container');
+        assert.isTrue(container._addons && container._addons.length === 1, 'add on is registered');
       });
 
     });
