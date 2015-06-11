@@ -338,7 +338,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       _boundOnInput: {
         type: Function,
         value: function() {
-          this._onInput.bind(this)
+          return this._onInput.bind(this);
         }
       },
 
