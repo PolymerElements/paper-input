@@ -85,6 +85,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       /**
+       * The datalist of the input (if any). This should match the id of an existing <datalist>. Bind this
+       * to the `<input is="iron-input">`'s `list` property.
+       */
+      list: {
+        type: String
+      },
+
+      /**
        * A pattern to validate the `input` with. Bind this to the `<input is="iron-input">`'s
        * `pattern` property.
        */
