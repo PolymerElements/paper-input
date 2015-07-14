@@ -440,7 +440,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       // type="number" hack needed because this.value is empty until it's valid
-      if (value || (inputElement.type === 'number' && !inputElement.checkValidity())) {
+      if (value || value === 0 || (inputElement.type === 'number' && !inputElement.checkValidity())) {
         this._inputHasContent = true;
       } else {
         this._inputHasContent = false;
