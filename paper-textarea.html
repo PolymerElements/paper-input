@@ -48,7 +48,9 @@ style this element.
         readonly$="[[readonly]]"
         required$="[[required]]"
         maxlength$="[[maxlength]]"
-        autocapitalize$="[[autocapitalize]]"></iron-autogrow-textarea>
+        autocapitalize$="[[autocapitalize]]"
+        rows$="[[rows]]"
+        max-rows$="[[maxRows]]"></iron-autogrow-textarea>
 
       <template is="dom-if" if="[[errorMessage]]">
         <paper-input-error>[[errorMessage]]</paper-input-error>
@@ -86,6 +88,16 @@ style this element.
       _ariaDescribedBy: {
         observer: '_ariaDescribedByChanged',
         type: String
+      },
+
+      rows: {
+        type: Number,
+        value: 1
+      },
+
+      maxRows: {
+        type: Number,
+        value: 0
       }
 
     },
