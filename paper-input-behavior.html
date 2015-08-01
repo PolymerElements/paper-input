@@ -273,11 +273,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     attached: function() {
       // set alwaysFloatLabel to true if browser has native formatter (input->type:date or input->type:time etc.)
       // TODO make value change silent
+      var value = this.inputElement.value;
       this.inputElement.value = ' ';
       if (!this.inputElement.value) {
         this.alwaysFloatLabel = true;
       } else {
-        this.inputElement.value = '';
+        this.inputElement.value = value;
       }
       this._updateAriaLabelledBy();
     },
