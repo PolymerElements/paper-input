@@ -110,23 +110,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       /**
-       * The maximum (numeric or date-time) input value.
-       * Can be a String (e.g. `"2000-1-1"`) or a Number (e.g. `2`).
-       * Bind this to the `<input is="iron-input">`'s `max` property.
-       */
-      max: {
-        type: String
-      },
-
-      /**
-       * The maximum length of the input value. Bind this to the `<input is="iron-input">`'s
-       * `maxlength` property.
-       */
-      maxlength: {
-        type: Number
-      },
-
-      /**
        * The error message to display when the input is invalid. Bind this to the
        * `<paper-input-error>`'s content, if using.
        */
@@ -202,6 +185,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       /**
+       * Bind this to the `<input is="iron-input">`'s `minlength` property.
+       */
+      minlength: {
+        type: Number
+      },
+
+      /**
+       * The maximum length of the input value. Bind this to the `<input is="iron-input">`'s
+       * `maxlength` property.
+       */
+      maxlength: {
+        type: Number
+      },
+
+      /**
        * The minimum (numeric or date-time) input value.
        * Bind this to the `<input is="iron-input">`'s `min` property.
        */
@@ -210,10 +208,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       /**
-       * Bind this to the `<input is="iron-input">`'s `minlength` property.
+       * The maximum (numeric or date-time) input value.
+       * Can be a String (e.g. `"2000-1-1"`) or a Number (e.g. `2`).
+       * Bind this to the `<input is="iron-input">`'s `max` property.
        */
-      minlength: {
-        type: Number
+      max: {
+        type: String
+      },
+
+      /**
+       * Limits the numeric or date-time increments.
+       * Bind this to the `<input is="iron-input">`'s `step` property.
+       */
+      step: {
+        type: String
       },
 
       /**
@@ -245,14 +253,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       size: {
         type: Number
-      },
-
-      /**
-       * Limits the numeric or date-time increments.
-       * Bind this to the `<input is="iron-input">`'s `step` property.
-       */
-      step: {
-        type: String
       },
 
       // Nonstandard attributes for binding if needed
