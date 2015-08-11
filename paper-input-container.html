@@ -78,6 +78,7 @@ Custom property | Description | Default
 `--paper-input-container-label` | Mixin applied to the label | `{}`
 `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
 `--paper-input-container-input` | Mixin applied to the input | `{}`
+`--paper-input-container-input-disabled` | Mixin applied to the input when it's disabled | `{}`
 `--paper-input-container-prefix` | Mixin applied to the input prefix | `{}`
 `--paper-input-container-suffix` | Mixin applied to the input suffix | `{}`
 `--paper-input-container-underline` | Mixin applied to the underline | `{}`
@@ -105,6 +106,8 @@ This element is `display:block` by default, but you can set the `inline` attribu
     :host([disabled]) {
       pointer-events: none;
       opacity: 0.33;
+
+      @apply(--paper-input-container-disabled);
     }
 
     .floated-label-placeholder {
