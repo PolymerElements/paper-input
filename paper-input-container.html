@@ -521,7 +521,8 @@ This element is `display:block` by default, but you can set the `inline` attribu
           }
           // The label might have a horizontal offset if a prefix element exists
           // which needs to be undone when displayed as a floating label.
-          if (this.$.prefix && label && label.offsetParent) {
+          if (this.$.prefix && label && label.offsetParent &&
+              Polymer.dom(this.$.prefix).getDistributedNodes().length > 0) {
            label.style.left = -label.offsetParent.offsetLeft + 'px';
           }
         } else {
