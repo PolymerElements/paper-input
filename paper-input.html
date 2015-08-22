@@ -103,6 +103,7 @@ style this element.
         max$="[[max]]"
         step$="[[step]]"
         name$="[[name]]"
+        on-change="_changeAction"
         placeholder$="[[placeholder]]"
         readonly$="[[readonly]]"
         list$="[[list]]"
@@ -140,6 +141,10 @@ style this element.
       Polymer.IronControlState
     ]
 
+    /** Re-fire change event that does not bubble across shadow roots. */
+    _changeAction: function() {
+      this.fire('change');
+    },
   })
 
 })();
