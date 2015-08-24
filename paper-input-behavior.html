@@ -394,6 +394,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         label.id = labelledBy;
       }
       this._ariaLabelledBy = labelledBy;
+    },
+
+    focus: function() {
+      // Pass focus calls on to the inputEleemnt.
+      this.inputElement.focus();
     }
 
   };
