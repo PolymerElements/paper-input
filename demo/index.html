@@ -65,6 +65,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <button onclick="validate()">Validate!</button>
     </div>
 
+    <h4>Focus</h4>
+    <div class="vertical-section">
+      <paper-input label="textarea label" id="inputForFocus"></paper-input>
+      <br>
+      <button onclick="inputFocus()">Focus!</button>
+    </div>
+
     <h4>Character counter</h4>
     <div class="vertical-section">
       <paper-input label="label" char-counter></paper-input>
@@ -90,6 +97,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     function validate() {
       document.getElementById('inputForValidation').validate();
+    }
+    function inputFocus () {
+      document.getElementById('inputForFocus').focus();
     }
   </script>
 </body>

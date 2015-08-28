@@ -237,6 +237,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return this.$.input;
     },
 
+    /**
+     * Passes focus() to the input element
+     */
+    focus: function() {
+      this.$.input.focus();
+    },
+
     attached: function() {
       this._updateAriaLabelledBy();
     },
