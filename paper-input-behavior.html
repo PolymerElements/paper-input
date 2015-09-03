@@ -302,7 +302,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _appendStringWithSpace: function(str, more) {
       if (str) {
-        str = str + ' ' + more;
+        str = concat(str, ' ', more);
       } else {
         str = more;
       }
@@ -312,10 +312,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     _onAddonAttached: function(event) {
       var target = event.path ? event.path[0] : event.target;
       if (target.id) {
-        this._ariaDescribedBy = this._appendStringWithSpace(this._ariaDescribedBy, target.id);
-      } else {
-        var id = 'paper-input-add-on-' + Math.floor((Math.random() * 100000));
-        target.id = id;
+        var id = target.id ? target.id : 'paper-input-add-on-' + Math.floor((Math.random() * 100000));
         this._ariaDescribedBy = this._appendStringWithSpace(this._ariaDescribedBy, id);
       }
     },
@@ -368,12 +365,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // element, but paper-input-container listens to those events. Since there are more
       // pending work on focus/blur in IronControlState, I'm putting in this hack to get the
       // input focus state working for now.
-      if (!this.$.container) {
-        this.$.container = Polymer.dom(this.root).querySelector('paper-input-container');
-        if (!this.$.container) {
-          return;
-        }
-      }
+      // if (!this.$.container) {
+      //   this.$.container = Polymer.dom(this.root).querySelector('paper-input-container');
+      //   if (!this.$.container) {
+      //     return;
+      //   }
+      // }
       if (focused) {
         this.$.container._onFocus();
       } else {
@@ -382,7 +379,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _updateAriaLabelledBy: function() {
-      var label = Polymer.dom(this.root).querySelector('label');
+      var label = this.$.label;
       if (!label) {
         this._ariaLabelledBy = '';
         return;

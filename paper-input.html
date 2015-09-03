@@ -73,11 +73,11 @@ style this element.
       }
     </style>
 
-    <paper-input-container no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
+    <paper-input-container id="container" no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
 
       <content select="[prefix]"></content>
 
-      <label hidden$="[[!label]]">[[label]]</label>
+      <label id="label" hidden$="[[!label]]">[[label]]</label>
 
       <input is="iron-input" id="input"
         aria-labelledby$="[[_ariaLabelledBy]]"
