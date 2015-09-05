@@ -276,6 +276,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
     _checkNativeFormatter: function() {
       // set alwaysFloatLabel to true if browser has native formatter (input->type:date or input->type:time etc.)
+      var checkTypes = ['number', 'time', 'date'];
+      if (checkTypes.indexOf(this.inputElement.type) === -1) {
+        return;
+      }
       // TODO make value change silent
       var value = this.inputElement.value;
       // TODO catch chrome format warning
