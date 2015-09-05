@@ -278,6 +278,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // set alwaysFloatLabel to true if browser has native formatter (input->type:date or input->type:time etc.)
       // TODO make value change silent
       var value = this.inputElement.value;
+      // TODO catch chrome format warning
       this.inputElement.value = ' ';
       if (!this.inputElement.value) {
         this.alwaysFloatLabel = true;
