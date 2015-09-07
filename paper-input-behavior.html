@@ -274,8 +274,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this._checkNativeFormatter();
       this._updateAriaLabelledBy();
     },
+    // set alwaysFloatLabel to true if browser has native formatter (input->type:date or input->type:time etc.)
     _checkNativeFormatter: function() {
-      // set alwaysFloatLabel to true if browser has native formatter (input->type:date or input->type:time etc.)
+      // only check these types if the label has to be always floated.
       var checkTypes = ['number', 'time', 'date'];
       if (checkTypes.indexOf(this.inputElement.type) === -1) {
         return;
