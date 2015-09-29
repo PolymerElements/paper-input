@@ -42,6 +42,7 @@ style this element.
       <iron-autogrow-textarea id="input" class="paper-input-input"
         bind-value="{{value}}"
         required$="[[required]]"
+        disabled$="[[disabled]]"
         maxlength$="[[maxlength]]"></iron-autogrow-textarea>
 
       <template is="dom-if" if="[[errorMessage]]">
