@@ -186,6 +186,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
         font: inherit;
         color: var(--paper-input-container-color, --secondary-text-color);
 
+        @apply(--paper-font-common-nowrap);
         @apply(--paper-font-subhead);
         @apply(--paper-input-container-label);
       }
@@ -198,6 +199,10 @@ This element is `display:block` by default, but you can set the `inline` attribu
         transform-origin: left top;
         -webkit-transition: -webkit-transform 0.25s;
         transition: transform 0.25s;
+
+        /* Since we scale to 75/100 of the size, we actually have 100/75 of the
+        original space now available */
+        width: 133%;
 
         @apply(--paper-transition-easing);
       }
