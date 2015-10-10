@@ -344,7 +344,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         this.type = '';
 
-        console.debug('type set to null as native validation is on, add novalidate attribute to the containing form');
+        if (console && console.debug) {
+          console.debug('type set to null as native validation is on, add novalidate attribute to the containing form');
+        }
       }
     },
 
