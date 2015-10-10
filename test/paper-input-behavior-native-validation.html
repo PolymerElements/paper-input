@@ -55,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
 
-    suite('native-validation', function () {
+    suite('type and native validation', function () {
 
       var getInputElement = function (element) {
 
@@ -72,7 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         forceXIfStamp(element);
         
         var input = getInputElement(element);
-        assert.equal(input.getAttribute('type'), null);
+        assert.equal(input.getAttribute('type'), '');
 
         done();
       });
@@ -83,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         forceXIfStamp(element);
 
         var input = getInputElement(element);
-        assert.equal(input.getAttribute('type'), null);
+        assert.equal(input.getAttribute('type'), '');
 
         done();
       });
