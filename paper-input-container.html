@@ -237,6 +237,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
         border: none;
         color: var(--paper-input-container-input-color, --primary-text-color);
         -webkit-appearance: none;
+        text-align: inherit;
 
         @apply(--paper-font-subhead);
         @apply(--paper-input-container-input);
@@ -261,6 +262,10 @@ This element is `display:block` by default, but you can set the `inline` attribu
         resize: none;
       }
 
+      .add-on-content {
+        position: relative;
+      }
+      
       .add-on-content.is-invalid ::content * {
         color: var(--paper-input-container-invalid-color, --google-red-500);
       }
