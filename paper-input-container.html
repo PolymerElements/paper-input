@@ -210,6 +210,9 @@ This element is `display:block` by default, but you can set the `inline` attribu
 
       :host-context([dir="rtl"]) .input-content.label-is-floating ::content label,
       :host-context([dir="rtl"]) .input-content.label-is-floating ::content .paper-input-label {
+        /* TODO(noms): Figure out why leaving the width at 133% before the animation
+         * actually makes
+         * it wider on the right side, not left side, as you would expect in RTL */
         width: 100%;
         -webkit-transform-origin: right top;
         transform-origin: right top;
