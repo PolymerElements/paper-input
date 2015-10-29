@@ -54,23 +54,24 @@ style this element.
 
 
 
-##&lt;paper-textarea&gt;
+##&lt;paper-input-char-counter&gt;
 
 
-`<paper-textarea>` is a multi-line text field with Material Design styling.
+`<paper-input-char-counter>` is a character counter for use with `<paper-input-container>`. It
+shows the number of characters entered in the input and the max length if it is specified.
 
-    <paper-textarea label="Textarea label"></paper-textarea>
-
-See `Polymer.PaperInputBehavior` for more API docs.
-
-### Validation
-
-Currently only `required` and `maxlength` validation is supported.
+    <paper-input-container>
+      <input is="iron-input" maxlength="20">
+      <paper-input-char-counter></paper-input-char-counter>
+    </paper-input-container>
 
 ### Styling
 
-See `Polymer.PaperInputContainer` for a list of custom properties used to
-style this element.
+The following mixin is available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-input-char-counter` | Mixin applied to the element | `{}`
 
 
 ##&lt;paper-input-container&gt;
@@ -174,24 +175,23 @@ Custom property | Description | Default
 `--paper-input-error`                   | Mixin applied to the error        | `{}`
 
 
-##&lt;paper-input-char-counter&gt;
+##&lt;paper-textarea&gt;
 
 
-`<paper-input-char-counter>` is a character counter for use with `<paper-input-container>`. It
-shows the number of characters entered in the input and the max length if it is specified.
+`<paper-textarea>` is a multi-line text field with Material Design styling.
 
-    <paper-input-container>
-      <input is="iron-input" maxlength="20">
-      <paper-input-char-counter></paper-input-char-counter>
-    </paper-input-container>
+    <paper-textarea label="Textarea label"></paper-textarea>
+
+See `Polymer.PaperInputBehavior` for more API docs.
+
+### Validation
+
+Currently only `required` and `maxlength` validation is supported.
 
 ### Styling
 
-The following mixin is available for styling:
-
-Custom property | Description | Default
-----------------|-------------|----------
-`--paper-input-char-counter` | Mixin applied to the element | `{}`
+See `Polymer.PaperInputContainer` for a list of custom properties used to
+style this element.
 
 
 ##Polymer.PaperInputBehavior
