@@ -100,9 +100,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="number">
+    <template>
+      <paper-input type="number" value-as-number="2"></paper-input>
+    </template>
+  </test-fixture>
+
   <script>
 
     suite('basic', function() {
+
+      test('default value is set', function() {
+        var input = fixture('label-has-value');
+        assert.equal(input.value, 'bar', 'input.value equals `bar`');
+        assert.equal(input.inputElement.value, input.value, 'inputElement.value equals input.value');
+      });
 
       test('setting value sets the input value', function() {
         var input = fixture('basic');
@@ -257,6 +269,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     });
 
+    suite('number', function(){
+      
+      var input;
+      setup(function(){
+        input = fixture('number');
+      });
+
+      test('value and valueAsNumber on init', function() {
+        assert.strictEqual(input.value, '2');
+        assert.strictEqual(input.valueAsNumber, 2);
+        assert.strictEqual(input.inputElement.bindValue, input.value);
+        assert.strictEqual(input.inputElement.bindValueAsNumber, input.valueAsNumber);
+      });
+
+      test('value and valueAsNumber updated', function() {
+        var data = ['2.1', 0, 1.2, '1.2e+1', -10];
+        for (var i in data) {
+          input.valueAsNumber = data[i];
+          assert.isTrue(typeof input.value === 'string');
+          assert.isTrue(typeof input.valueAsNumber === 'number');
+          assert.strictEqual(input.value, parseFloat(data[i]) + '');
+          assert.strictEqual(input.valueAsNumber, parseFloat(data[i]));
+          assert.strictEqual(input.inputElement.bindValueAsNumber, input.valueAsNumber);
+        }
+      });
+    });
   </script>
 
 </body>

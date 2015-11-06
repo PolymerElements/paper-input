@@ -48,6 +48,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       /**
+       * The value as number for this input. Bind this to the `<input is="iron-input">`'s
+       * `bindValueAsNumber` property.
+       */
+      valueAsNumber: {
+        notify: true,
+        type: Number
+      },
+
+      /**
        * Set to true to disable this input. Bind this to both the `<paper-input-container>`'s
        * and the input's `disabled` property.
        */
