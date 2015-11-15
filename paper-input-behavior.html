@@ -334,11 +334,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return this.$.input;
     },
 
-    attached: function() {
-      this._updateAriaLabelledBy();
+    /**
+     * Returns a reference to the input's form element (can be null).
+     */
+    getFormElement: function() {
+
+      if (this.form) return this.inputElement.form;
+      var parent = this;
+      while (parent = parent.parentElement) {
+        if (parent.tagName.toUpperCase() === 'FORM') return parent;
+      }
+
+      return null;
     },
 
-    _appendStringWithSpace: function(str, more) {
+    attached: function() {
+      this._updateAriaLabelledBy();
+      this._nullTypeWhenUsingNativeValidation();
+    },
+
+    _nullTypeWhenUsingNativeValidation: function () {
+      // find the associated form and check for novalidate attribute, 
+      // if not found nullify the input[type] to avoid native validation errors
+
+      var form = this.getFormElement();
+      if (form == null
+            || !form.hasAttribute('novalidate')) {
+
+        this.type = '';
+
+        if (console && console.debug) {
+          console.debug('type set to null as native validation is on, add novalidate attribute to the containing form');
+        }
+      }
+    },
+
+    _appendStringWithSpace: function (str, more) {
       if (str) {
         str = str + ' ' + more;
       } else {
