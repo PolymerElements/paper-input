@@ -54,6 +54,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var error = Polymer.dom(container).querySelector('#e');
         assert.equal(getComputedStyle(error).visibility, 'hidden', 'error is visibility:hidden');
         input.bindValue = 'foobar';
+        assert(container.invalid, 'invalid should be set to true');
+        assert(container.hasAttribute('invalid'), 'invalid attribute should be set');
         assert.notEqual(getComputedStyle(error).visibility, 'hidden', 'error is not visibility:hidden');
       });
 

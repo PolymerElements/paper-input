@@ -48,7 +48,7 @@ Custom property | Description | Default
         right:0;
       }
 
-      :host([invalid]) {
+      :host-context([invalid]) {
         visibility: visible;
       };
     </style>
@@ -65,20 +65,5 @@ Custom property | Description | Default
     behaviors: [
       Polymer.PaperInputAddonBehavior
     ],
-
-    properties: {
-      /**
-       * True if the error is showing.
-       */
-      invalid: {
-        readOnly: true,
-        reflectToAttribute: true,
-        type: Boolean
-      }
-    },
-
-    update: function(state) {
-      this._setInvalid(state.invalid);
-    }
   });
 </script>
