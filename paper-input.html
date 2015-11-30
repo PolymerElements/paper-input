@@ -59,7 +59,7 @@ style this element.
 @demo demo/index.html
 -->
 
-<dom-module id="paper-input">
+<dom-module id="paper-input-template">
   <template>
 
     <style>
@@ -144,8 +144,12 @@ style this element.
 
     behaviors: [
       Polymer.IronFormElementBehavior,
-      Polymer.PaperInputBehavior,
-      Polymer.IronControlState
-    ]
+      Polymer.PaperInputBehavior
+    ],
+
+    // Manually import the template, so that other elements can re-use it.
+    beforeRegister: function() {
+      this._template = Polymer.DomModule.import('paper-input-template', 'template');
+    }
   });
 </script>

@@ -338,6 +338,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this._updateAriaLabelledBy();
     },
 
+    ready: function() {
+      // If there's an initial input, validate it.
+      if (this.value)
+        this._handleAutoValidate();
+    },
+
     _appendStringWithSpace: function(str, more) {
       if (str) {
         str = str + ' ' + more;
