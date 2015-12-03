@@ -49,10 +49,16 @@ as to not overlap the native UI (search icon, file button, etc.).
 
 See `Polymer.PaperInputBehavior` for more API docs.
 
+### Focus
+
+To focus a paper-input, you can call the native `focus()` method as long as the
+paper input has a tab index.
+
 ### Styling
 
 See `Polymer.PaperInputContainer` for a list of custom properties used to
 style this element.
+
 
 
 
