@@ -16,6 +16,7 @@
     "paper-input-behavior.html",
     "paper-input-container.html",
     "paper-input-error.html",
+    "paper-input-addon-behavior.html",
     "paper-input-char-counter.html"
   ],
   "private": true,
