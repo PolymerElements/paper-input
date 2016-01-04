@@ -316,8 +316,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _ariaLabelledBy: {
         type: String,
         value: ''
-      }
+      },
 
+      /**
+       * Bind this to the `<input is="iron-input">`'s` `tabindex` property.
+       */
+      tabindex: {
+        type: Number
+      }
     },
 
     listeners: {
