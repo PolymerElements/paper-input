@@ -189,6 +189,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
         top: 0;
         right: 0;
         left: 0;
+        width: 100%;
         font: inherit;
         color: var(--paper-input-container-color, --secondary-text-color);
 
@@ -201,8 +202,8 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content.label-is-floating ::content .paper-input-label {
         -webkit-transform: translateY(-75%) scale(0.75);
         transform: translateY(-75%) scale(0.75);
-        -webkit-transition: -webkit-transform 0.25s;
-        transition: transform 0.25s;
+        -webkit-transition: -webkit-transform 0.25s, width 0.25s;
+        transition: transform 0.25s, width 0.25s;
         -webkit-transform-origin: left top;
         transform-origin: left top;
 
