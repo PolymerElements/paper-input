@@ -20,130 +20,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
   <link rel="import" href="../paper-input.html">
-  <link rel="stylesheet" href="../../paper-styles/color.html">
-  <link rel="import" href="../../paper-styles/demo-pages.html">
+  <link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
 
   <link rel="import" href="../experiments/paper-input-light.html">
-  <link rel="import" href="../experiments/paper-input-tiny.html">
-  
+  <link rel="import" href="../experiments/paper-input-tiniest.html">
   <link rel="import" href="../experiments/paper-input-not-an-input.html">
-
-
 </head>
+<style is="custom-style">
+  .horizontal {
+    @apply(--layout-horizontal);
+    @apply(--layout-center);
+  }
+</style>
 <body unresolved>
-  <input pattern="[a-zA-Z]*">
-  <div class="vertical center-justified layout">
-    <h4>Text input</h4>
-
-    <div class="vertical-section">
-      <div class="horizontal layout">
-        <paper-input></paper-input>
-        <paper-input-light></paper-input-light>
-        <paper-input-tiny></paper-input-tiny>
-        <paper-input-not-an-input></paper-input-not-an-input>
-      </div>
-      <div class="horizontal layout">
-        <paper-input label="normal" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input>
-        <paper-input-light label="light" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input-light>
-        <paper-input-tiny label="tiny" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input-tiny>
-        <paper-input-not-an-input label="content editable" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input-not-an-input>
-      </div>
-      <div class="horizontal layout">
-        <paper-input invalid label="normal invalid" error-message="foo"></paper-input>
-        <paper-input-light invalid label="light invalid" error-message="foo"></paper-input-light>
-        <paper-input-tiny label="preset aria label" aria-label="zomg hello" placeholder="a placeholder"></paper-input-tiny>
-        <paper-input-not-an-input invalid label="fake invalid" error-message="foo"></paper-input-not-an-input>
-      </div>
-      <div class="horizontal layout">
-        <paper-input disabled label="normal disabled"></paper-input>
-        <paper-input-light disabled label="light disabled"></paper-input-light>
-        <paper-input-tiny disabled label="tiny disabled"></paper-input-tiny>
-        <paper-input-not-an-input disabled label="fake disabled"></paper-input-not-an-input>
-      </div>
-      <div class="horizontal layout">
-        <paper-input value="batman" label="normal value"></paper-input>
-        <paper-input-light value="batman" label="light value" ></paper-input-light>
-        <paper-input-tiny value="batman" label="tiny value" ></paper-input-tiny>
-        <paper-input-not-an-input value="batman" label="fake value" ></paper-input-not-an-input>
-      </div>
-
-
-
-
-<!--
-      <paper-input label="password" type="password"></paper-input>
-
-      <paper-input no-label-float label="label (no-label-float)"></paper-input>
-
-      <paper-input label="disabled" disabled></paper-input> -->
-    </div>
-<!--
-    <h4>Text area</h4>
-    <div class="vertical-section">
-      <paper-textarea label="textarea label"></paper-textarea>
-    </div>
-
-    <h4>Validation</h4>
-    <div class="vertical-section">
-      <paper-input label="input validates on blur (required, auto-validate)" required auto-validate error-message="needs some text!"></paper-input>
-
-      <paper-input label="only type letters (auto-validate)" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
-
-      <paper-input id="inputForValidation" required label="only type letters (no auto validate)" pattern="[a-zA-Z]*" error-message="letters only, required input!"></paper-input>
-      <br>
-      <button onclick="validate()">Validate!</button>
-    </div>
-
-    <h4>Character counter</h4>
-    <div class="vertical-section">
-      <paper-input label="label" char-counter></paper-input>
-
-      <paper-input label="at most 10 letters" char-counter auto-validate pattern="[a-zA-Z]*" maxlength="10" error-message="letters only!"></paper-input>
-
-      <paper-textarea label="textarea" char-counter></paper-textarea>
-
-      <paper-textarea label="textarea with maxlength" char-counter maxlength="10"></paper-textarea>
-
-      <paper-textarea label="text area with rows and max-rows" rows="3" max-rows="4"></paper-textarea>
-    </div>
-
-    <h4>Prefixes and Suffixes</h4>
-    <div class="vertical-section">
-      <paper-input class="short" label="total" type="number">
-        <div prefix>$</div>
-      </paper-input>
-
-      <paper-input class="short" label="username">
-        <div suffix>@email.com</div>
-      </paper-input>
-
-      <paper-input class="short" label="icons and buttons" id="inputWithButton">
-        <iron-icon icon="search" prefix></iron-icon>
-        <paper-icon-button suffix onclick="clearInput()"
-            icon="clear" alt="clear" title="clear" tabindex="0">
-        </paper-icon-button>
-      </paper-input>
-    </div>
-
-    <h4>Complex inputs</h4>
-    <div class="vertical-section">
-      <template is="dom-bind">
-        <paper-input-container always-float-label auto-validate attr-for-value="value">
-          <label>Social Security Number</label>
-          <ssn-input class="paper-input-input"></ssn-input>
-          <paper-input-error>SSN invalid!</paper-input-error>
-        </paper-input-container>
-      </template>
-    </div>
-  </div> -->
-  <script>
-    function validate() {
-      document.getElementById('inputForValidation').validate();
-    }
-
-    function clearInput() {
-      document.getElementById('inputWithButton').value = '';
-    }
-  </script>
+  <div class="horizontal">
+    <paper-input></paper-input>
+    <paper-input-tiniest></paper-input-tiniest>
+    <!-- <paper-input-light></paper-input-light>
+    <paper-input-not-an-input></paper-input-not-an-input> -->
+  </div>
+  <div class="horizontal">
+    <paper-input label="normal" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input>
+    <paper-input-tiniest label="tiny" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input-tiniest>
+    <!-- <paper-input-light label="light" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input-light>
+    <paper-input-not-an-input label="content editable" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input-not-an-input> -->
+  </div>
+  <div class="horizontal">
+    <paper-input invalid label="normal invalid" error-message="foo"></paper-input>
+    <paper-input-tiniest label="preset aria label" aria-label="zomg hello" placeholder="a placeholder"></paper-input-tiniest>
+    <!-- <paper-input-light invalid label="light invalid" error-message="foo"></paper-input-light>
+    <paper-input-not-an-input invalid label="fake invalid" error-message="foo"></paper-input-not-an-input> -->
+  </div>
+  <div class="horizontal">
+    <paper-input disabled label="normal disabled"></paper-input>
+    <paper-input-tiniest disabled label="tiny disabled"></paper-input-tiniest>
+    <!-- <paper-input-light disabled label="light disabled"></paper-input-light>
+    <paper-input-not-an-input disabled label="fake disabled"></paper-input-not-an-input> -->
+  </div>
+  <div class="horizontal">
+    <paper-input value="batman" label="normal value"></paper-input>
+    <paper-input-tiniest value="batman" label="tiny value" ></paper-input-tiniest>
+    <!-- <paper-input-light value="batman" label="light value" ></paper-input-light>
+    <paper-input-not-an-input value="batman" label="fake value" ></paper-input-not-an-input> -->
+  </div>
 </body>
 </html>
