@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="paper-input-new-behavior.html">
+<link rel="import" href="paper-input-contenteditable-behavior.html">
 <link rel="import" href="../paper-input-container-shared-styles.html">
 
 <dom-module id="paper-input-contenteditable-plus-validation">
@@ -83,45 +84,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     behaviors: [
       Polymer.PaperInputBehaviorTinyImpl,
       Polymer.PaperInputBehaviorUIImpl,
-      Polymer.PaperInputBehaviorValidationImpl
+      Polymer.PaperInputBehaviorValidationImpl,
+      Polymer.PaperInputContentEditableBehavior
     ],
-
-    properties: {
-      focused: {
-        type: Boolean,
-        value: false
-      }
-    },
-
-    attached: function() {
-      var self = this;
-      if (this.value) {
-        this.$.input.textContent = this.value;
-        this._onInput();
-      }
-
-      this.$.input.addEventListener('input', function() {
-        self._onInput();
-      });
-
-      this.$.input.addEventListener('focus', function() {
-        self.focused = true;
-      });
-
-      this.$.input.addEventListener('blur', function() {
-        self.focused = false;
-      });
-
-    },
 
     // Bleh; needed because contenteditable doesn't have 'value'
     _onInput: function() {
-      var value = this.$.input.textContent;
-      
-      // lolwat.
-      var plain =  value.replace(/<\/?(\w+)\s*[\w\W]*?>/g, '');
-      this.$.input.textContent = plain;
-
+      value = this.$.input.textContent;
       if (value || value === 0 || (!!this.placeholder && !this.value)) {
         this._hasContent = true;
       } else {
