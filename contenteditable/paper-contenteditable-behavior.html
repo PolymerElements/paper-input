@@ -1,0 +1,216 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../polymer/polymer.html">
+
+<script>
+  Polymer.PaperIronInputBehaviorImpl = {
+    properties: {
+
+      // From iron-input
+      value: {
+        observer: '_valueChanged',
+        type: String
+      },
+
+      preventInvalidInput: {
+        type: Boolean
+      },
+
+      allowedPattern: {
+        type: String,
+        observer: "_allowedPatternChanged"
+      },
+
+      _previousValidInput: {
+        type: String,
+        value: ''
+      },
+
+      _patternAlreadyChecked: {
+        type: Boolean,
+        value: false
+      },
+
+      listeners: {
+        'keypress': '_onKeypress'
+      },
+
+      // Mock IronControlState maybe?
+      // TODO: is this needed?
+      focused: {
+        type: Boolean,
+        value: false
+      },
+
+      placeholder: {
+        type: String,
+      },
+
+    },
+
+    attached: function() {
+      // TODO: why is this needed? :()
+      this.focused = false;
+      this.invalid = false;
+
+      // Initial value
+      if (this.value) {
+        this._onInput();
+      }
+
+      // Bunch of listeners.
+      this.$.input.addEventListener('focus', function() {
+        this.focused = true;
+      }.bind(this));
+
+      this.$.input.addEventListener('blur', function() {
+        this.focused = false;
+      }.bind(this));
+
+      var self = this;
+      this.$.input.addEventListener('input', function() {
+        self._onInput();
+      });
+
+      // Never stop being different, IE.
+      this.$.input.addEventListener('textinput', function() {
+        console.log('textinput event');
+        self._onInput();
+      });
+
+      this.$.input.addEventListener('paste', function(e) {
+        var pastedText = undefined;
+        if (window.clipboardData && window.clipboardData.getData) { // IE
+          pastedText = window.clipboardData.getData('Text');
+        } else if (e.clipboardData && e.clipboardData.getData) {
+          pastedText = e.clipboardData.getData('text/plain');
+        }
+        this._updateTextContent(pastedText);
+        this._onInput();
+        return false; // Prevent the default handler from running.
+      }.bind(this));
+    },
+
+    _updateTextContent: function (value) {
+      this.$.input.textContent = value;
+    },
+
+    _onInput: function() {
+      if (this.preventInvalidInput && !this._patternAlreadyChecked) {
+        var valid = this._checkAllowedPatternValidity(this.$.input.textContent);
+        // Don't allow this character if it's invalid.
+        if (!valid) {
+          // The cursor automatically jumps to the beginning after re-setting the value,
+          // so restore the original position.
+          this.updateValueAndPreserveCaret(this._previousValidInput);
+        }
+      }
+      this.value = this.$.input.textContent;
+      this._previousValidInput = this.value;
+      this._patternAlreadyChecked = false;
+
+      if (this.value || this.value === 0 || this.value === false) {
+        this._hasContent = true;
+      } else {
+        this._hasContent = false;
+      }
+    },
+
+    _valueChanged: function() {
+      // Only update if it's actually different.
+      if (this.$.input && this.$.input.textContent !== this.value) {
+        this.$.input.textContent = this.value;
+      }
+    },
+
+    /******************************
+     * Prevent invalid input stuff from iron-input
+     *****************************/
+    _checkAllowedPatternValidity: function(value) {
+      var regexp = this._patternRegExp;
+      if (!regexp) {
+        return true;
+      }
+      for (var i = 0; i < value.length; i++) {
+        if (!regexp.test(value[i])) {
+          return false;
+        }
+      }
+      return true;
+    },
+
+    get _patternRegExp() {
+      var pattern;
+      if (this.allowedPattern) {
+        pattern = new RegExp(this.allowedPattern);
+      }
+      return pattern;
+    },
+
+    _allowedPatternChanged: function() {
+      // Force to prevent invalid input when an `allowed-pattern` is set
+      this.preventInvalidInput = this.allowedPattern ? true : false;
+    },
+
+    /**
+     * Restores the cursor to its original position after updating the value.
+     * @param {string} newValue The value that should be saved.
+     */
+    updateValueAndPreserveCaret: function(newValue) {
+      // Get the current cursor.
+      var selection = window.getSelection();
+
+      // If there's no selection (we tried to programmatically set the
+      // input to an invalid value), then there's no cursor to update.
+      // Just update the value.
+      if (selection.rangeCount === 0) {
+        this.$.input.textContent = newValue;
+        return;
+      }
+
+      var range = selection.getRangeAt(0);
+
+      // If the selection was just a cursor, then you need to undo the advance
+      // Otherwise, restore to the beginning of the selection.
+      // TODO(noms): This is dark magic and you should explain it better
+      var start = range.startOffset;
+      var end = range.endOffset;
+      var cursor = (start == end) ? Math.max(0, start - 1) : end;
+      // Update the value.
+      this.$.input.textContent = newValue;
+
+      // The cursor automatically jumps to the beginning after re-setting the value,
+      // so restore the original position. But don't go past the end because
+      // that's an exception.
+      selection.collapse(this.$.input.firstChild, Math.min(cursor, newValue.length));
+    },
+
+    /******************************
+     * Validation stuff
+     *****************************/
+    validate: function() {
+      // We are trying to match input's behaviour, which always matches the
+      // whole string. So we need to pad with ^ and $ if we haven't already
+      var prefix = this.pattern[0] === '^' ? '' : '^';
+      var suffix = this.pattern[this.pattern.length -1 ] === '$' ? '' : '$';
+
+      var regexp = RegExp(prefix + this.pattern + suffix);
+      if (!regexp) {
+        return true;
+      }
+      var valid = regexp.test(this.$.input.textContent);
+      this.invalid = !valid;
+      return valid;
+    }
+
+  };
+
+  Polymer.PaperInputContentEditableBehavior = [Polymer.PaperIronInputBehaviorImpl];
+</script>

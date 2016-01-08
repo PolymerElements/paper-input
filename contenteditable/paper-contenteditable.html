@@ -1,0 +1,127 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../paper-input-container-shared-styles.html">
+
+<link rel="import" href="../experiments/paper-input-new-behavior.html">
+<link rel="import" href="paper-contenteditable-behavior.html">
+
+<dom-module id="paper-contenteditable">
+  <!-- <template strip-whitespace> -->
+  <template>
+    <style include="paper-input-container-shared-styles"></style>
+    <style>
+      :host {
+        display: inline-block;
+      }
+
+      #input.single-line {
+        white-space: nowrap;
+        width:200px;
+        overflow: hidden;
+      }
+
+      #input ::content br, #input br {
+        display:none !important;
+      }
+      #input ::content *, #input * {
+        display:inline;
+        white-space:nowrap;
+      }
+
+      #input {
+        min-width: 170px;
+        min-height: 24px; /* FF doesn't seem to have a default */
+        z-index: 1;
+      }
+
+      #input:focus {
+        outline: none;
+      }
+
+      .error {
+        display: inline-block;
+
+        color: var(--paper-input-container-invalid-color, --google-red-500);
+
+        @apply(--paper-font-caption);
+        @apply(--paper-input-error);
+        position: absolute;
+        left:0;
+        right:0;
+      }
+
+      /*.placeholder {
+        color: var(--paper-input-container-color, --secondary-text-color);
+        @apply(--paper-font-common-nowrap);
+        @apply(--paper-font-subhead);
+      }*/
+    </style>
+
+    <div class="floated-label-placeholder" hidden$="[[noLabelFloat]]">&nbsp;</div>
+
+    <div class="input-content">
+      <label hidden$="[[!label]]"
+             class$="[[_computeLabelClass(noLabelFloat,alwaysFloatLabel,focused,_hasContent,invalid)]]">[[label]]</label>
+      <div id="input" contenteditable="true" class="single-line" tabindex="0"></div>
+    </div>
+
+    <div class$="[[_computeUnderlineClass(focused,invalid)]]">
+      <div class="unfocused-line"></div>
+      <div class="focused-line"></div>
+    </div>
+
+    <div style="position: relative">
+      <span class="error" hidden$="[[_computeErrorMessageClass(invalid,errorMessage)]]">[[errorMessage]]</span>
+    </div>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'paper-contenteditable',
+
+    behaviors: [
+      Polymer.PaperInputBehaviorTinyImpl,
+      Polymer.PaperInputBehaviorUIImpl,
+      Polymer.PaperInputBehaviorValidationImpl,
+      Polymer.PaperInputContentEditableBehavior
+    ],
+
+    // Bleh; needed because contenteditable doesn't have 'value'
+    // _onInput: function() {
+    //   value = this.$.input.textContent;
+    //   if (value || value === 0 || (!!this.placeholder && !this.value)) {
+    //     this._hasContent = true;
+    //   } else {
+    //     this._hasContent = false;
+    //   }
+    //   this._handleValueAndAutoValidate();
+    // },
+
+    // Need to override some validation stuff
+    // validate: function() {
+    //   return this._checkPatternValidity();
+    // },
+    //
+    // _checkPatternValidity: function() {
+    //   // We are trying to match input's behaviour, which always matches the
+    //   // whole string. So we need to pad with ^ and $ if we haven't already
+    //   var prefix = this.pattern[0] === '^' ? '' : '^';
+    //   var suffix = this.pattern[this.pattern.length -1 ] === '$' ? '' : '$';
+    //   var regexp = RegExp(prefix + this.pattern + suffix);
+    //   if (!regexp) {
+    //     return true;
+    //   }
+    //   return regexp.test(this.$.input.textContent);
+    // }
+  });
+</script>

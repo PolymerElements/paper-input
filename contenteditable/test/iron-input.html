@@ -1,0 +1,202 @@
+<!doctype html>
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+<head>
+
+  <title>iron-input tests</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+  <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../../web-component-tester/browser.js"></script>
+  <link rel="import" href="../paper-contenteditable.html">
+
+</head>
+<body>
+
+  <test-fixture id="basic">
+    <template>
+      <paper-contenteditable></paper-contenteditable>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="has-value">
+    <template>
+      <paper-contenteditable value="foobar"></paper-contenteditable>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="prevent-invalid-input">
+    <template>
+      <paper-contenteditable prevent-invalid-input allowed-pattern="[0-9]"></paper-contenteditable>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="prevent-invalid-input-with-pattern">
+    <template>
+      <paper-contenteditable prevent-invalid-input pattern="[a-zA-Z]{3}[0-9]*"></paper-contenteditable>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="prevent-invalid-input-has-value">
+    <template>
+      <paper-contenteditable prevent-invalid-input allowed-pattern="[0-9]" value="foobar"></paper-contenteditable>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="automatically-prevent-invalid-input-if-allowed-pattern">
+    <template>
+      <paper-contenteditable allowed-pattern="[0-9]"></paper-contenteditable>
+    </template>
+  </test-fixture>
+
+  <template is="dom-bind" id="bind-to-object">
+    <paper-contenteditable id="el" value="{{foo}}"></paper-contenteditable>
+  </template>
+
+  <test-fixture id="complex-regex">
+    <template>
+      <paper-contenteditable pattern="[a-zA-Z]{3}[0-9]*"></paper-contenteditable>
+    </template>
+  </test-fixture>
+
+  <script>
+
+    suite('basic', function() {
+
+      test('setting the value sets the text content', function() {
+        var input = fixture('basic');
+        input.value = 'foobar';
+        assert.equal(input.value, input.$.input.textContent, 'value equals to textContent');
+      });
+
+      test('setting the text content sets the value after _onInput()', function() {
+        var input = fixture('basic');
+        input.$.textContent = 'foobar';
+        input._onInput();
+        assert.equal(input.value, input.$.input.textContent, 'value equals to textContent');
+      });
+
+      test('changing the value triggers an event', function(done) {
+        var input = fixture('basic');
+
+        input.addEventListener('value-changed', function(value) {
+          done();
+        });
+
+        input.value = "foo";
+      });
+
+      test('default value sets textContent', function() {
+        var input = fixture('has-value');
+        assert.equal(input.value, input.$.input.textContent, 'value equals to textContent');
+      });
+
+      // test('set value to undefined', function() {
+      //   var scope = document.getElementById('bind-to-object');
+      //   scope.foo = undefined;
+      //   var element = scope.$.el;
+      //   assert.ok(!element.$.textContent, 'textContent is falsy');
+      //   assert.ok(!element.value, 'value is falsy');
+      // });
+      //
+      // test('set value to false', function() {
+      //   var scope = document.getElementById('bind-to-object');
+      //   scope.foo = false;
+      //   var element = scope.$.el;
+      //   assert.isFalse(element.value);
+      //   assert.equal(element.$.input.textContent, 'false');
+      // });
+
+      test('can validate using a complex regex', function() {
+        var input = fixture('complex-regex');
+        input.value = '123';
+        input.validate();
+        assert.isTrue(input.invalid, 'input is invalid');
+        input.value = 'foo';
+        input.validate();
+        assert.isFalse(input.invalid, 'input is valid');
+        input.value = 'foo123';
+        input.validate();
+        assert.isFalse(input.invalid, 'input is valid');
+      });
+
+      test('prevent invalid input works in _onInput', function() {
+        var input = fixture('prevent-invalid-input');
+        input.$.input.textContent = '123';
+        input._onInput();
+        assert.equal(input.value, '123');
+        assert.equal(input.$.input.textContent, '123');
+
+        input.$.input.textContent = '123foo';
+        input._onInput();
+        assert.equal(input.value, '123');
+        assert.equal(input.$.input.textContent, '123');
+      });
+
+      test('inputs can be validated', function() {
+        var input = fixture('prevent-invalid-input-with-pattern');
+        input.$.input.textContent = '123';
+        input._onInput();
+        assert.equal(input.value, '123');
+        assert.equal(input.$.input.textContent, '123');
+        input.validate();
+        assert.isTrue(input.invalid, 'input is invalid');
+
+        input.$.input.textContent = 'foo';
+        input._onInput();
+        assert.equal(input.value, 'foo');
+        assert.equal(input.$.input.textContent, 'foo');
+        input.validate();
+        assert.isFalse(input.invalid, 'input is valid');
+
+        input.$.input.textContent = 'foo123';
+        input._onInput();
+        assert.equal(input.value, 'foo123');
+        assert.equal(input.$.input.textContent, 'foo123');
+        input.validate();
+        assert.isFalse(input.invalid, 'input is valid');
+      });
+
+      test('prevent invalid input works automatically when allowed pattern is set', function() {
+        var input = fixture('automatically-prevent-invalid-input-if-allowed-pattern');
+
+        input.$.input.textContent = '123';
+        input._onInput();
+        assert.equal(input.value, '123');
+        assert.equal(input.$.input.textContent, '123');
+
+        input.$.input.textContent = '123foo';
+        input._onInput();
+        assert.equal(input.value, '123');
+        assert.equal(input.$.input.textContent, '123');
+
+        input.allowedPattern = '';
+        input.$.input.textContent = '#123foo BAR!';
+        input._onInput();
+        assert.equal(input.value, '#123foo BAR!');
+        assert.equal(input.$.input.textContent, '#123foo BAR!');
+
+        input.allowedPattern = '[a-zA-Z]';
+        input.$.input.textContent = 'foo';
+        input._onInput();
+        input.$.input.textContent = 'bar123';
+        input._onInput();
+        assert.equal(input.value, 'foo');
+        assert.equal(input.$.input.textContent, 'foo');
+
+      });
+    });
+  </script>
+
+</body>
+</html>
