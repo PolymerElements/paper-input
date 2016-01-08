@@ -1,0 +1,277 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../../iron-behaviors/iron-control-state.html">
+
+<script>
+
+  /**
+   * Use `Polymer.PaperInputBehavior` to implement inputs with `<paper-input-container>`. This
+   * behavior is implemented by `<paper-input>`. It exposes a number of properties from
+   * `<paper-input-container>` and `<input is="iron-input">` and they should be bound in your
+   * template.
+   *
+   * The input element can be accessed by the `inputElement` property if you need to access
+   * properties or methods that are not exposed.
+   * @polymerBehavior Polymer.PaperInputBehavior
+   */
+
+
+  // HTMLInputElement attributes for binding if needed
+  Polymer.PaperInputBehaviorNativeInputAttributes = {
+    properties: {
+      /**
+       * The type of the input. The supported types are `text`, `number` and `password`. Bind this
+       * to the `<input is="iron-input">`'s `type` property.
+       */
+      type: {
+        type: String
+      },
+
+      /**
+       * The datalist of the input (if any). This should match the id of an existing `<datalist>`. Bind this
+       * to the `<input is="iron-input">`'s `list` property.
+       */
+      list: {
+        type: String
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `autocomplete` property.
+       */
+      autocomplete: {
+        type: String,
+        value: 'off'
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `autofocus` property.
+       */
+      autofocus: {
+        type: Boolean
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `inputmode` property.
+       */
+      inputmode: {
+        type: String
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `minlength` property.
+       */
+      minlength: {
+        type: Number
+      },
+
+      /**
+       * The maximum length of the input value. Bind this to the `<input is="iron-input">`'s
+       * `maxlength` property.
+       */
+      maxlength: {
+        type: Number
+      },
+
+      /**
+       * The minimum (numeric or date-time) input value.
+       * Bind this to the `<input is="iron-input">`'s `min` property.
+       */
+      min: {
+        type: String
+      },
+
+      /**
+       * The maximum (numeric or date-time) input value.
+       * Can be a String (e.g. `"2000-1-1"`) or a Number (e.g. `2`).
+       * Bind this to the `<input is="iron-input">`'s `max` property.
+       */
+      max: {
+        type: String
+      },
+
+      /**
+       * Limits the numeric or date-time increments.
+       * Bind this to the `<input is="iron-input">`'s `step` property.
+       */
+      step: {
+        type: String
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `name` property.
+       */
+      name: {
+        type: String
+      },
+
+      /**
+       * A placeholder string in addition to the label. If this is set, the label will always float.
+       */
+      placeholder: {
+        type: String,
+        // need to set a default so _computeAlwaysFloatLabel is run
+        value: ''
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `readonly` property.
+       */
+      readonly: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `size` property.
+       */
+      size: {
+        type: Number
+      },
+
+      // Nonstandard attributes for binding if needed
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `autocapitalize` property.
+       */
+      autocapitalize: {
+        type: String,
+        value: 'none'
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `autocorrect` property.
+       */
+      autocorrect: {
+        type: String,
+        value: 'off'
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `autosave` property, used with type=search.
+       */
+      autosave: {
+        type: String
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `results` property, , used with type=search.
+       */
+      results: {
+        type: Number
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `accept` property, , used with type=file.
+       */
+      accept: {
+        type: String
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `multiple` property, , used with type=file.
+       */
+      multiple: {
+        type: Boolean
+      }
+    }
+  };
+
+
+  Polymer.PaperInputBehaviorAriaImpl = {
+    properties: {
+      _ariaDescribedBy: {
+        type: String,
+        value: ''
+      },
+      _ariaLabelledBy: {
+        type: String,
+        value: ''
+      }
+    },
+
+    attached: function() {
+      this._ariaDescribedBy = '';
+      this._updateAriaLabelledBy();
+      // Don't stomp over the user set aria label.
+      if (!this.getAttribute('aria-label') && this.label) {
+        this.setAttribute('aria-label', this.label);
+      }
+    },
+
+    _updateAriaLabelledBy: function() {
+      var label = Polymer.dom(this.root).querySelector('label');
+      if (!label) {
+        this._ariaLabelledBy = '';
+        return;
+      }
+      var labelledBy;
+      if (label.id) {
+        labelledBy = label.id;
+      } else {
+        labelledBy = 'paper-input-label-' + new Date().getUTCMilliseconds();
+        label.id = labelledBy;
+      }
+      this._ariaLabelledBy = labelledBy;
+    },
+  };
+
+
+  Polymer.PaperInputBehaviorFocusImpl = {
+    hostAttributes: {
+      tabindex: 0
+    },
+
+    keyBindings: {
+      'shift+tab:keydown': '_onShiftTabDown'
+    },
+
+    listeners: {
+      'focus': '_onFocus'
+    },
+
+
+    /**
+     * Returns a reference to the focusable element.
+     */
+    get _focusableElement() {
+      return this.inputElement;
+    },
+
+    /**
+     * Forward focus to inputElement
+     */
+    _onFocus: function() {
+      if (!this._shiftTabPressed) {
+        this._focusableElement.focus();
+      }
+    },
+
+    /**
+     * Handler that is called when a shift+tab keypress is detected by the menu.
+     *
+     * @param {CustomEvent} event A key combination event.
+     */
+    _onShiftTabDown: function(event) {
+      var oldTabIndex = this.getAttribute('tabindex');
+      this._shiftTabPressed = true;
+      this.setAttribute('tabindex', '-1');
+      this.async(function() {
+        this.setAttribute('tabindex', oldTabIndex);
+        this._shiftTabPressed = false;
+      }, 1);
+    }
+  };
+
+  // Things we have:
+  // PaperInputBehaviorNativeInputAttributes
+  // PaperInputBehaviorAriaImpl
+  // PaperInputBehaviorFocusImpl

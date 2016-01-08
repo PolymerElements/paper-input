@@ -22,9 +22,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../paper-input.html">
   <link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
 
-  <link rel="import" href="../experiments/paper-input-light.html">
-  <link rel="import" href="../experiments/paper-input-tiniest.html">
-  <link rel="import" href="../experiments/paper-input-not-an-input.html">
+  <link rel="import" href="../experiments/paper-input-tiny.html">
+  <link rel="import" href="../experiments/paper-input-tiny-plus-validation.html">
+  <!-- <link rel="import" href="../experiments/paper-input-light.html">
+  <link rel="import" href="../experiments/paper-input-not-an-input.html"> -->
 </head>
 <style is="custom-style">
   .horizontal {
@@ -35,33 +36,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved>
   <div class="horizontal">
     <paper-input></paper-input>
-    <paper-input-tiniest></paper-input-tiniest>
+    <paper-input-tiny></paper-input-tiny>
+    <paper-input-tiny-plus-validation></paper-input-tiny-plus-validation>
     <!-- <paper-input-light></paper-input-light>
     <paper-input-not-an-input></paper-input-not-an-input> -->
   </div>
   <div class="horizontal">
-    <paper-input label="normal" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input>
-    <paper-input-tiniest label="tiny" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input-tiniest>
-    <!-- <paper-input-light label="light" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input-light>
-    <paper-input-not-an-input label="content editable" auto-validate pattern="[a-zA-Z]*" error-message="foo"></paper-input-not-an-input> -->
+    <paper-input label="normal auto-validate" required auto-validate pattern="[0-9]*" error-message="digits only"></paper-input>
+    <paper-input-tiny label="tiny auto-validate" required auto-validate pattern="[0-9]*" error-message="digits only"></paper-input-tiny>
+    <paper-input-tiny-plus-validation label="tiny + validation auto-validate" required auto-validate pattern="[0-9]*" error-message="digits only"></paper-input-tiny-plus-validation>
   </div>
   <div class="horizontal">
     <paper-input invalid label="normal invalid" error-message="foo"></paper-input>
-    <paper-input-tiniest label="preset aria label" aria-label="zomg hello" placeholder="a placeholder"></paper-input-tiniest>
-    <!-- <paper-input-light invalid label="light invalid" error-message="foo"></paper-input-light>
-    <paper-input-not-an-input invalid label="fake invalid" error-message="foo"></paper-input-not-an-input> -->
+    <paper-input-tiny invalid label="tiny invalid" error-message="foo"></paper-input-tiny>
+    <paper-input-tiny-plus-validation invalid label="tiny + validation invalid" error-message="foo"></paper-input-tiny-plus-validation>
   </div>
   <div class="horizontal">
     <paper-input disabled label="normal disabled"></paper-input>
-    <paper-input-tiniest disabled label="tiny disabled"></paper-input-tiniest>
-    <!-- <paper-input-light disabled label="light disabled"></paper-input-light>
-    <paper-input-not-an-input disabled label="fake disabled"></paper-input-not-an-input> -->
+    <paper-input-tiny disabled label="tiny disabled"></paper-input-tiny>
+    <paper-input-tiny-plus-validation disabled label="tiny disabled"></paper-input-tiny-plus-validation>
   </div>
   <div class="horizontal">
     <paper-input value="batman" label="normal value"></paper-input>
-    <paper-input-tiniest value="batman" label="tiny value" ></paper-input-tiniest>
-    <!-- <paper-input-light value="batman" label="light value" ></paper-input-light>
-    <paper-input-not-an-input value="batman" label="fake value" ></paper-input-not-an-input> -->
+    <paper-input-tiny value="batman" label="tiny value" ></paper-input-tiny>
+    <paper-input-tiny-plus-validation value="batman" label="tiny + validation value" ></paper-input-tiny-plus-validation>
   </div>
 </body>
 </html>
