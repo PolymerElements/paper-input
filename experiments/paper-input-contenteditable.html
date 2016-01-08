@@ -8,10 +8,10 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../paper-input-behavior.html">
+<link rel="import" href="paper-input-new-behavior.html">
 <link rel="import" href="../paper-input-container-shared-styles.html">
 
-<dom-module id="paper-input-not-an-input">
+<dom-module id="paper-input-contenteditable">
   <template strip-whitespace>
     <style include="paper-input-container-shared-styles"></style>
     <style>
@@ -42,14 +42,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         outline: none;
       }
 
+      .error {
+        display: inline-block;
+
+        color: var(--paper-input-container-invalid-color, --google-red-500);
+
+        @apply(--paper-font-caption);
+        @apply(--paper-input-error);
+        position: absolute;
+        left:0;
+        right:0;
+      }
+
     </style>
 
     <div class="floated-label-placeholder" hidden$="[[noLabelFloat]]">.</div>
 
     <div class="input-content">
       <label hidden$="[[!label]]"
-             class$="[[_computeLabelClass(noLabelFloat,alwaysFloatLabel,focused,invalid,_hasContent)]]">[[label]]</label>
-      <div id="input" contenteditable="true" class="single-line"></div>
+             class$="[[_computeLabelClass(noLabelFloat,alwaysFloatLabel,focused,_hasContent,invalid)]]">[[label]]</label>
+      <div id="input" contenteditable="true" class="single-line" tabindex="0"></div>
     </div>
 
     <div class$="[[_computeUnderlineClass(focused,invalid)]]">
@@ -57,18 +69,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="focused-line"></div>
     </div>
 
-    <div class="error" hidden$="[[!invalid]]">[[errorMessage]]</div>
+    <div style="position: relative">
+      <span class="error" hidden$="[[_computeErrorMessageClass(invalid,errorMessage)]]">[[errorMessage]]</span>
+    </div>
 
   </template>
 </dom-module>
 
 <script>
   Polymer({
-    is: 'paper-input-not-an-input',
+    is: 'paper-input-contenteditable',
 
     behaviors: [
-      Polymer.PaperInputNotAnInputBehavior
+      Polymer.PaperInputBehaviorTinyImpl,
+      Polymer.PaperInputBehaviorUIImpl,
+      Polymer.PaperInputBehaviorValidationImpl
     ],
+
+    properties: {
+      focused: {
+        type: Boolean,
+        value: false
+      }
+    },
 
     attached: function() {
       var self = this;
@@ -81,67 +104,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         self._onInput();
       });
 
-      // Don't stomp over the user set aria label.
-      // if (!this.getAttribute('aria-label') && this.label) {
-      //   this.setAttribute('aria-label', this.label);
-      // }
+      this.$.input.addEventListener('focus', function() {
+        self.focused = true;
+      });
+
+      this.$.input.addEventListener('blur', function() {
+        self.focused = false;
+      });
+
     },
 
+    // Bleh; needed because contenteditable doesn't have 'value'
     _onInput: function() {
-      var value = this.$.input.textContent;
-      if (value || value === 0) {
+      var value = this.$.input.textContent
+      if (value || value === 0 || (!!this.placeholder && !this.value)) {
         this._hasContent = true;
       } else {
         this._hasContent = false;
       }
-
-      if (this.autoValidate) {
-        this.validate();
-      }
     },
 
+    // Need to override some validation stuff
     validate: function() {
-      var valid = this._checkPatternValidity();;
-      return valid;
+      return this._checkPatternValidity();
     },
 
     _checkPatternValidity: function() {
       var regexp = RegExp(this.pattern);
-      debugger
       if (!regexp) {
         return true;
       }
       return regexp.test(this.$.input.textContent);
-    },
-
-    _computeLabelClass: function(noLabelFloat,alwaysFloatLabel,focused,invalid,hasContent) {
-      var cls = '';
-
-      if (noLabelFloat) {
-        return hasContent ? 'label-is-hidden' : '';
-      }
-
-      if (hasContent || alwaysFloatLabel) {
-        cls += ' label-is-floating';
-        if (invalid) {
-          cls += ' is-invalid';
-        } else if (focused) {
-          cls += " label-is-highlighted";
-        }
-      }
-
-      return cls;
-    },
-
-    _computeUnderlineClass: function(focused, invalid) {
-      var cls = 'underline';
-      if (invalid) {
-        cls += ' is-invalid';
-      } else if (focused) {
-        cls += ' is-highlighted'
-      }
-      return cls;
     }
-
   });
 </script>

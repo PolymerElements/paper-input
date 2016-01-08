@@ -24,8 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <link rel="import" href="../experiments/paper-input-tiny.html">
   <link rel="import" href="../experiments/paper-input-tiny-plus-validation.html">
-  <!-- <link rel="import" href="../experiments/paper-input-light.html">
-  <link rel="import" href="../experiments/paper-input-not-an-input.html"> -->
+  <link rel="import" href="../experiments/paper-input-contenteditable.html">
 </head>
 <style is="custom-style">
   .horizontal {
@@ -38,28 +37,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-input></paper-input>
     <paper-input-tiny></paper-input-tiny>
     <paper-input-tiny-plus-validation></paper-input-tiny-plus-validation>
-    <!-- <paper-input-light></paper-input-light>
-    <paper-input-not-an-input></paper-input-not-an-input> -->
+    <paper-input-contenteditable></paper-input-contenteditable>
   </div>
   <div class="horizontal">
     <paper-input label="normal auto-validate" required auto-validate pattern="[0-9]*" error-message="digits only"></paper-input>
     <paper-input-tiny label="tiny auto-validate" required auto-validate pattern="[0-9]*" error-message="digits only"></paper-input-tiny>
     <paper-input-tiny-plus-validation label="tiny + validation auto-validate" required auto-validate pattern="[0-9]*" error-message="digits only"></paper-input-tiny-plus-validation>
+    <paper-input-contenteditable label="contenteditable auto-validate" required auto-validate pattern="[0-9]*" error-message="digits only"></paper-input-contenteditable>
   </div>
   <div class="horizontal">
     <paper-input invalid label="normal invalid" error-message="foo"></paper-input>
     <paper-input-tiny invalid label="tiny invalid" error-message="foo"></paper-input-tiny>
     <paper-input-tiny-plus-validation invalid label="tiny + validation invalid" error-message="foo"></paper-input-tiny-plus-validation>
+    <paper-input-contenteditable invalid label="contenteditable invalid" error-message="foo"></paper-input-contenteditable>
   </div>
   <div class="horizontal">
     <paper-input disabled label="normal disabled"></paper-input>
     <paper-input-tiny disabled label="tiny disabled"></paper-input-tiny>
     <paper-input-tiny-plus-validation disabled label="tiny disabled"></paper-input-tiny-plus-validation>
+    <paper-input-contenteditable disabled label="contenteditable disabled"></paper-input-contenteditable>
   </div>
   <div class="horizontal">
     <paper-input value="batman" label="normal value"></paper-input>
     <paper-input-tiny value="batman" label="tiny value" ></paper-input-tiny>
     <paper-input-tiny-plus-validation value="batman" label="tiny + validation value" ></paper-input-tiny-plus-validation>
+    <paper-input-contenteditable value="batman" label="contenteditable value" ></paper-input-contenteditable>
   </div>
 </body>
 </html>

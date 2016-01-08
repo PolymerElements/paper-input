@@ -239,13 +239,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _handleValueAndAutoValidate: function() {
       if (this.autoValidate) {
-        var valid;
-        if (this.$.input.validate) {
-          valid = this.$.input.validate();
-        } else {
-          valid = this.$.input.checkValidity();
-        }
-        this.invalid = !valid;
+        this.invalid = !this.validate();
       }
     },
     /**
@@ -254,7 +248,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @return {boolean}
      */
     validate: function() {
-      return this.$.input.validate();
+      var valid;
+      if (this.$.input.validate) {
+        valid = this.$.input.validate();
+      } else {
+        valid = this.$.input.checkValidity();
+      }
+      return valid;
     },
 
     /**
@@ -263,6 +263,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     _handleAutoValidate: function() {
       if (this.autoValidate)
         this.validate();
+    },
+
+    _computeErrorMessageClass: function(invalid,errorMessage) {
+      if (!errorMessage)
+        return true;
+      return !invalid;
     }
   };
 
@@ -278,12 +284,4 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   Polymer.PaperInputBehaviorTiny = [Polymer.PaperInputBehaviorBasicImpl,
                                     Polymer.PaperInputBehaviorTinyImpl];
-
-  // Polymer.PaperInputNotAnInputBehavior = [Polymer.PaperInputBehaviorCustomInputProperties,
-  //                                         Polymer.PaperInputBehaviorLightImpl,
-  //                                         Polymer.PaperInputBehaviorLightImpl,
-  //
-  //                                         Polymer.PaperInputBehaviorAdvancedValidationProperties,
-  //                                       //  PaperInputBehaviorAdvancedValidationLogic
-  //                                         ];
 </script>
