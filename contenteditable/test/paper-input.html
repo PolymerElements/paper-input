@@ -141,13 +141,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       // TODO(noms): add back when the char counter is added
-      // test('character counter is displayed', function() {
-      //   var input = fixture('char-counter');
-      //   forceXIfStamp(input);
-      //   var counter = Polymer.dom(input.root).querySelector('paper-contenteditable-char-counter')
-      //   assert.ok(counter, 'paper-contenteditable-char-counter exists');
-      //   assert.equal(counter._charCounterStr, input.value.length, 'character counter shows the value length');
-      // });
+      test('character counter is displayed', function() {
+        var input = fixture('char-counter');
+        var counter = Polymer.dom(input.root).querySelector('.char-counter')
+        assert.ok(counter, 'char-counter exists');
+        assert.equal(input._charCounterStr, input.value.length, 'character counter shows the value length');
+      });
 
       // TODO(noms): add back when validators are added
       // test('validator is used', function() {

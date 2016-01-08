@@ -49,9 +49,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         value: false
       },
 
-      placeholder: {
-        type: String,
+      // placeholder: {
+      //   type: String,
+      // },
+
+      charCounter: {
+        type: Boolean,
+        value: false
       },
+
+      maxlength: {
+        type: Number
+      },
+
+      _charCounterStr: {
+        type: String,
+        value: '0'
+      }
 
     },
 
@@ -122,6 +136,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       this._handleValueAndAutoValidate();
+
+      // Char counter!
+      var str = this.value.length || 0;
+      if (this.maxlength)
+        str += '/' + this.maxlength;
+      this._charCounterStr = str;
     },
 
     _valueChanged: function() {

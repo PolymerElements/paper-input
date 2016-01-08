@@ -50,6 +50,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         white-space:nowrap;
       }
 
+      .gutter {
+        position: relative;
+      }
+
       .error {
         display: inline-block;
         color: var(--paper-input-container-invalid-color, --google-red-500);
@@ -58,6 +62,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         position: absolute;
         left:0;
         right:0;
+      }
+
+      .char-counter {
+        display: inline-block;
+        float: right;
+
+        @apply(--paper-font-caption);
+        @apply(--paper-input-char-counter);
+      }
+
+      :host-context([dir="rtl"]) .char-counter {
+        float: left;
       }
 
       /*.placeholder {
@@ -80,8 +96,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="focused-line"></div>
     </div>
 
-    <div style="position: relative">
+    <div class="gutter">
       <span class="error" hidden$="[[_computeErrorMessageClass(invalid,errorMessage)]]">[[errorMessage]]</span>
+      <span class="char-counter"
+          hidden$="[[!charCounter]]">[[_charCounterStr]]</span>
     </div>
 
   </template>
