@@ -19,8 +19,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 
   <link rel="import" href="../paper-contenteditable.html">
-
+  <link rel="import" href="../../../iron-flex-layout/iron-flex-layout.html">
 </head>
+<style is="custom-style">
+  .tiny {
+    width: 50px;
+  }
+  .not-tiny {
+    width: 300px;
+  }
+  .horizontal {
+    @apply(--layout-horizontal);
+  }
+</style>
 <body unresolved>
   <h4>Basic</h4>
   <paper-contenteditable label="plain"></paper-contenteditable>
@@ -36,5 +47,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <paper-contenteditable label="prevent invalid input, pattern [a-z]" prevent-invalid-input allowed-pattern="[a-z]"></paper-contenteditable>
 
   <h4>Validation</h4>
+  <paper-contenteditable label="invalid" invalid error-message="foo"></paper-contenteditable>
+  <paper-contenteditable label="required, auto-validate" required auto-validate error-message="foo"></paper-contenteditable>
+  <paper-contenteditable label="[a-z]*, auto-validate" auto-validate pattern="[a-z]*" error-message="foo"></paper-contenteditable>
+  <paper-contenteditable id="inputForValidation" required label="manual validation" pattern="[a-z]*" error-message="lowercase only!"></paper-contenteditable>
+  <br>
+  <button onclick="validate()">Validate!</button>
+  <script>
+    function validate() {
+      document.getElementById('inputForValidation').validate();
+    }
+  </script>
+
+  <h4>UI tests</h4>
+  <paper-contenteditable label="tiny" class="tiny"></paper-contenteditable>
+  <paper-contenteditable label="not tiny" class="not-tiny"></paper-contenteditable>
+  <div class="horizontal" style="width:300px;">
+    <paper-contenteditable label="one" class="tiny"></paper-contenteditable>
+    <paper-contenteditable label="two" class="tiny"></paper-contenteditable>
+    <paper-contenteditable label="three" class="tiny"></paper-contenteditable>
+  </div>
+  In a flex layout, they still don't have a size
+  <div class="horizontal" style="width:300px;">
+    <paper-contenteditable label="one"></paper-contenteditable>
+    <paper-contenteditable label="two"></paper-contenteditable>
+    <paper-contenteditable label="three"></paper-contenteditable>
+  </div>
+
+  <h4>RTL</h4>
+  <div dir="rtl" style="width: 400px;">
+    <paper-contenteditable label="tiny" class="tiny"></paper-contenteditable>
+    <paper-contenteditable label="not tiny" class="not-tiny"></paper-contenteditable>
+    <paper-contenteditable label="invalid" error-message="foo" invalid></paper-contenteditable>
+  </div>
+
+
 </body>
 </html>

@@ -58,7 +58,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     attached: function() {
       // TODO: why is this needed? :()
       this.focused = false;
-      this.invalid = false;
 
       // Initial value
       if (this.value) {
@@ -121,6 +120,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       } else {
         this._hasContent = false;
       }
+
+      this._handleValueAndAutoValidate();
     },
 
     _valueChanged: function() {
@@ -182,7 +183,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // TODO(noms): This is dark magic and you should explain it better
       var start = range.startOffset;
       var end = range.endOffset;
-      var cursor = (start == end) ? Math.max(0, start - 1) : end;
+      var cursor = (start == end) ? Math.max(0, start) : end;
       // Update the value.
       this.$.input.textContent = newValue;
 
@@ -196,6 +197,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * Validation stuff
      *****************************/
     validate: function() {
+      if (this.required && this.value === '') {
+        this.invalid = true;
+        return false;
+      }
+
+      // No pattern, no problem.
+      if (!this.pattern)
+        return true;
+
       // We are trying to match input's behaviour, which always matches the
       // whole string. So we need to pad with ^ and $ if we haven't already
       var prefix = this.pattern[0] === '^' ? '' : '^';
@@ -205,7 +215,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if (!regexp) {
         return true;
       }
-      var valid = regexp.test(this.$.input.textContent);
+      var valid = regexp.test(this.value);
       this.invalid = !valid;
       return valid;
     }

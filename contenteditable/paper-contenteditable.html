@@ -20,11 +20,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: inline-block;
+        width: 170px;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      #input {
+        min-height: 24px; /* FF doesn't seem to have a default */
+        z-index: 1;
+      }
+
+      /* We manage the focus UI separately */
+      #input:focus {
+        outline: none;
       }
 
       #input.single-line {
         white-space: nowrap;
-        width:200px;
         overflow: hidden;
       }
 
@@ -36,21 +50,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         white-space:nowrap;
       }
 
-      #input {
-        min-width: 170px;
-        min-height: 24px; /* FF doesn't seem to have a default */
-        z-index: 1;
-      }
-
-      #input:focus {
-        outline: none;
-      }
-
       .error {
         display: inline-block;
-
         color: var(--paper-input-container-invalid-color, --google-red-500);
-
         @apply(--paper-font-caption);
         @apply(--paper-input-error);
         position: absolute;
@@ -95,33 +97,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer.PaperInputBehaviorValidationImpl,
       Polymer.PaperInputContentEditableBehavior
     ],
-
-    // Bleh; needed because contenteditable doesn't have 'value'
-    // _onInput: function() {
-    //   value = this.$.input.textContent;
-    //   if (value || value === 0 || (!!this.placeholder && !this.value)) {
-    //     this._hasContent = true;
-    //   } else {
-    //     this._hasContent = false;
-    //   }
-    //   this._handleValueAndAutoValidate();
-    // },
-
-    // Need to override some validation stuff
-    // validate: function() {
-    //   return this._checkPatternValidity();
-    // },
-    //
-    // _checkPatternValidity: function() {
-    //   // We are trying to match input's behaviour, which always matches the
-    //   // whole string. So we need to pad with ^ and $ if we haven't already
-    //   var prefix = this.pattern[0] === '^' ? '' : '^';
-    //   var suffix = this.pattern[this.pattern.length -1 ] === '$' ? '' : '$';
-    //   var regexp = RegExp(prefix + this.pattern + suffix);
-    //   if (!regexp) {
-    //     return true;
-    //   }
-    //   return regexp.test(this.$.input.textContent);
-    // }
   });
 </script>
