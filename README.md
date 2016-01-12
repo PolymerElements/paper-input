@@ -204,6 +204,14 @@ See `Polymer.PaperInputContainer` for a list of custom properties used to
 style this element.
 
 
+##Polymer.PaperInputAddonBehavior
+
+
+Use `Polymer.PaperInputAddonBehavior` to implement an add-on for `<paper-input-container>`. A
+add-on appears below the input, and may display information based on the input value and
+validity such as a character counter or an error message.
+
+
 ##Polymer.PaperInputBehavior
 
 
@@ -214,12 +222,4 @@ template.
 
 The input element can be accessed by the `inputElement` property if you need to access
 properties or methods that are not exposed.
-
-
-##Polymer.PaperInputAddonBehavior
-
-
-Use `Polymer.PaperInputAddonBehavior` to implement an add-on for `<paper-input-container>`. A
-add-on appears below the input, and may display information based on the input value and
-validity such as a character counter or an error message.
 
