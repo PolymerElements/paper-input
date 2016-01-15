@@ -162,7 +162,7 @@ The following custom properties and mixins are available for styling:
 | Custom property | Description | Default |
 | --- | --- | --- |
 | `--paper-input-container-color` | Label and underline color when the input is not focused | `--secondary-text-color` |
-| `--paper-input-container-focus-color` | Label and underline color when the input is focused | `--default-primary-color` |
+| `--paper-input-container-focus-color` | Label and underline color when the input is focused | `--primary-color` |
 | `--paper-input-container-invalid-color` | Label and underline color when the input is is invalid | `--google-red-500` |
 | `--paper-input-container-input-color` | Input foreground color | `--primary-text-color` |
 | `--paper-input-container` | Mixin applied to the container | `{}` |
