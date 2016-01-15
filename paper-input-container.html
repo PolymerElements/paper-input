@@ -74,7 +74,7 @@ The following custom properties and mixins are available for styling:
 Custom property | Description | Default
 ----------------|-------------|----------
 `--paper-input-container-color` | Label and underline color when the input is not focused | `--secondary-text-color`
-`--paper-input-container-focus-color` | Label and underline color when the input is focused | `--default-primary-color`
+`--paper-input-container-focus-color` | Label and underline color when the input is focused | `--primary-color`
 `--paper-input-container-invalid-color` | Label and underline color when the input is is invalid | `--google-red-500`
 `--paper-input-container-input-color` | Input foreground color | `--primary-text-color`
 `--paper-input-container` | Mixin applied to the container | `{}`
@@ -125,8 +125,9 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .focused-line {
         @apply(--layout-fit);
 
-        background: var(--paper-input-container-focus-color, --default-primary-color);
+        background: var(--paper-input-container-focus-color, --primary-color);
         height: 2px;
+
         -webkit-transform-origin: center center;
         transform-origin: center center;
         -webkit-transform: scale3d(0,1,1);
@@ -157,8 +158,8 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .unfocused-line {
         @apply(--layout-fit);
 
-        height: 1px;
         background: var(--paper-input-container-color, --secondary-text-color);
+        height: 1px;
 
         @apply(--paper-input-container-underline);
       }
@@ -174,6 +175,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .label-and-input-container {
         @apply(--layout-flex-auto);
         @apply(--layout-relative);
+
         width: 100%;
         max-width: 100%;
       }
@@ -229,7 +231,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
 
       .input-content.label-is-highlighted ::content label,
       .input-content.label-is-highlighted ::content .paper-input-label {
-        color: var(--paper-input-container-focus-color, --default-primary-color);
+        color: var(--paper-input-container-focus-color, --primary-color);
 
         @apply(--paper-input-container-label-focus);
       }
@@ -266,12 +268,14 @@ This element is `display:block` by default, but you can set the `inline` attribu
 
       ::content [prefix] {
         @apply(--paper-font-subhead);
+
         @apply(--paper-input-prefix);
         @apply(--layout-flex-none);
       }
 
       ::content [suffix] {
         @apply(--paper-font-subhead);
+
         @apply(--paper-input-suffix);
         @apply(--layout-flex-none);
       }
@@ -294,7 +298,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       .add-on-content.is-highlighted ::content * {
-        color: var(--paper-input-container-focus-color, --default-primary-color);
+        color: var(--paper-input-container-focus-color, --primary-color);
       }
     </style>
 
