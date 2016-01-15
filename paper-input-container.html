@@ -449,7 +449,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
     },
 
     get _inputElementValue() {
-      return this._inputElement[this._propertyForValue] || this._inputElement.value;
+      return this._inputElement[this._propertyForValue] || this._inputElement.value || '';
     },
 
     ready: function() {
