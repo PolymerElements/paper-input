@@ -42,6 +42,8 @@ style this element.
 
     <paper-input-container no-label-float$="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
 
+      <content select="[prefix]"></content>
+
       <label hidden$="[[!label]]">[[label]]</label>
 
       <iron-autogrow-textarea id="input" class="paper-input-input"
@@ -59,6 +61,8 @@ style this element.
         rows$="[[rows]]"
         max-rows$="[[maxRows]]"
         on-change="_onChange"></iron-autogrow-textarea>
+
+      <content select="[suffix]"></content>
 
       <template is="dom-if" if="[[errorMessage]]">
         <paper-input-error>[[errorMessage]]</paper-input-error>
