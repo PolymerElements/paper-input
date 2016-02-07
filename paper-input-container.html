@@ -196,6 +196,10 @@ This element is `display:block` by default, but you can set the `inline` attribu
         width: 100%;
         font: inherit;
         color: var(--paper-input-container-color, --secondary-text-color);
+        -webkit-transition: -webkit-transform 0.25s, width 0.25s;
+        transition: transform 0.25s, width 0.25s;
+        -webkit-transform-origin: left top;
+        transform-origin: left top;
 
         @apply(--paper-font-common-nowrap);
         @apply(--paper-font-subhead);
@@ -206,10 +210,6 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content.label-is-floating ::content .paper-input-label {
         -webkit-transform: translateY(-75%) scale(0.75);
         transform: translateY(-75%) scale(0.75);
-        -webkit-transition: -webkit-transform 0.25s, width 0.25s;
-        transition: transform 0.25s, width 0.25s;
-        -webkit-transform-origin: left top;
-        transform-origin: left top;
 
         /* Since we scale to 75/100 of the size, we actually have 100/75 of the
         original space now available */
