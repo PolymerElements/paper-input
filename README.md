@@ -200,7 +200,7 @@ The following custom properties and mixins are available for styling:
 
 | Custom property | Description | Default |
 | --- | --- | --- |
-| `--paper-input-container-invalid-color` | The foreground color of the error | `--google-red-500` |
+| `--paper-input-container-invalid-color` | The foreground color of the error | `--error-color` |
 | `--paper-input-error` | Mixin applied to the error | `{}` |
 
 
