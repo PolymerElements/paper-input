@@ -25,6 +25,9 @@ For example:
       <input is="iron-input">
     </paper-input-container>
 
+Do not wrap <paper-input-contanter> around elements that already include it, such as <paper-input>.
+Doing so may cause events to bounce infintely between the container and its contained element.
+
 ### Listening for input changes
 
 By default, it listens for changes on the `bind-value` attribute on its children nodes and perform
