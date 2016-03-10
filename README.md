@@ -132,6 +132,10 @@ compound input field like a social security number input. The custom input eleme
 </paper-input-container>
 ```
 
+If you're using a `<paper-input-container>` imperatively, it's important to make sure
+that you attach its children (the `iron-input` and the optional `label`) before you
+attach the `<paper-input-container>` itself, so that it can be set up correctly.
+
 ### Validation
 
 If the `auto-validate` attribute is set, the input container will validate the input and update
