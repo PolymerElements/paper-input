@@ -14,6 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <script>
 
+  // Generate unique, monotonically increasing IDs for labels (needed by
+  // aria-labelledby) and add-ons.
   Polymer.PaperInputHelper = {};
   Polymer.PaperInputHelper.NextLabelID = 1;
   Polymer.PaperInputHelper.NextAddonID = 1;
