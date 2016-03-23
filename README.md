@@ -241,4 +241,14 @@ validity such as a character counter or an error message.
 
 
 
-<!-- No docs for Polymer.PaperInputBehavior found. -->
+##Polymer.PaperInputBehavior
+
+Use `Polymer.PaperInputBehavior` to implement inputs with `<paper-input-container>`. This
+behavior is implemented by `<paper-input>`. It exposes a number of properties from
+`<paper-input-container>` and `<input is="iron-input">` and they should be bound in your
+template.
+
+The input element can be accessed by the `inputElement` property if you need to access
+properties or methods that are not exposed.
+
+
