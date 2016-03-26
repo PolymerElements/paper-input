@@ -95,7 +95,10 @@ style this element.
 
       <content select="[prefix]"></content>
 
-      <label hidden$="[[!label]]">[[label]]</label>
+      <label hidden$="[[!label]]">
+        [[label]]
+        <span class="label-required" hidden$="[[!required]]">*</span>
+      </label>
 
       <input is="iron-input" id="input"
         aria-labelledby$="[[_ariaLabelledBy]]"
