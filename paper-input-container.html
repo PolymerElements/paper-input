@@ -226,6 +226,11 @@ This element is `display:block` by default, but you can set the `inline` attribu
         @apply(--paper-input-container-label-floating);
       }
 
+      .input-content.label-is-floating ::content label .label-required,
+      .input-content.label-is-floating ::content .paper-input-label .label-required{
+        color: var(--error-color);
+      }
+
       :host-context([dir="rtl"]) .input-content.label-is-floating ::content label,
       :host-context([dir="rtl"]) .input-content.label-is-floating ::content .paper-input-label {
         /* TODO(noms): Figure out why leaving the width at 133% before the animation
