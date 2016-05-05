@@ -81,7 +81,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       invalid: {
         type: Boolean,
         value: false,
-        notify: true
+        notify: true,
+        observer: '_setErrorMessage'
       },
 
       /**
@@ -531,6 +532,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           bubbles: event.bubbles,
           cancelable: event.cancelable
         });
+      }
+    },
+
+    _setErrorMessage: function(invalid) {
+      if(invalid) {
+        this.errorMessage = this.errorMessages ? this.errorMessages[this._getErrorMessageKey()] : this.errorMessage;
+      }
+    },
+
+    _getErrorMessageKey: function() {
+      var states = this.inputElement.validity;
+      for(var s in states){
+        if (states[s]) {
+          return s;
+        }
       }
     }
   }
