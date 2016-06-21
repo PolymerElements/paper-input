@@ -74,6 +74,10 @@ style this element.
         display: block;
       }
 
+      :host([hidden]) {
+        display: none !important;
+      }
+
       input::-webkit-input-placeholder {
         color: var(--paper-input-container-color, --secondary-text-color);
       }
