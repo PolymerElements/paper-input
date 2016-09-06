@@ -140,6 +140,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-input-container>
       </template>
     </demo-snippet>
+    
+    <h3>Inputs can have custom error styling</h3>
+    <demo-snippet>
+      <template>
+        <style is="custom-style">
+          .styled-error-input {
+            --paper-input-container-label-invalid: {
+              color: var(--paper-indigo-500);
+            };
+            --paper-input-container-underline-invalid: {
+              background: var(--paper-orange-500);
+            };
+            --paper-input-container-add-on-invalid: {
+              color: var(--paper-blue-grey-600);
+            };
+          }
+        </style>
+        <paper-input class="styled-error-input" label="this input requires some text" required auto-validate error-message="needs some text!"></paper-input>
+        <paper-input class="styled-error-input" label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
+      </template>
+    </demo-snippet>
   </div>
 
   <script>
