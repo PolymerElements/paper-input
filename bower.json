@@ -32,7 +32,7 @@
     "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^1.0.0",
     "iron-behaviors": "PolymerElements/iron-behaviors#^1.0.0",
     "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#^1.0.0",
-    "iron-input": "PolymerElements/iron-input#^1.0.0",
+    "iron-input": "https://github.com/tlouisse/iron-input.git#feature/multipleValidators",
     "paper-styles": "PolymerElements/paper-styles#^1.1.4",
     "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#^1.0.0"
   },
@@ -42,10 +42,16 @@
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
     "iron-icon": "PolymerElements/iron-icon#^1.0.0",
     "iron-test-helpers": "PolymerElements/iron-test-helpers#^1.0.0",
-    "iron-validator-behavior": "PolymerElements/iron-validator-behavior#^1.0.0",
+    "iron-validatable-behavior": "https://github.com/tlouisse/iron-validatable-behavior.git",
+    "iron-validator-behavior": "https://github.com/tlouisse/iron-validator-behavior.git",
     "paper-icon-button": "PolymerElements/paper-icon-button#^1.0.0",
     "test-fixture": "PolymerElements/test-fixture#^1.0.0",
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "resolutions": {
+    "iron-validatable-behavior": "feature/multipleValidators",
+    "iron-validator-behavior": "feature/multipleValidators",
+    "iron-input": "feature/multipleValidators"
   }
 }

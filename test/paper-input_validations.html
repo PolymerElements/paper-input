@@ -1,0 +1,104 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+<head>
+
+    <title>paper-input tests</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../iron-test-helpers/test-helpers.js"></script>
+    <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+    <link rel="import" href="../paper-input.html">
+    <link rel="import" href="validators/letters-only.html">
+    <link rel="import" href="validators/cats-only.html">
+
+</head>
+<body>
+
+<test-fixture id="validatable">
+    <template>
+        <paper-input validator="cats-only"></paper-input>
+    </template>
+</test-fixture>
+
+<test-fixture id="error-message">
+    <template>
+        <paper-input pattern="[a-zA-Z]*" error-message="override error"></paper-input>
+    </template>
+</test-fixture>
+
+<test-fixture id="multiple-errors">
+    <template>
+        <paper-input validator="cats-only letters-only"></paper-input>
+    </template>
+</test-fixture>
+
+<script>
+
+    suite('validatable id', function () {
+
+        test('validatable id is passed to input field', function () {
+            var node = fixture('validatable');
+            Polymer.dom(node).flush(function () {
+                assert.equal(node.$.input.validatableId, node.validatableId);
+            });
+        });
+
+    });
+
+    suite('error messages', function () {
+
+        test('show error message defined in external validator', function (done) {
+            var input = fixture('validatable');
+            input.value = 'foobar';
+            input.validate();
+            flush(function () {
+                var error = Polymer.dom(input.root).querySelector('paper-input-error').textContent;
+                assert.include(error, 'No cats');
+                done();
+            });
+        });
+
+        test('always show error message defined via error-message attribute', function (done) {
+            var input = fixture('error-message');
+            input.value = '123';
+            input.validate();
+            flush(function () {
+                var error = Polymer.dom(input.root).querySelector('paper-input-error').textContent;
+                assert.equal(error.trim(), 'override error', 'letters only!');
+                done();
+            });
+        });
+
+        test('show error message with top priority', function (done) {
+            var input = fixture('multiple-errors');
+            input.value = '123';
+            input.validate();
+            flush(function () {
+                var error = Polymer.dom(input.root).querySelector('paper-input-error').textContent;
+                assert.include(error, 'No cats');
+                done();
+            });
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

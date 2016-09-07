@@ -30,6 +30,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../paper-input.html">
   <link rel="import" href="../paper-textarea.html">
   <link rel="import" href="ssn-input.html">
+  <link rel="import" href="validators/no-cats.html">
+  <link rel="import" href="validators/no-catfishes.html">
 
   <style is="custom-style" include="demo-pages-shared-styles">
     paper-input {
@@ -110,6 +112,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-input label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
         <paper-input label="this input will only let you type letters" auto-validate allowed-pattern="[a-zA-Z]"></paper-input>
         <paper-input id="inputForValidation" required label="this input is manually validated" pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
+        <paper-input label="this input has multiple validators (no-cats + no-catfishes)" validator="no-cats no-catfishes" auto-validate></paper-input>
         <button onclick="validate()">Validate!</button>
       </template>
     </demo-snippet>

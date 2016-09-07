@@ -352,6 +352,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       /**
+       * The id used to connect the validator instance implementing IronValidatableBehavior(having a 'for' property)
+       * to the validatable. This is useful for validator instances containing custom messages.
+       * If you're using PaperInputBehavior to implement your own paper-input-like
+       * element, bind this to the `<input is="iron-input">`'s `validatable-id` property.
+       */
+      validatableId: {
+          type: String
+      },
+
+      /**
        * If you're using PaperInputBehavior to implement your own paper-input-like
        * element, bind this to the`<input is="iron-input">`'s `multiple` property,
        * used with type=file.

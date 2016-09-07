@@ -142,7 +142,9 @@ style this element.
         autosave$="[[autosave]]"
         results$="[[results]]"
         accept$="[[accept]]"
-        multiple$="[[multiple]]">
+        multiple$="[[multiple]]"
+        errors="{{_errors}}"
+        validatable-id="[[validatableId]]">
 
       <content select="[suffix]"></content>
 
@@ -150,11 +152,20 @@ style this element.
         <paper-input-error aria-live="assertive">[[errorMessage]]</paper-input-error>
       </template>
 
+      <template is="dom-if" if="[[_showErrors(_errors.splices)]]">
+        <paper-input-error aria-live="assertive">
+          <template is="dom-repeat" items="[[_errors]]" filter="_showHighestPrio">
+            <div>[[item.message]]</div>
+          </template>
+        </paper-input-error>
+      </template>
+
       <template is="dom-if" if="[[charCounter]]">
         <paper-input-char-counter></paper-input-char-counter>
       </template>
 
     </paper-input-container>
+
   </template>
 </dom-module>
 
@@ -165,6 +176,40 @@ style this element.
     behaviors: [
       Polymer.IronFormElementBehavior,
       Polymer.PaperInputBehavior
-    ]
+    ],
+
+    properties: {
+      /*
+       * Errors that are exposed by validatable element.
+       * The error with the highest priority in this list will be shown when validatable is in error state, and no error-message is supplied.
+       * @private
+       */
+      _errors: {
+        type: Array,
+        value: function () {
+          return [];
+        }
+      }
+    },
+
+    /**
+     * Makes sure only error messages with the highest priority are shown.
+     * @param {Object} item The error object to be filtered out.
+     * @return {boolean} whether the item should be shown based on priority
+     */
+    _showHighestPrio: function (item) {
+      return item.priority < 1;
+    },
+
+    /**
+     * Determines whether error with highest priority from errors array needs to be shown.
+     * This error will be visible when property error-message is not supplied and the errors array is not empty.
+     * @param {Array} errors array
+     * @return {boolean} whether error with highest priority from errors array will be shown.
+     */
+    _showErrors: function(_errors) {
+      return !this.errorMessage && _errors;
+    }
+
   });
 </script>
