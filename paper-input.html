@@ -133,11 +133,11 @@ style this element.
       <iron-input bind-value="{{value}}" id="input" slot="input"
           maxlength$="[[maxlength]]"
           allowed-pattern="[[allowedPattern]]"
-          aria-labelledby$="[[_ariaLabelledBy]]"
-          aria-describedby$="[[_ariaDescribedBy]]"
           invalid="{{invalid}}"
           validator="[[validator]]">
-        <input
+        <input id="nativeInput"
+          aria-labelledby$="[[_ariaLabelledBy]]"
+          aria-describedby$="[[_ariaDescribedBy]]"
           disabled$="[[disabled]]"
           title$="[[title]]"
           type$="[[type]]"
@@ -183,9 +183,21 @@ style this element.
       Polymer.PaperInputBehavior
     ],
 
+    registered: function() {
+      // These types have some default placeholder text; overlapping
+      // the label on top of it looks terrible. Auto-float the label in this case.
+      this._typesThatHaveText = ["date", "datetime", "datetime-local", "month",
+          "time", "week", "file"];
+    },
+
     attached: function() {
       // HACK eeeek
       this.$.input._initSlottedInput();
-    }
+
+      if (this.inputElement &&
+          this._typesThatHaveText.indexOf(this.$.nativeInput.type) !== -1) {
+        this.alwaysFloatLabel = true;
+      }
+    },
   });
 </script>

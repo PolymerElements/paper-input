@@ -52,7 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /**
        * The value for this input. If you're using PaperInputBehavior to
        * implement your own paper-input-like element, bind this to
-       * the `<input is="iron-input">`'s `bindValue`
+       * the `<iron-input>`'s `bindValue`
        * property, or the value property of your input that is `notify:true`.
        */
       value: {
@@ -389,20 +389,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return this.inputElement;
     },
 
-    registered: function() {
-      // These types have some default placeholder text; overlapping
-      // the label on top of it looks terrible. Auto-float the label in this case.
-      this._typesThatHaveText = ["date", "datetime", "datetime-local", "month",
-          "time", "week", "file"];
-    },
-
     attached: function() {
       this._updateAriaLabelledBy();
-
-      if (this.inputElement &&
-          this._typesThatHaveText.indexOf(this.inputElement.type) !== -1) {
-        this.alwaysFloatLabel = true;
-      }
     },
 
     _appendStringWithSpace: function(str, more) {
