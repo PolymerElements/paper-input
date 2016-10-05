@@ -326,7 +326,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
     <div class="floated-label-placeholder" aria-hidden="true" hidden="[[noLabelFloat]]">&nbsp;</div>
 
     <div class$="[[_computeInputContentClass(noLabelFloat,alwaysFloatLabel,focused,invalid,_inputHasContent)]]">
-      <span class="prefix"><slot name="prefix" id="prefix"></slot></span>
+      <span class="prefix"><slot name="prefix"></slot></span>
 
       <div class="label-and-input-container" id="labelAndInputContainer">
         <slot name="label"></slot>
@@ -478,16 +478,16 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
       this.addEventListener('focus', this._boundOnFocus, true);
       this.addEventListener('blur', this._boundOnBlur, true);
-    },
 
-    attached: function() {
       if (this.attrForValue) {
         this._inputElement.addEventListener(this._valueChangedEvent, this._boundValueChanged);
       } else {
         this.addEventListener('input', this._onInput);
       }
+    },
 
-      // Only validate when attached if the input already has a value.
+    attached: function() {
+      //Only validate when attached if the input already has a value.
       if (!!this._inputElementValue) {
         this._handleValueAndAutoValidate(this._inputElement);
       } else {
@@ -543,10 +543,9 @@ This element is `display:block` by default, but you can set the `inline` attribu
     },
 
     _handleValueAndAutoValidate: function(inputElement) {
-      if (this.autoValidate) {
+      if (this.autoValidate && inputElement) {
         var valid;
 
-        debugger
         if (inputElement.validate) {
           valid = inputElement.validate(this._inputElementValue);
         } else {
