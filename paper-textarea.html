@@ -57,6 +57,8 @@ style this element.
       <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
 
       <iron-autogrow-textarea id="input" class="paper-input-input" slot="input"
+        aria-labelledby$="[[_ariaLabelledBy]]"
+        aria-describedby$="[[_ariaDescribedBy]]"
         bind-value="{{value}}"
         invalid="{{invalid}}"
         disabled$="[[disabled]]"
@@ -73,8 +75,17 @@ style this element.
         max-rows$="[[maxRows]]"
         on-change="_onChange"></iron-autogrow-textarea>
 
-      <paper-input-error aria-live="assertive" hidden="[[!errorMessage]]" slot="add-on">[[errorMessage]]</paper-input-error>
-      <paper-input-char-counter hidden="[[!charCounter]]" slot="add-on"></paper-input-char-counter>
+      <dom-if if="[[errorMessage]]">
+        <template is="dom-if">
+          <paper-input-error aria-live="assertive" slot="add-on">[[errorMessage]]</paper-input-error>
+        </template>
+      </dom-if>
+
+      <dom-if if="[[charCounter]]">
+        <template is="dom-if">
+          <paper-input-char-counter slot="add-on"></paper-input-char-counter>
+        </template>
+      </dom-if>
 
     </paper-input-container>
   </template>

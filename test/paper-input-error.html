@@ -50,13 +50,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     suite('basic', function() {
 
-      test('error message only appears when input is invalid', function() {
+      test('error message only appears when input is invalid', function(done) {
         var container = fixture('auto-validate-numbers');
         var input = Polymer.dom(container).querySelector('#i');
         var error = Polymer.dom(container).querySelector('#e');
+
         assert.equal(getComputedStyle(error).visibility, 'hidden', 'error is visibility:hidden');
         input.bindValue = 'foobar';
-        assert.notEqual(getComputedStyle(error).visibility, 'hidden', 'error is not visibility:hidden');
+
+        // Need to wait a tick to stamp the error message.
+        Polymer.Base.async(function() {
+          assert.notEqual(getComputedStyle(error).visibility, 'hidden', 'error is not visibility:hidden');
+          done();
+        }, 1);
       });
 
       test('error message add on is registered', function() {

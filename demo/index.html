@@ -76,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <demo-snippet>
       <template>
         <paper-input label="text input"></paper-input>
-        <paper-input label="text input" value="batman"></paper-input>
+        <paper-input label="text input" value="pre-filled"></paper-input>
         <paper-textarea label="autoresizing textarea input"></paper-textarea>
         <paper-input label="password input" type="password"></paper-input>
         <paper-input label="disabled input" disabled></paper-input>
@@ -106,6 +106,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template>
         <paper-input label="this input requires some text" required auto-validate error-message="needs some text!"></paper-input>
         <paper-input label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
+        <paper-input label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="pre-filled 123"></paper-input>
         <paper-input label="this input will only let you type letters" auto-validate allowed-pattern="[a-zA-Z]"></paper-input>
         <paper-input id="inputForValidation" required label="this input is manually validated" pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
 
@@ -136,7 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-input-container always-float-label auto-validate attr-for-value="value">
           <label slot="label">Social Security Number</label>
           <ssn-input class="paper-input-input" slot="input"></ssn-input>
-          <paper-input-error>SSN invalid!</paper-input-error>
+          <paper-input-error slot="add-on">SSN invalid!</paper-input-error>
         </paper-input-container>
       </template>
     </demo-snippet>
