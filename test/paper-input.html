@@ -187,25 +187,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.notEqual(getComputedStyle(error).visibility, 'hidden', 'error is not visibility:hidden');
       });
 
-      test('character counter is displayed', function() {
+      test('character counter is displayed', function(done) {
         var input = fixture('char-counter');
-        forceXIfStamp(input);
-        var counter = getCharCounterDiv(input)
-        assert.ok(counter, 'paper-input-char-counter exists');
-        assert.equal(counter._charCounterStr, input.value.length, 'character counter shows the value length');
+
+        // Need to wait a tick to stamp the char-counter.
+        Polymer.Base.async(function() {
+          var counter = getCharCounterDiv(input);
+          assert.ok(counter, 'paper-input-char-counter exists');
+          assert.equal(counter._charCounterStr, input.value.length, 'character counter shows the value length');
+          done();
+        }, 1);
       });
 
-      test('character counter is correct for type=number', function() {
+      test('character counter is correct for type=number', function(done) {
         var input = fixture('type-number-char-counter');
-        forceXIfStamp(input);
-        var counter = getCharCounterDiv(input)
-        assert.ok(counter, 'paper-input-char-counter exists');
-        assert.equal(counter._charCounterStr, input.value.toString().length, 'character counter shows the value length');
+
+        // Need to wait a tick to stamp the char-counter.
+        Polymer.Base.async(function() {
+          var counter = getCharCounterDiv(input)
+          assert.ok(counter, 'paper-input-char-counter exists');
+          assert.equal(counter._charCounterStr, input.value.toString().length, 'character counter shows the value length');
+          done();
+        }, 1);
       });
 
       test('validator is used', function() {
         var input = fixture('validator');
-        assert.ok(getNativeInput(input).invalid, 'input is invalid');
+        assert.ok(getIronInput(input).invalid, 'input is invalid');
       });
 
       test('caret position is preserved', function() {
@@ -329,14 +337,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     suite('validation', function() {
 
-      test('invalid attribute updated after calling validate()', function() {
+      test('invalid attribute updated after calling validate()', function(done) {
         var input = fixture('required-no-auto-validate');
-        forceXIfStamp(input);
         input.validate();
-        var error = getErrorDiv(input);
-        assert.ok(error, 'paper-input-error exists');
-        assert.notEqual(getComputedStyle(error).visibility, 'hidden', 'error is not visibility:hidden');
-        assert.isTrue(input.invalid, 'invalid is true');
+
+        // Need to wait a tick to stamp the error message.
+        Polymer.Base.async(function() {
+          var error = getErrorDiv(input);
+          assert.ok(error, 'paper-input-error exists');
+          assert.notEqual(getComputedStyle(error).visibility, 'hidden', 'error is not visibility:hidden');
+          assert.isTrue(input.invalid, 'invalid is true');
+          done();
+        }, 1);
       });
 
     });
@@ -353,7 +365,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var index = parseInt(firstLabel.substr(firstLabel.lastIndexOf('-') + 1));
 
         for (var i = 0; i < inputs.length; i++ ) {
-          var input = inputs[i].inputElement;
+          var input = getNativeInput(inputs[i]);
           var label = Polymer.dom(inputs[i].root).querySelector('label').id;
 
           assert.isTrue(input.hasAttribute('aria-labelledby'));
@@ -362,25 +374,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       });
 
-      test('has aria-describedby for error message', function() {
+      test('has aria-describedby for error message', function(done) {
         var input = fixture('required');
-        forceXIfStamp(input);
-        assert.isTrue(getNativeInput(input).hasAttribute('aria-describedby'));
-        assert.equal(getNativeInput(input).getAttribute('aria-describedby'), getErrorDiv(input).id, 'aria-describedby points to the error message');
+
+        // Need to wait a tick to stamp the error message.
+        Polymer.Base.async(function() {
+          assert.isTrue(getNativeInput(input).hasAttribute('aria-describedby'));
+          assert.equal(getNativeInput(input).getAttribute('aria-describedby'), getErrorDiv(input).id, 'aria-describedby points to the error message');
+          done();
+        }, 1);
       });
 
-      test('has aria-describedby for character counter', function() {
+
+      test('has aria-describedby for character counter', function(done) {
         var input = fixture('char-counter');
-        forceXIfStamp(input);
-        assert.isTrue(getNativeInput(input).hasAttribute('aria-describedby'));
-        assert.equal(getNativeInput(input).getAttribute('aria-describedby'), getCharCounterDiv(input).id, 'aria-describedby points to the character counter');
+
+        // Need to wait a tick to stamp the char-counter.
+        Polymer.Base.async(function() {
+          assert.isTrue(getNativeInput(input).hasAttribute('aria-describedby'));
+          assert.equal(getNativeInput(input).getAttribute('aria-describedby'), getCharCounterDiv(input).id, 'aria-describedby points to the character counter');
+          done();
+        }, 1);
       });
 
-      test('has aria-describedby for character counter and error', function() {
+      test('has aria-describedby for character counter and error', function(done) {
         var input = fixture('required-char-counter');
-        forceXIfStamp(input);
-        assert.isTrue(getNativeInput(input).hasAttribute('aria-describedby'));
-        assert.equal(getNativeInput(input).getAttribute('aria-describedby'), getErrorDiv(input).id + ' ' + getCharCounterDiv(input).id, 'aria-describedby points to the error message and character counter');
+
+        // Need to wait a tick to stamp the char-counter and error message.
+        Polymer.Base.async(function() {
+          assert.isTrue(getNativeInput(input).hasAttribute('aria-describedby'));
+          assert.equal(getNativeInput(input).getAttribute('aria-describedby'), getErrorDiv(input).id + ' ' + getCharCounterDiv(input).id, 'aria-describedby points to the error message and character counter');
+          done();
+        }, 1);
       });
 
       test('focus an input with tabindex', function(done) {
