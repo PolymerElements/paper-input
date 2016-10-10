@@ -486,8 +486,8 @@ This element is `display:block` by default, but you can set the `inline` attribu
     },
 
     attached: function() {
-      //Only validate when attached if the input already has a value.
-      if (!!this._inputElementValue) {
+      // Only validate when attached if the input already has a value.
+      if (this._inputElementValue != '') {
         this._handleValueAndAutoValidate(this._inputElement);
       } else {
         this._handleValue(this._inputElement);
