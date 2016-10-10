@@ -32,8 +32,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="basic">
     <template>
       <paper-input-container>
-        <label id="l">label</label>
-        <input id="i">
+        <label slot="label" id="l">label</label>
+        <input slot="input" id="i">
       </paper-input-container>
     </template>
   </test-fixture>
@@ -42,8 +42,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template>
       <paper-input-container>
         <div prefix>$</div>
-        <label id="l">label</label>
-        <input is="iron-input" id="i">
+        <label slot="label" id="l">label</label>
+        <iron-input slot="input" id="i">
+          <input>
+        </iron-input>
       </paper-input-container>
     </template>
   </test-fixture>
@@ -52,8 +54,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template>
       <paper-input-container>
         <div prefix>$</div>
-        <label id="l">label</label>
-        <input is="iron-input" id="i" value="foo">
+        <label slot="label" id="l">label</label>
+        <iron-input slot="input" id="i" bind-value="foo">
+          <input>
+        </iron-input>
       </paper-input-container>
     </template>
   </test-fixture>
@@ -61,8 +65,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="has-value">
     <template>
       <paper-input-container>
-        <label id="l">label</label>
-        <input id="i" value="value">
+        <label slot="label" id="l">label</label>
+        <input slot="input" id="i" value="value">
       </paper-input-container>
     </template>
   </test-fixture>
@@ -70,8 +74,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="no-float-has-value">
     <template>
       <paper-input-container no-label-float>
-        <label id="l">label</label>
-        <input id="i" value="value">
+        <label slot="label" id="l">label</label>
+        <input slot="input" id="i" value="value">
       </paper-input-container>
     </template>
   </test-fixture>
@@ -79,8 +83,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="always-float">
     <template>
       <paper-input-container always-float-label>
-        <label id="l">label</label>
-        <input id="i" value="value">
+        <label slot="label" id="l">label</label>
+        <input slot="input" id="i" value="value">
       </paper-input-container>
     </template>
   </test-fixture>
@@ -88,8 +92,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="auto-validate-numbers">
     <template>
       <paper-input-container auto-validate>
-        <label id="l">label</label>
-        <input is="iron-input" id="i" pattern="[0-9]*">
+        <label slot="label" id="l">label</label>
+        <iron-input slot="input" id="i">
+          <input pattern="[0-9]*">
+        </iron-input>
       </paper-input-container>
     </template>
   </test-fixture>
@@ -97,8 +103,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="manual-validate-numbers">
     <template>
       <paper-input-container>
-        <label id="l">label</label>
-        <input is="iron-input" id="i" pattern="[0-9]*">
+        <label slot="label" id="l">label</label>
+        <iron-input slot="input" id="i">
+          <input pattern="[0-9]*">
+        </iron-input>
       </paper-input-container>
     </template>
   </test-fixture>
@@ -108,8 +116,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="auto-validate-validator">
     <template>
       <paper-input-container auto-validate>
-        <label id="l">label</label>
-        <input is="iron-input" id="i" pattern="[0-9]*" validator="letters-only">
+        <label slot="label" id="l">label</label>
+        <iron-input slot="input" id="i" validator="letters-only">
+          <input pattern="[0-9]*">
+        </iron-input>
       </paper-input-container>
     </template>
   </test-fixture>
@@ -117,8 +127,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="auto-validate-validator-has-invalid-value">
     <template>
       <paper-input-container auto-validate>
-        <label id="l">label</label>
-        <input is="iron-input" id="i" validator="letters-only" value="123123">
+        <label slot="label" id="l">label</label>
+        <iron-input slot="input" id="i" validator="letters-only" bind-value="123123">
+          <input>
+        </iron-input>
       </paper-input-container>
     </template>
   </test-fixture>

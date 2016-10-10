@@ -82,7 +82,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('character counter shows the value length with maxlength', function() {
         var input = fixture('textarea-with-max');
-        forceXIfStamp(input);
 
         var counter = Polymer.dom(input.root).querySelector('paper-input-char-counter');
         assert.ok(counter, 'paper-input-char-counter exists');
@@ -93,8 +92,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('character counter counts new lines in textareas correctly', function() {
         var input = fixture('textarea');
         input.value = 'foo\nbar';
-        forceXIfStamp(input);
 
+        debugger
         var counter = Polymer.dom(input.root).querySelector('paper-input-char-counter')
         assert.ok(counter, 'paper-input-char-counter exists');
 
