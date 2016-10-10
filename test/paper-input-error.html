@@ -28,15 +28,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body>
 
   <paper-input-container id="container">
-    <input is="iron-input">
+    <iron-input slot="input">
+      <input>
+    </iron-input>
     <paper-input-error>error</paper-input-error>
   </paper-input-container>
 
   <test-fixture id="auto-validate-numbers">
     <template>
       <paper-input-container auto-validate attr-for-value="bind-value">
-        <label id="l">label</label>
-        <input is="iron-input" id="i" pattern="[0-9]*">
+        <label slot="label" id="l">label</label>
+        <iron-input slot="input" id="i">
+          <input pattern="[0-9]*">
+        </iron-input>
         <paper-input-error id="e">error</paper-input-error>
       </paper-input-container>
     </template>
