@@ -90,6 +90,7 @@ Custom property | Description | Default
 `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
 `--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}`
 `--paper-input-container-input` | Mixin applied to the input | `{}`
+`--paper-input-container-underline-common` | Mixin applied to the underline when the input is not focused, focused or disabled | `{}`
 `--paper-input-container-underline` | Mixin applied to the underline | `{}`
 `--paper-input-container-underline-focus` | Mixin applied to the underline when the input is focused | `{}`
 `--paper-input-container-underline-disabled` | Mixin applied to the underline when the input is disabled | `{}`
@@ -144,6 +145,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
         -webkit-transform: scale3d(0,1,1);
         transform: scale3d(0,1,1);
 
+        @apply(--paper-input-container-underline-common);
         @apply(--paper-input-container-underline-focus);
       }
 
@@ -172,6 +174,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
         background: var(--paper-input-container-color, --secondary-text-color);
         height: 1px;
 
+        @apply(--paper-input-container-underline-common);
         @apply(--paper-input-container-underline);
       }
 
@@ -180,6 +183,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
         border-color: var(--paper-input-container-color, --secondary-text-color);
         background: transparent;
 
+        @apply(--paper-input-container-underline-common);
         @apply(--paper-input-container-underline-disabled);
       }
 
