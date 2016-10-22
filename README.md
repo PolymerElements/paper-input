@@ -178,6 +178,7 @@ The following custom properties and mixins are available for styling:
 | `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}` |
 | `--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}` |
 | `--paper-input-container-input` | Mixin applied to the input | `{}` |
+| `--paper-input-container-underline-common` | Mixin applied to the underline when the input is not focused, focused or disabled | `{}` |
 | `--paper-input-container-underline` | Mixin applied to the underline | `{}` |
 | `--paper-input-container-underline-focus` | Mixin applied to the underline when the input is focused | `{}` |
 | `--paper-input-container-underline-disabled` | Mixin applied to the underline when the input is disabled | `{}` |
