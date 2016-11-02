@@ -88,14 +88,17 @@ Custom property | Description | Default
 `--paper-input-container-disabled` | Mixin applied to the container when it's disabled | `{}`
 `--paper-input-container-label` | Mixin applied to the label | `{}`
 `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
+`--paper-input-container-label-invalid` | Mixin applied to the label when the input is invalid | `{}`
 `--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}`
 `--paper-input-container-input` | Mixin applied to the input | `{}`
 `--paper-input-container-input-webkit-spinner` | Mixin applied to the webkit spinner | `{}`
 `--paper-input-container-underline` | Mixin applied to the underline | `{}`
 `--paper-input-container-underline-focus` | Mixin applied to the underline when the input is focused | `{}`
+`--paper-input-container-underline-invalid` | Mixin applied to the underline when the input is invalid | `{}`
 `--paper-input-container-underline-disabled` | Mixin applied to the underline when the input is disabled | `{}`
 `--paper-input-prefix` | Mixin applied to the input prefix | `{}`
 `--paper-input-suffix` | Mixin applied to the input suffix | `{}`
+`--paper-input-container-add-on-invalid` | Mixin applied to the add-on when the input is invalid | `{}`
 
 This element is `display:block` by default, but you can set the `inline` attribute to make it
 `display:inline-block`.
@@ -165,6 +168,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
         transition: transform 0.25s;
 
         @apply(--paper-transition-easing);
+        @apply(--paper-input-container-underline-invalid);
       }
 
       .unfocused-line {
@@ -251,6 +255,8 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content.is-invalid ::content label,
       .input-content.is-invalid ::content .paper-input-label {
         color: var(--paper-input-container-invalid-color, --error-color);
+
+        @apply(--paper-input-container-label-invalid);
       }
 
       .input-content.label-is-hidden ::content label,
@@ -313,6 +319,8 @@ This element is `display:block` by default, but you can set the `inline` attribu
 
       .add-on-content.is-invalid ::content * {
         color: var(--paper-input-container-invalid-color, --error-color);
+
+        @apply(--paper-input-container-add-on-invalid);
       }
 
       .add-on-content.is-highlighted ::content * {
