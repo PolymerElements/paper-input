@@ -137,8 +137,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .focused-line {
         @apply(--layout-fit);
 
-        background: var(--paper-input-container-focus-color, --primary-color);
-        height: 2px;
+        border-bottom: 2px solid var(--paper-input-container-focus-color, --primary-color);
 
         -webkit-transform-origin: center center;
         transform-origin: center center;
@@ -158,7 +157,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       .underline.is-invalid .focused-line {
-        background: var(--paper-input-container-invalid-color, --error-color);
+        border-color: var(--paper-input-container-invalid-color, --error-color);
         -webkit-transform: none;
         transform: none;
         -webkit-transition: -webkit-transform 0.25s;
@@ -170,8 +169,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .unfocused-line {
         @apply(--layout-fit);
 
-        background: var(--paper-input-container-color, --secondary-text-color);
-        height: 1px;
+        border-bottom: 1px solid var(--paper-input-container-color, --secondary-text-color);
 
         @apply(--paper-input-container-underline);
       }
@@ -179,7 +177,6 @@ This element is `display:block` by default, but you can set the `inline` attribu
       :host([disabled]) .unfocused-line {
         border-bottom: 1px dashed;
         border-color: var(--paper-input-container-color, --secondary-text-color);
-        background: transparent;
 
         @apply(--paper-input-container-underline-disabled);
       }
