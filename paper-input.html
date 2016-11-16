@@ -204,6 +204,14 @@ style this element.
           "time", "week", "file"];
     },
 
+    /**
+     * Returns a reference to the focusable element. Overridden from PaperInputBehavior
+     * to correctly focus the native input.
+     */
+    get _focusableElement() {
+      return this.inputElement._inputElement;
+    },
+
     listeners: {
       'iron-input-ready': '_onIronInputReady'
     },
