@@ -522,6 +522,19 @@ This element is `display:block` by default, but you can set the `inline` attribu
     },
 
     _onValueChanged: function(event) {
+      var input = event.target;
+
+      // Problem: if the input is required but has no text entered, we should
+      // only validate it on blur (so that an empty form doesn't come up red
+      // immediately; however, in this handler, we don't know whether this is
+      // the booting up value or a value in the future. I am assuming that the
+      // case  we care about manifests itself when the value is undefined.
+      // If this causes future problems, we need to do something like track whether
+      // the iron-input-ready event has fired, and this handler came before that.
+
+      if (input.value === undefined)
+        return;
+
       this._handleValueAndAutoValidate(event.target);
     },
 
