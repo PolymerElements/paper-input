@@ -14,16 +14,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-styles/typography.html">
 
 <!--
-`<paper-input-container>` is a container for a `<label>`, an `<input is="iron-input">` or
+`<paper-input-container>` is a container for a `<label>`, an `<iron-input>` or
 `<textarea>` and optional add-on elements such as an error message or character
 counter, used to implement Material Design text fields.
 
 For example:
 
     <paper-input-container>
-      <label>Your name</label>
-      <input is="iron-input">
+      <label slot="label">Your name</label>
+      <iron-input slot="input">
+        <input>
+      </iron-input>
     </paper-input-container>
+
+    You can style the nested <input> however you want; if you want it to look like a
+    Material Design input, you can style it with the --paper-input-container-shared-input-style mixin.
 
 Do not wrap `<paper-input-container>` around elements that already include it, such as `<paper-input>`.
 Doing so may cause events to bounce infintely between the container and its contained element.
@@ -42,8 +47,8 @@ compound input field like a social security number input. The custom input eleme
 `Polymer.IronValidatableBehavior` if it is validatable.
 
     <paper-input-container attr-for-value="ssn-value">
-      <label>Social security number</label>
-      <ssn-input class="paper-input-input"></ssn-input>
+      <label slot="label">Social security number</label>
+      <ssn-input slot="input" class="paper-input-input"></ssn-input>
     </paper-input-container>
 
 
@@ -68,10 +73,12 @@ These are child elements of a `<paper-input-container>` with the `prefix`
 or `suffix` attribute, and are displayed inline with the input, before or after.
 
     <paper-input-container>
-      <div prefix>$</div>
-      <label>Total</label>
-      <input is="iron-input">
-      <paper-icon-button suffix icon="clear"></paper-icon-button>
+      <div slot="prefix">$</div>
+      <label slot="label">Total</label>
+      <iron-input slot="input">
+        <input>
+      </iron-input>
+      <paper-icon-button slot="suffix" icon="clear"></paper-icon-button>
     </paper-input-container>
 
 ### Styling
