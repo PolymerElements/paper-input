@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../paper-styles/default-theme.html">
 <link rel="import" href="../paper-styles/typography.html">
 
@@ -90,7 +90,6 @@ Custom property | Description | Default
 `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
 `--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}`
 `--paper-input-container-input` | Mixin applied to the input | `{}`
-`--paper-input-container-input-webkit-spinner` | Mixin applied to the webkit spinner | `{}`
 `--paper-input-container-underline` | Mixin applied to the underline | `{}`
 `--paper-input-container-underline-focus` | Mixin applied to the underline when the input is focused | `{}`
 `--paper-input-container-underline-disabled` | Mixin applied to the underline when the input is disabled | `{}`
@@ -131,14 +130,18 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       .underline {
-        height: 2px;
         position: relative;
       }
 
       .focused-line {
-        @apply(--layout-fit);
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
 
-        border-bottom: 2px solid var(--paper-input-container-focus-color, --primary-color);
+        background: var(--paper-input-container-focus-color, --primary-color);
+        height: 2px;
 
         -webkit-transform-origin: center center;
         transform-origin: center center;
@@ -158,7 +161,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       .underline.is-invalid .focused-line {
-        border-color: var(--paper-input-container-invalid-color, --error-color);
+        background: var(--paper-input-container-invalid-color, --error-color);
         -webkit-transform: none;
         transform: none;
         -webkit-transition: -webkit-transform 0.25s;
@@ -168,9 +171,14 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       .unfocused-line {
-        @apply(--layout-fit);
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
 
-        border-bottom: 1px solid var(--paper-input-container-color, --secondary-text-color);
+        background: var(--paper-input-container-color, --secondary-text-color);
+        height: 1px;
 
         @apply(--paper-input-container-underline);
       }
@@ -178,22 +186,31 @@ This element is `display:block` by default, but you can set the `inline` attribu
       :host([disabled]) .unfocused-line {
         border-bottom: 1px dashed;
         border-color: var(--paper-input-container-color, --secondary-text-color);
+        background: transparent;
 
         @apply(--paper-input-container-underline-disabled);
       }
 
       .label-and-input-container {
-        @apply(--layout-flex-auto);
-        @apply(--layout-relative);
+        -ms-flex: 1 1 auto;
+        -webkit-flex: 1 1 auto;
+        flex: 1 1 auto;
+        position: relative;
 
         width: 100%;
         max-width: 100%;
       }
 
       .input-content {
-        @apply(--layout-horizontal);
-        @apply(--layout-center);
-
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
         position: relative;
       }
 
@@ -271,29 +288,27 @@ This element is `display:block` by default, but you can set the `inline` attribu
         color: var(--paper-input-container-input-color, --primary-text-color);
         -webkit-appearance: none;
         text-align: inherit;
-        vertical-align: bottom;
 
         @apply(--paper-font-subhead);
         @apply(--paper-input-container-input);
-      }
-
-      .input-content ::content input::-webkit-outer-spin-button,
-      .input-content ::content input::-webkit-inner-spin-button {
-        @apply(--paper-input-container-input-webkit-spinner);
       }
 
       ::content [prefix] {
         @apply(--paper-font-subhead);
 
         @apply(--paper-input-prefix);
-        @apply(--layout-flex-none);
+        -ms-flex: none;
+        -webkit-flex: none;
+        flex: none;
       }
 
       ::content [suffix] {
         @apply(--paper-font-subhead);
 
         @apply(--paper-input-suffix);
-        @apply(--layout-flex-none);
+        -ms-flex: none;
+        -webkit-flex: none;
+        flex: none;
       }
 
       /* Firefox sets a min-width on the input, which can cause layout issues */
