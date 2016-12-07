@@ -21,7 +21,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../iron-test-helpers/test-helpers.js"></script>
-  <script src="../../iron-test-helpers/mock-interactions.js"></script>
 
   <link rel="import" href="../paper-input.html">
   <link rel="import" href="letters-only.html">
@@ -304,7 +303,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          MockInteractions.focus(input);
+          input.focus();
         }, 1);
       });
 
@@ -316,7 +315,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          MockInteractions.focus(getNativeInput(input));
+          getNativeInput(input).focus();
         }, 1);
       });
 
@@ -328,8 +327,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          MockInteractions.focus(input);
-          MockInteractions.blur(input);
+          input.focus();
+          input.blur();
         }, 1);
       });
 
@@ -341,21 +340,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          MockInteractions.focus(input);
-          MockInteractions.blur(getNativeInput(input));
+          input.focus();
+          getNativeInput(input).blur();
         }, 1)
       });
 
       test('focusing then bluring sets the focused attribute correctly', function(done) {
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          MockInteractions.focus(input);
+          input.focus();
           assert(input.focused, 'input is focused');
-          MockInteractions.blur(input);
+          input.blur();
           assert(!input.focused, 'input is blurred');
-          MockInteractions.focus(getNativeInput(input));
+          getNativeInput(input).focus();
           assert(input.focused, 'input is focused');
-          MockInteractions.blur(getNativeInput(input));
+          getNativeInput(input).blur();
           assert(!input.focused, 'input is blurred');
           done();
         }, 1);
@@ -364,12 +363,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('focusing then bluring with shift-tab removes the focused attribute correctly', function(done) {
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          MockInteractions.focus(input);
+          input.focus();
           assert(input.focused, 'input is focused');
 
           // Fake a shift-tab induced blur by forcing the flag.
           input._shiftTabPressed = true;
-          MockInteractions.blur(getNativeInput(input));
+          getNativeInput(input).blur();
           assert(!input.focused, 'input is blurred');
           done();
         }, 1);
@@ -385,7 +384,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          MockInteractions.focus(getNativeInput(input));
+          getNativeInput(input).focus();
           requestAnimationFrame(function() {
             assert.isTrue(line.classList.contains('is-highlighted'), 'line is highlighted when input is focused');
             done();
@@ -481,7 +480,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          MockInteractions.focus(input);
+          input.focus();
           assert.equal(input.shadowRoot ? input.shadowRoot.activeElement :
                   document.activeElement, input._focusableElement);
           done();
