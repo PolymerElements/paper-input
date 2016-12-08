@@ -31,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-input slot="input">
       <input>
     </iron-input>
-    <paper-input-error>error</paper-input-error>
+    <paper-input-error slot="add-on">error</paper-input-error>
   </paper-input-container>
 
   <test-fixture id="auto-validate-numbers">
@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-input slot="input" id="i">
           <input pattern="[0-9]*">
         </iron-input>
-        <paper-input-error id="e">error</paper-input-error>
+        <paper-input-error id="e" slot="add-on">error</paper-input-error>
       </paper-input-container>
     </template>
   </test-fixture>
@@ -55,12 +55,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var input = Polymer.dom(container).querySelector('#i');
         var error = Polymer.dom(container).querySelector('#e');
 
-        assert.equal(getComputedStyle(error).visibility, 'hidden', 'error is visibility:hidden');
-        input.bindValue = 'foobar';
-
         // Need to wait a tick to stamp the error message.
         Polymer.Base.async(function() {
-          assert.notEqual(getComputedStyle(error).visibility, 'hidden', 'error is not visibility:hidden');
+          assert.equal(getComputedStyle(error).visibility, 'hidden', 'error is visibility:hidden');
+          input.bindValue = 'foobar';
+          assert.equal(getComputedStyle(error).visibility, 'visible', 'error is visibility:visible');
           done();
         }, 1);
       });

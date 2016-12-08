@@ -403,7 +403,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _onAddonAttached: function(event) {
-      var target = event.path ? event.path[0] : event.target;
+      var eventPath = event.composedPath();
+      var target = eventPath ? eventPath[0] : event.target;
       if (target.id) {
         this._ariaDescribedBy = this._appendStringWithSpace(this._ariaDescribedBy, target.id);
       } else {
@@ -429,7 +430,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer.IronControlState._focusBlurHandler.call(this, event);
 
       // Forward the focus to the nested input.
-      if (this.focused && !this._shiftTabPressed) {
+      if (this.focused && !this._shiftTabPressed && this._focusableElement) {
         this._focusableElement.focus();
 
         // If possible, also auto-select the text.

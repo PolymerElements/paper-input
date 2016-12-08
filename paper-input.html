@@ -173,17 +173,13 @@ style this element.
 
       <slot name="suffix" slot="suffix"></slot>
 
-      <dom-if if="[[errorMessage]]">
-        <template is="dom-if">
-          <paper-input-error aria-live="assertive" slot="add-on">[[errorMessage]]</paper-input-error>
-        </template>
-      </dom-if>
+      <template is="dom-if" if="[[errorMessage]]">
+        <paper-input-error aria-live="assertive" slot="add-on">[[errorMessage]]</paper-input-error>
+      </template>
 
-      <dom-if if="[[charCounter]]">
-        <template is="dom-if">
-          <paper-input-char-counter slot="add-on"></paper-input-char-counter>
-        </template>
-      </dom-if>
+      <template is="dom-if" if="[[charCounter]]">
+        <paper-input-char-counter slot="add-on"></paper-input-char-counter>
+      </template>
 
     </paper-input-container>
   </template>
