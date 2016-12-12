@@ -268,6 +268,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var input;
       var inputFocusSpy, blurFocusSpy;
 
+      function ensureDocumentHasFocus() {
+        window.top && window.top.focus();
+      }
+
       setup(function() {
         input = fixture('basic');
         inputFocusSpy = sinon.spy();
@@ -292,6 +296,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('focus events fired on host element', function(done) {
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
+
           input.focus();
           assert(input.focused, 'input is focused');
           assert(inputFocusSpy.callCount > 0, 'focus event fired');
@@ -302,6 +307,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('focus events fired on host element if nested element is focused', function(done) {
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
+          ensureDocumentHasFocus();
           getNativeInput(input).focus();
           assert(input.focused, 'input is focused');
           assert(inputFocusSpy.callCount > 0, 'focus event fired');
@@ -313,6 +319,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
+          ensureDocumentHasFocus();
           input.focus();
           assert(input.focused, 'input is focused');
           assert(inputFocusSpy.callCount > 0, 'focus event fired');
@@ -330,6 +337,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('blur events fired on host element nested element is blurred', function(done) {
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
+          ensureDocumentHasFocus();
           input.focus();
           assert(inputFocusSpy.callCount > 0, 'focus event fired');
 
@@ -343,6 +351,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('focusing then bluring sets the focused attribute correctly', function(done) {
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
+          ensureDocumentHasFocus();
           input.focus();
           assert(input.focused, 'input is focused');
           getNativeInput(input).blur();
@@ -358,6 +367,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('focusing then bluring with shift-tab removes the focused attribute correctly', function(done) {
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
+          ensureDocumentHasFocus();
           input.focus();
           assert(input.focused, 'input is focused');
 
@@ -379,6 +389,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
+          ensureDocumentHasFocus();
           getNativeInput(input).focus();
           requestAnimationFrame(function() {
             assert.isTrue(line.classList.contains('is-highlighted'), 'line is highlighted when input is focused');
