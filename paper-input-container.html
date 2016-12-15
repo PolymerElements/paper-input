@@ -279,17 +279,17 @@ This element is `display:block` by default, but you can set the `inline` attribu
         @apply(--paper-input-container-input);
       }
 
-      .input-content ::content input:focus,
-      .input-content ::content textarea:focus,
-      .input-content ::content iron-autogrow-textarea:focus,
-      .input-content ::content .paper-input-input:focus {
+      .input-content.focused ::content input,
+      .input-content.focused ::content textarea,
+      .input-content.focused ::content iron-autogrow-textarea,
+      .input-content.focused ::content .paper-input-input {
         @apply(--paper-input-container-input-focus);
       }
 
-      .input-content ::content input[invalid],
-      .input-content ::content textarea[invalid],
-      .input-content ::content iron-autogrow-textarea[invalid],
-      .input-content ::content .paper-input-input[invalid] {
+      .input-content.is-invalid ::content input,
+      .input-content.is-invalid ::content textarea,
+      .input-content.is-invalid ::content iron-autogrow-textarea,
+      .input-content.is-invalid ::content .paper-input-input {
         @apply(--paper-input-container-input-invalid);
       }
 
@@ -610,12 +610,21 @@ This element is `display:block` by default, but you can set the `inline` attribu
           if (label) {
             this.$.labelAndInputContainer.style.position = 'relative';
           }
+		  if (invalid) {
+            cls += ' is-invalid';
+          }
         }
       } else {
         if (_inputHasContent) {
           cls += ' label-is-hidden';
         }
+		if (invalid) {
+		  cls += ' is-invalid';
+		}
       }
+	  if (focused) {
+		  cls += ' focused';
+	  }
       return cls;
     },
 
