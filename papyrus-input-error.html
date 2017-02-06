@@ -11,16 +11,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-styles/default-theme.html">
 <link rel="import" href="../paper-styles/typography.html">
-<link rel="import" href="paper-input-addon-behavior.html">
+<link rel="import" href="papyrus-input-addon-behavior.html">
 
 <!--
-`<paper-input-error>` is an error message for use with `<paper-input-container>`. The error is
-displayed when the `<paper-input-container>` is `invalid`.
+`<papyrus-input-error>` is an error message for use with `<papyrus-input-container>`. The error is
+displayed when the `<papyrus-input-container>` is `invalid`.
 
-    <paper-input-container>
+    <papyrus-input-container>
       <input is="iron-input" pattern="[0-9]*">
-      <paper-input-error>Only numbers are allowed!</paper-input-error>
-    </paper-input-container>
+      <papyrus-input-error>Only numbers are allowed!</papyrus-input-error>
+    </papyrus-input-container>
 
 ### Styling
 
@@ -28,21 +28,21 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--paper-input-container-invalid-color` | The foreground color of the error | `--error-color`
-`--paper-input-error`                   | Mixin applied to the error        | `{}`
+`--papyrus-input-container-invalid-color` | The foreground color of the error | `--error-color`
+`--papyrus-input-error`                   | Mixin applied to the error        | `{}`
 -->
 
-<dom-module id="paper-input-error">
+<dom-module id="papyrus-input-error">
   <template>
     <style>
       :host {
         display: inline-block;
         visibility: hidden;
 
-        color: var(--paper-input-container-invalid-color, --error-color);
+        color: red;
 
         @apply(--paper-font-caption);
-        @apply(--paper-input-error);
+        @apply(--papyrus-input-error);
         position: absolute;
         left:0;
         right:0;
@@ -59,10 +59,10 @@ Custom property | Description | Default
 
 <script>
   Polymer({
-    is: 'paper-input-error',
+    is: 'papyrus-input-error',
 
     behaviors: [
-      Polymer.PaperInputAddonBehavior
+      Polymer.PapyrusInputAddonBehavior
     ],
 
     properties: {
@@ -77,7 +77,7 @@ Custom property | Description | Default
     },
 
     /**
-     * This overrides the update function in PaperInputAddonBehavior.
+     * This overrides the update function in PapyrusInputAddonBehavior.
      * @param {{
      *   inputElement: (Element|undefined),
      *   value: (string|undefined),
