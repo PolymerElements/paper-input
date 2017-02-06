@@ -1,24 +1,26 @@
 language: node_js
+dist: trusty
 sudo: required
-before_script:
-  - npm install -g bower polylint web-component-tester
-  - bower install
-  - polylint
-env:
-  global:
-    - secure: >-
-        Hg2KIEhKqOw0J8ZW2C3Pdgp5N4HD/f9jhdluH0tiYRCU4I/jf5grQuA3ohqsbqnJKV5l06gWVIDCdxBDwDEH0h8v9uUG5z/i2diiuLQc94SLQu8kWKkUPDOx+pUyXmfRKj6KnaRTotTLFrwlyuKDi9OfGjQbLZWTvmJUWoFwh4g=
-    - secure: >-
-        U6/Hp/V0ezT/yxeP2bv4S99LSLScKEaOfYwQUbe0+v5dPbN5XZaCUS6iSbNP2K8Mtb1UQUEyL8uN6Zn+khFlJ8/KJshppJ6HJi235CykahBhh9/Cv7EapgDUoss14ntE8EKpm6Ijo4LvVyPVmhgqKk9wP5ykDFtvhoKD4C3guVU=
 node_js: '6'
 addons:
   firefox: latest
   apt:
     sources:
-      - google-chrome
+    - google-chrome
     packages:
-      - google-chrome-stable
+    - google-chrome-stable
+before_script:
+  - npm install -g bower polylint web-component-tester
+  - bower install
+  - polylint
+  - chmod -R +x ./bower_components/git-version-tagging
 script:
   - xvfb-run wct
-  - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct -s ''default''; fi'
-dist: trusty
+after_success:
+  - git config credential.helper "store --file=.git/credentials"
+  - echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
+  - if [ "${TRAVIS_BRANCH}" = "master" ] && [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then ./bower_components/git-version-tagging/create-release.sh; fi
+env:
+  global:
+    secure: pIqUta5nLNK4ZGIz9QuN3C3jMZ/wbqAOkf+NTP/zjrklSll4aZ961cG2tA12h3qVATxOa9y1cSjxsPa/pBF3cK75m7pXgWxD1nKgCcLzCOWkw0q92krnp1ciNwv89WTyaGgXw9Hb9ea2y5qATAC/Oriw/dATMn4iSKJI6GG8df3GctidFfxZr+NzKI9rc8btbJBQegVNrhPQ53JAed84YANWrWKC2P4q1MNoYet8GfXCd5ZpDms1hSo7hxe/ejO1G6XDU4w+ORVPqQ0Y1zn3A05oaKZJBKBzV1edLxoUt9R6uTd/XI3PLOyfI1H0AhYESQInvqB1JtV3uDMdzmf6ZfONOIPOu+RVUZTHvtf6BrFzxhBun7HASqMoUqeKznN8rwXt5OU9gEhd/Bwu4eLZ4CKlrio0RQZ2c+0C4dnDpdr4gWKZE8XDh3i4e6H5uukNUw6hJrSpcsZnj+3BLopWDGVElKQqf+uyIcVjdriJypjQ2Mouy+nAT4z8vHAg2/wiThkefcd1eGRlaPPeOi2lBWZk02RNGYITu0hLseIIY+OO8AE9w8zrM/JZZNqPODuaDNfbo14ic+iDKoldU8LdqdmW4wyKj56NFutzZ0BNm87GPZF4iKJoV8IAKOMHKBFM4prtlwDNZBXYSJq0Td+pc/BHqeCeI+FkL1jWu6oS4I4=
+    

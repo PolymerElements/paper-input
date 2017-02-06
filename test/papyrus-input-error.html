@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <html>
 <head>
 
-  <title>paper-input-error tests</title>
+  <title>papyrus-input-error tests</title>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -21,24 +21,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../web-component-tester/browser.js"></script>
 
   <link rel="import" href="../../iron-input/iron-input.html">
-  <link rel="import" href="../paper-input-container.html">
-  <link rel="import" href="../paper-input-error.html">
+  <link rel="import" href="../papyrus-input-container.html">
+  <link rel="import" href="../papyrus-input-error.html">
 
 </head>
 <body>
 
-  <paper-input-container id="container">
+  <papyrus-input-container id="container">
     <input is="iron-input">
-    <paper-input-error>error</paper-input-error>
-  </paper-input-container>
+    <papyrus-input-error>error</papyrus-input-error>
+  </papyrus-input-container>
 
   <test-fixture id="auto-validate-numbers">
     <template>
-      <paper-input-container auto-validate attr-for-value="bind-value">
+      <papyrus-input-container auto-validate attr-for-value="bind-value">
         <label id="l">label</label>
         <input is="iron-input" id="i" pattern="[0-9]*">
-        <paper-input-error id="e">error</paper-input-error>
-      </paper-input-container>
+        <papyrus-input-error id="e">error</papyrus-input-error>
+      </papyrus-input-container>
     </template>
   </test-fixture>
 

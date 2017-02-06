@@ -1,9 +1,9 @@
 {
-  "name": "paper-input",
-  "version": "1.1.23",
-  "description": "Material design text fields",
+  "name": "papyrus-input",
+  "description": "Plain themed text fields based on paper-input",
   "authors": [
-    "The Polymer Authors"
+    "The Polymer Authors",
+    "Aqovia"
   ],
   "keywords": [
     "web-components",
@@ -11,21 +11,15 @@
     "input"
   ],
   "main": [
-    "paper-input.html",
-    "paper-textarea.html",
-    "paper-input-behavior.html",
-    "paper-input-container.html",
-    "paper-input-error.html",
-    "paper-input-addon-behavior.html",
-    "paper-input-char-counter.html"
+    "papyrus-input.html"
   ],
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
-    "url": "git://github.com/PolymerElements/paper-input.git"
+    "url": "git://github.com/AqoviaElements/papyrus-input.git"
   },
   "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/PolymerElements/paper-input",
+  "homepage": "https://github.com/AqoviaElements/papyrus-input",
   "ignore": [],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
@@ -46,6 +40,7 @@
     "paper-icon-button": "PolymerElements/paper-icon-button#^1.0.0",
     "test-fixture": "PolymerElements/test-fixture#^1.0.0",
     "web-component-tester": "^4.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
+    "git-version-tagging": "^1.0.0"
   }
 }
