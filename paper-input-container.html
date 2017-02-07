@@ -25,13 +25,14 @@ For example:
       <iron-input slot="input">
         <input>
       </iron-input>
+      // In Polymer 1.0, you would use `<input is="iron-input" slot="input">` instead ov the above.
     </paper-input-container>
 
-    You can style the nested <input> however you want; if you want it to look like a
-    Material Design input, you can style it with the --paper-input-container-shared-input-style mixin.
+You can style the nested <input> however you want; if you want it to look like a
+Material Design input, you can style it with the --paper-input-container-shared-input-style mixin.
 
 Do not wrap `<paper-input-container>` around elements that already include it, such as `<paper-input>`.
-Doing so may cause events to bounce infintely between the container and its contained element.
+Doing so may cause events to bounce infinitely between the container and its contained element.
 
 ### Listening for input changes
 
@@ -78,6 +79,7 @@ or `suffix` attribute, and are displayed inline with the input, before or after.
       <iron-input slot="input">
         <input>
       </iron-input>
+      // In Polymer 1.0, you would use `<input is="iron-input" slot="input">` instead of the above.
       <paper-icon-button slot="suffix" icon="clear"></paper-icon-button>
     </paper-input-container>
 
@@ -484,15 +486,15 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
       this.addEventListener('focus', this._boundOnFocus, true);
       this.addEventListener('blur', this._boundOnBlur, true);
+    },
 
+    attached: function() {
       if (this.attrForValue) {
         this._inputElement.addEventListener(this._valueChangedEvent, this._boundValueChanged);
       } else {
         this.addEventListener('input', this._onInput);
       }
-    },
 
-    attached: function() {
       // Only validate when attached if the input already has a value.
       if (this._inputElementValue && this._inputElementValue != '') {
         this._handleValueAndAutoValidate(this._inputElement);

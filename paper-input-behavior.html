@@ -389,8 +389,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return this.inputElement;
     },
 
+    created: function() {
+      // These types have some default placeholder text; overlapping
+      // the label on top of it looks terrible. Auto-float the label in this case.
+      this._typesThatHaveText = ["date", "datetime", "datetime-local", "month",
+          "time", "week", "file"];
+    },
+
     attached: function() {
       this._updateAriaLabelledBy();
+
+      // In the 2.0 version of the element, this is handled in `onIronInputReady`,
+      // i.e. after the native input has finished distributing. In the 1.0 version,
+      // the input is in the shadow tree, so it's already available.
+      if (!Polymer.Element && this.inputElement &&
+          this._typesThatHaveText.indexOf(this.inputElement.type) !== -1) {
+        this.alwaysFloatLabel = true;
+      }
     },
 
     _appendStringWithSpace: function(str, more) {

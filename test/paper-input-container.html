@@ -38,7 +38,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <test-fixture id="prefix">
+  <test-fixture id="prefix-1.0">
+    <template>
+      <paper-input-container>
+        <div prefix>$</div>
+        <label slot="label" id="l">label</label>
+        <input is="iron-input" slot="input" id="i">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="prefix-2.0">
     <template>
       <paper-input-container>
         <div prefix>$</div>
@@ -50,7 +60,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <test-fixture id="prefix-has-value">
+  <test-fixture id="prefix-has-value-1.0">
+    <template>
+      <paper-input-container>
+        <div prefix>$</div>
+        <label slot="label" id="l">label</label>
+        <input is="iron-input" slot="input" id="i" bind-value="foo">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="prefix-has-value-2.0">
     <template>
       <paper-input-container>
         <div prefix>$</div>
@@ -89,7 +109,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <test-fixture id="auto-validate-numbers">
+  <test-fixture id="auto-validate-numbers-1.0">
+    <template>
+      <paper-input-container auto-validate>
+        <label slot="label" id="l">label</label>
+        <input is="iron-input" slot="input" id="i" pattern="[0-9]*">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="auto-validate-numbers-2.0">
     <template>
       <paper-input-container auto-validate>
         <label slot="label" id="l">label</label>
@@ -100,7 +129,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <test-fixture id="manual-validate-numbers">
+  <test-fixture id="manual-validate-numbers-1.0">
+    <template>
+      <paper-input-container>
+        <label slot="label" id="l">label</label>
+        <input is="iron-input" slot="input" id="i" pattern="[0-9]*">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="manual-validate-numbers-2.0">
     <template>
       <paper-input-container>
         <label slot="label" id="l">label</label>
@@ -113,7 +151,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <letters-only></letters-only>
 
-  <test-fixture id="auto-validate-validator">
+  <test-fixture id="auto-validate-validator-1.0">
+    <template>
+      <paper-input-container auto-validate>
+        <label slot="label" id="l">label</label>
+        <input is="iron-input" slot="input" id="i" validator="letters-only" pattern="[0-9]*">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="auto-validate-validator-2.0">
     <template>
       <paper-input-container auto-validate>
         <label slot="label" id="l">label</label>
@@ -124,7 +171,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <test-fixture id="auto-validate-validator-has-invalid-value">
+  <test-fixture id="auto-validate-validator-has-invalid-value-1.0">
+    <template>
+      <paper-input-container auto-validate>
+        <label slot="label" id="l">label</label>
+        <input is="iron-input" slot="input" id="i" validator="letters-only" bind-value="123123">
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="auto-validate-validator-has-invalid-value-2.0">
     <template>
       <paper-input-container auto-validate>
         <label slot="label" id="l">label</label>
@@ -145,7 +201,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     suite('basic', function() {
       test('can be created imperatively', function() {
         var container = document.createElement('paper-input-container');
-        var input = document.createElement('input', 'iron-input');
+        var input = document.createElement('input');
         input.className = 'paper-input-input';
         input.id = 'input';
 
@@ -187,7 +243,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('label is floated correctly with a prefix', function(done) {
-        var container = fixture('prefix');
+        var container = Polymer.Element ? fixture('prefix-2.0') : fixture('prefix-1.0');
         var label = Polymer.dom(container).querySelector('#l');
         var input = Polymer.dom(container).querySelector('#i');
 
@@ -204,7 +260,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('label is floated correctly with a prefix and prefilled value', function(done) {
-        var container = fixture('prefix-has-value');
+        var container = Polymer.Element ?
+            fixture('prefix-has-value-2.0') : fixture('prefix-has-value-1.0');
         var label = Polymer.dom(container).querySelector('#l');
 
         // The label floats, and it is not indented.
@@ -261,7 +318,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     suite('validation', function() {
 
       test('styled when the input is set to an invalid value with auto-validate', function(done) {
-        var container = fixture('auto-validate-numbers');
+        var container = Polymer.Element ?
+            fixture('auto-validate-numbers-2.0') :
+            fixture('auto-validate-numbers-1.0');
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
@@ -279,7 +338,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('styled when the input is set to an invalid value with auto-validate, with validator', function(done) {
-        var container = fixture('auto-validate-validator');
+        var container = Polymer.Element ?
+            fixture('auto-validate-validator-2.0') :
+            fixture('auto-validate-validator-1.0');
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
@@ -297,7 +358,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('styled when the input is set initially to an invalid value with auto-validate, with validator', function(done) {
-        var container = fixture('auto-validate-validator-has-invalid-value');
+        var container = Polymer.Element ?
+            fixture('auto-validate-validator-has-invalid-value-2.0') :
+            fixture('auto-validate-validator-has-invalid-value-1.0');
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
@@ -308,7 +371,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('styled when the input is set to an invalid value with manual validation', function(done) {
-        var container = fixture('manual-validate-numbers');
+        var container = Polymer.Element ?
+            fixture('manual-validate-numbers-2.0') :
+            fixture('manual-validate-numbers-1.0');
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
