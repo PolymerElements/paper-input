@@ -34,7 +34,7 @@
     "iron-input": "PolymerElements/iron-input#2.0-preview",
     "paper-styles": "PolymerElements/paper-styles#2.0-preview",
     "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#2.0-preview",
-    "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#2.0-preview",
+    "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#2.0-preview"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#2.0-preview",
@@ -57,7 +57,7 @@
         "iron-input": "PolymerElements/iron-input#^1.0.0",
         "paper-styles": "PolymerElements/paper-styles#^1.1.4",
         "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#^1.0.0",
-        "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#^1.0.0",
+        "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#^1.0.0"
       },
       "devDependencies": {
         "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
