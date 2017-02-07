@@ -28,13 +28,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body>
 
   <paper-input-container id="container">
-    <iron-input slot="input">
-      <input>
-    </iron-input>
+    <input slot="input">
     <paper-input-error slot="add-on">error</paper-input-error>
   </paper-input-container>
 
-  <test-fixture id="auto-validate-numbers">
+  <test-fixture id="auto-validate-numbers-1.0">
+    <template>
+      <paper-input-container auto-validate attr-for-value="bind-value">
+        <label slot="label" id="l">label</label>
+        <input is="iron-input" slot="input" id="i" pattern="[0-9]*">
+        <paper-input-error id="e" slot="add-on">error</paper-input-error>
+      </paper-input-container>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="auto-validate-numbers-2.0">
     <template>
       <paper-input-container auto-validate attr-for-value="bind-value">
         <label slot="label" id="l">label</label>
@@ -51,7 +59,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     suite('basic', function() {
 
       test('error message only appears when input is invalid', function(done) {
-        var container = fixture('auto-validate-numbers');
+        var container = Polymer.Element ?
+            fixture('auto-validate-numbers-2.0') :
+            fixture('auto-validate-numbers-1.0');
         var input = Polymer.dom(container).querySelector('#i');
         var error = Polymer.dom(container).querySelector('#e');
 

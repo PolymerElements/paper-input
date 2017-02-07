@@ -128,7 +128,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return paperInput.inputElement;
     }
     function getNativeInput(paperInput) {
-      return paperInput.inputElement.inputElement;
+      return Polymer.Element ? paperInput.inputElement.inputElement : paperInput.inputElement;
     }
     function getFloatingLabel(paperInput) {
       return Polymer.dom(Polymer.dom(paperInput.root).querySelector('paper-input-container').root)
@@ -139,6 +139,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     function getCharCounterDiv(paperInput) {
       return Polymer.dom(paperInput.root).querySelector('paper-input-char-counter')
+    }
+
+    function ensureDocumentHasFocus() {
+      window.top && window.top.focus();
     }
 
     suite('basic', function() {
@@ -268,10 +272,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var input;
       var inputFocusSpy, blurFocusSpy;
 
-      function ensureDocumentHasFocus() {
-        window.top && window.top.focus();
-      }
-
       setup(function() {
         input = fixture('basic');
         inputFocusSpy = sinon.spy();
@@ -316,7 +316,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('blur events fired on host element', function(done) {
-
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
           ensureDocumentHasFocus();
