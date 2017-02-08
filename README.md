@@ -1,7 +1,9 @@
+![Bower version](https://img.shields.io/bower/v/papyrus-input.svg)
 [![Build status](https://travis-ci.org/AqoviaElements/papyrus-input.svg?branch=master)](https://travis-ci.org/AqoviaElements/papyrus-input)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/AqoviaElements/papyrus-input)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AqoviaElements/papyrus-input?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-##&lt;papyrus-input&gt;
+## &lt;papyrus-input&gt;
 
 `<papyrus-input>` is a single-line text field with validation and plain styling.
 
