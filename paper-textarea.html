@@ -63,6 +63,7 @@ style this element.
         bind-value="{{value}}"
         invalid="{{invalid}}"
         validator$="[[validator]]"
+        label$="[[label]]"
         disabled$="[[disabled]]"
         autocomplete$="[[autocomplete]]"
         autofocus$="[[autofocus]]"
@@ -100,16 +101,6 @@ style this element.
     ],
 
     properties: {
-      _ariaLabelledBy: {
-        observer: '_ariaLabelledByChanged',
-        type: String
-      },
-
-      _ariaDescribedBy: {
-        observer: '_ariaDescribedByChanged',
-        type: String
-      },
-
       /**
        * The initial number of rows.
        *
@@ -134,14 +125,6 @@ style this element.
        type: Number,
        value: 0
       }
-    },
-
-    _ariaLabelledByChanged: function(ariaLabelledBy) {
-      this.$.input.textarea.setAttribute('aria-labelledby', ariaLabelledBy);
-    },
-
-    _ariaDescribedByChanged: function(ariaDescribedBy) {
-      this.$.input.textarea.setAttribute('aria-describedby', ariaDescribedBy);
     },
 
     get _focusableElement() {
