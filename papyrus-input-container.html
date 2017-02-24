@@ -80,18 +80,13 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--papyrus-input-container-color` | Label color when the input is not focused | `--secondary-text-color`
 `--papyrus-input-container-focus-color` | Label color when the input is focused | `--primary-color`
 `--papyrus-input-container-invalid-color` | Label color when the input is is invalid | `--error-color`
-`--papyrus-input-container-input-color` | Input foreground color | `--primary-text-color`
 `--papyrus-input-container` | Mixin applied to the container | `{}`
 `--papyrus-input-container-disabled` | Mixin applied to the container when it's disabled | `{}`
 `--papyrus-input-container-label` | Mixin applied to the label | `{}`
-`--papyrus-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
-`--papyrus-input-container-label-floating` | Mixin applied to the label when floating | `{}`
 `--papyrus-input-container-input` | Mixin applied to the input | `{}`
-`--papyrus-input-prefix` | Mixin applied to the input prefix | `{}`
-`--papyrus-input-suffix` | Mixin applied to the input suffix | `{}`
+`--papyrus-input-container-input-disabled` | Mixin applied to the input when it's disabled | `{}`
 
 This element is `display:block` by default, but you can set the `inline` attribute to make it
 `display:inline-block`.
@@ -118,6 +113,14 @@ This element is `display:block` by default, but you can set the `inline` attribu
         @apply(--papyrus-input-container-disabled);
       }
 
+      .label-and-input-container {
+        @apply(--layout-flex-auto);
+        @apply(--layout-relative);
+        
+        width: 100%;
+        max-width: 100%;
+      }
+
       .input-content {
         @apply(--layout-horizontal);
         @apply(--layout-center);
@@ -133,11 +136,22 @@ This element is `display:block` by default, but you can set the `inline` attribu
         border: solid 1px red;
       }
 
+      .input-content ::content label,
+      .input-content ::content .paper-input-label {
+        @apply(--papyrus-input-container-label);
+      }      
+
       /* Firefox sets a min-width on the input, which can cause layout issues */
       .input-content ::content input {
         width:100%;
         box-sizing: border-box;
         min-width: 0;
+        
+        @apply(--papyrus-input-container-input);
+      }
+
+      .input-content ::content input:disabled {
+        @apply(--papyrus-input-container-input-disabled);
       }
 
       .input-content ::content textarea {
