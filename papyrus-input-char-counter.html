@@ -10,27 +10,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-styles/typography.html">
-<link rel="import" href="paper-input-addon-behavior.html">
+<link rel="import" href="papyrus-input-addon-behavior.html">
 
 <!--
-`<paper-input-char-counter>` is a character counter for use with `<paper-input-container>`. It
+`<papyrus-input-char-counter>` is a character counter for use with `<papyrus-input-container>`. It
 shows the number of characters entered in the input and the max length if it is specified.
 
-    <paper-input-container>
+    <papyrus-input-container>
       <input is="iron-input" maxlength="20">
-      <paper-input-char-counter></paper-input-char-counter>
-    </paper-input-container>
-
-### Styling
-
-The following mixin is available for styling:
-
-Custom property | Description | Default
-----------------|-------------|----------
-`--paper-input-char-counter` | Mixin applied to the element | `{}`
+      <papyrus-input-char-counter></papyrus-input-char-counter>
+    </papyrus-input-container>
 -->
 
-<dom-module id="paper-input-char-counter">
+<dom-module id="papyrus-input-char-counter">
   <template>
     <style>
       :host {
@@ -38,7 +30,7 @@ Custom property | Description | Default
         float: right;
 
         @apply(--paper-font-caption);
-        @apply(--paper-input-char-counter);
+        @apply(--papyrus-input-char-counter);
       }
 
       :host([hidden]) {
@@ -56,10 +48,10 @@ Custom property | Description | Default
 
 <script>
   Polymer({
-    is: 'paper-input-char-counter',
+    is: 'papyrus-input-char-counter',
 
     behaviors: [
-      Polymer.PaperInputAddonBehavior
+      Polymer.PapyrusInputAddonBehavior
     ],
 
     properties: {
@@ -70,7 +62,7 @@ Custom property | Description | Default
     },
 
     /**
-     * This overrides the update function in PaperInputAddonBehavior.
+     * This overrides the update function in PapyrusInputAddonBehavior.
      * @param {{
      *   inputElement: (Element|undefined),
      *   value: (string|undefined),

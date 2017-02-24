@@ -1,24 +1,25 @@
 language: node_js
+dist: trusty
 sudo: required
-before_script:
-  - npm install -g bower polylint web-component-tester
-  - bower install
-  - polylint
-env:
-  global:
-    - secure: >-
-        Hg2KIEhKqOw0J8ZW2C3Pdgp5N4HD/f9jhdluH0tiYRCU4I/jf5grQuA3ohqsbqnJKV5l06gWVIDCdxBDwDEH0h8v9uUG5z/i2diiuLQc94SLQu8kWKkUPDOx+pUyXmfRKj6KnaRTotTLFrwlyuKDi9OfGjQbLZWTvmJUWoFwh4g=
-    - secure: >-
-        U6/Hp/V0ezT/yxeP2bv4S99LSLScKEaOfYwQUbe0+v5dPbN5XZaCUS6iSbNP2K8Mtb1UQUEyL8uN6Zn+khFlJ8/KJshppJ6HJi235CykahBhh9/Cv7EapgDUoss14ntE8EKpm6Ijo4LvVyPVmhgqKk9wP5ykDFtvhoKD4C3guVU=
 node_js: '6'
 addons:
   firefox: latest
   apt:
     sources:
-      - google-chrome
+    - google-chrome
     packages:
-      - google-chrome-stable
+    - google-chrome-stable
+before_script:
+  - npm install -g bower polylint web-component-tester
+  - bower install
+  - polylint
+  - chmod -R +x ./bower_components/git-version-tagging
 script:
   - xvfb-run wct
-  - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct -s ''default''; fi'
-dist: trusty
+after_success:
+  - git config credential.helper "store --file=.git/credentials"
+  - echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
+  - if [ "${TRAVIS_BRANCH}" = "master" ] && [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then ./bower_components/git-version-tagging/create-release.sh; fi
+env:
+  global:
+    secure: FzUkKHYEVJEzD5XLuhhH2MBB1BshrjxHt7BKfkRd6wZqIL+eOw4DaYLOEVXCLd3JcfQQV3q82PjxbO4QHiQIu5bRF2no1w2wmTz9/xlqmWU0qBLPxVf8ISMIN+2vwSvcrSdWh8Wy/tvRmqfTqniVMghbrbc/vMgiHKIq3PgZH4W2LTcQitc4154j5rHCNK0XNYPUlXT2fCWYf+DOyTYaemIDxwcOBVSGTGDBwNJiqzEWWrP7Q93UMBCY6o9/0Oyh7brbo0Np/HWwdQYU7jirtRPNMtbeVKJ2V9KnvyTLt3rtu13oTk0KPz5jYSPgFWltU4X9L6L3qamreuseqMe6LIIJAl41Hkzyhx/6o6ZAdmQl4zg9qvLEIt8/Ar8+wsFG14hqgB9L+yI9OEW7/MboeUXrxPIAVZLblwBIeXiknBo830piOzar9z5tigi3Y4FLu1jeYjJFefGl7FYY9YR6hQFrvQYoKh5BBGnESUdx1cGr+oebveKHmILBEHQr1VzQs2BUJksl7VxmPxg6lpQCtEhiOJrUUqm7mNHAtc4CaQj3gzs9h0YiiX0RAPGJ9wz8OOH0675gULlIQOc6zD95KTrBiuL2kU2MI8kYcKXC+HA9I6Vst4EszUpbFkpks0Unq4VlXs9aWLpsdzyK0YZ5PCtxleEKE0NuZ+pendJ0m7U=

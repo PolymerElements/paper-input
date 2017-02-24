@@ -1,27 +1,24 @@
-[![Build status](https://travis-ci.org/PolymerElements/paper-input.svg?branch=master)](https://travis-ci.org/PolymerElements/paper-input)
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://beta.webcomponents.org/element/PolymerElements/paper-input)
+![Bower version](https://img.shields.io/bower/v/papyrus-input.svg)
+[![Build status](https://travis-ci.org/AqoviaElements/papyrus-input.svg?branch=master)](https://travis-ci.org/AqoviaElements/papyrus-input)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/AqoviaElements/papyrus-input)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AqoviaElements/papyrus-input?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-##&lt;paper-input&gt;
+## &lt;papyrus-input&gt;
 
-Material design: [Text fields](https://www.google.com/design/spec/components/text-fields.html)
-
-`<paper-input>` is a single-line text field with Material Design styling.
+`<papyrus-input>` is a single-line text field with validation and plain styling.
 
 <!---
 ```
 <custom-element-demo>
   <template>
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="paper-input.html">
-    <link rel="import" href="../iron-icons/iron-icons.html">
+    <link rel="import" href="papyrus-input.html">
     <style>
-      paper-input {
-        max-width: 400px;
+      papyrus-input {
+        max-width: 200px;
         margin: auto;
-      }
-      iron-icon, div[suffix] {
-        color: hsl(0, 0%, 50%);
-        margin-right: 12px;
+        font-family: sans-serif;
+        font-size: 14px;
       }
     </style>
     <next-code-block></next-code-block>
@@ -30,9 +27,11 @@ Material design: [Text fields](https://www.google.com/design/spec/components/tex
 ```
 -->
 ```html
-<paper-input always-float-label label="Floating label"></paper-input>
-<paper-input label="username">
-  <iron-icon icon="mail" prefix></iron-icon>
-  <div suffix>@email.com</div>
-</paper-input>
+<papyrus-input 
+  label="This input requires letters only" 
+  char-counter 
+  auto-validate 
+  pattern="[a-zA-Z]*" 
+  error-message="Please enter letters only!">
+</papyrus-input>
 ```
