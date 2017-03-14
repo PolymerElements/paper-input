@@ -7,13 +7,14 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
+
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="paper-input-behavior.html">
+<link rel="import" href="paper-input-char-counter.html">
 <link rel="import" href="paper-input-container.html">
 <link rel="import" href="paper-input-error.html">
-<link rel="import" href="paper-input-char-counter.html">
 
 <!--
 `<paper-textarea>` is a multi-line text field with Material Design styling.
@@ -34,13 +35,28 @@ style this element.
 
 <dom-module id="paper-textarea">
   <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      :host([hidden]) {
+        display: none !important;
+      }
+
+      label {
+        pointer-events: none;
+      }
+    </style>
 
     <paper-input-container no-label-float$="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
 
-      <label hidden$="[[!label]]">[[label]]</label>
+      <label hidden$="[[!label]]" aria-hidden="true">[[label]]</label>
 
       <iron-autogrow-textarea id="input" class="paper-input-input"
         bind-value="{{value}}"
+        invalid="{{invalid}}"
+        disabled$="[[disabled]]"
         autocomplete$="[[autocomplete]]"
         autofocus$="[[autofocus]]"
         inputmode$="[[inputmode]]"
@@ -48,7 +64,12 @@ style this element.
         placeholder$="[[placeholder]]"
         readonly$="[[readonly]]"
         required$="[[required]]"
-        maxlength$="[[maxlength]]"></iron-autogrow-textarea>
+        minlength$="[[minlength]]"
+        maxlength$="[[maxlength]]"
+        autocapitalize$="[[autocapitalize]]"
+        rows$="[[rows]]"
+        max-rows$="[[maxRows]]"
+        on-change="_onChange"></iron-autogrow-textarea>
 
       <template is="dom-if" if="[[errorMessage]]">
         <paper-input-error>[[errorMessage]]</paper-input-error>
@@ -59,17 +80,11 @@ style this element.
       </template>
 
     </paper-input-container>
-
   </template>
-
 </dom-module>
 
 <script>
-
-(function() {
-
   Polymer({
-
     is: 'paper-textarea',
 
     behaviors: [
@@ -78,7 +93,6 @@ style this element.
     ],
 
     properties: {
-
       _ariaLabelledBy: {
         observer: '_ariaLabelledByChanged',
         type: String
@@ -87,8 +101,32 @@ style this element.
       _ariaDescribedBy: {
         observer: '_ariaDescribedByChanged',
         type: String
-      }
+      },
 
+      /**
+       * The initial number of rows.
+       *
+       * @attribute rows
+       * @type number
+       * @default 1
+       */
+      rows: {
+        type: Number,
+        value: 1
+      },
+
+      /**
+       * The maximum number of rows this element can grow to until it
+       * scrolls. 0 means no maximum.
+       *
+       * @attribute maxRows
+       * @type number
+       * @default 0
+       */
+      maxRows: {
+       type: Number,
+       value: 0
+      }
     },
 
     _ariaLabelledByChanged: function(ariaLabelledBy) {
@@ -97,10 +135,10 @@ style this element.
 
     _ariaDescribedByChanged: function(ariaDescribedBy) {
       this.$.input.textarea.setAttribute('aria-describedby', ariaDescribedBy);
-    }
+    },
 
+    get _focusableElement() {
+      return this.$.input.textarea;
+    },
   });
-
-})();
-
 </script>

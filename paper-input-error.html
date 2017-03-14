@@ -9,7 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-styles/paper-styles.html">
+<link rel="import" href="../paper-styles/default-theme.html">
+<link rel="import" href="../paper-styles/typography.html">
 <link rel="import" href="paper-input-addon-behavior.html">
 
 <!--
@@ -27,56 +28,44 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--paper-input-container-invalid-color` | The foreground color of the error | `--google-red-500`
+`--paper-input-container-invalid-color` | The foreground color of the error | `--error-color`
 `--paper-input-error`                   | Mixin applied to the error        | `{}`
 -->
+
 <dom-module id="paper-input-error">
-
-  <style>
-
-    :host {
-      /* need to use display: none for role="alert" */
-      display: none;
-      float: left;
-
-      color: var(--paper-input-container-invalid-color, --google-red-500);
-
-      @apply(--paper-font-caption);
-      @apply(--paper-input-error);
-    }
-
-    :host([invalid]) {
-      display: inline-block;
-    };
-
-  </style>
-
   <template>
+    <style>
+      :host {
+        display: inline-block;
+        visibility: hidden;
+
+        color: var(--paper-input-container-invalid-color, --error-color);
+
+        @apply(--paper-font-caption);
+        @apply(--paper-input-error);
+        position: absolute;
+        left:0;
+        right:0;
+      }
+
+      :host([invalid]) {
+        visibility: visible;
+      };
+    </style>
 
     <content></content>
-
   </template>
-
 </dom-module>
 
 <script>
-
-(function() {
-
   Polymer({
-
     is: 'paper-input-error',
 
     behaviors: [
       Polymer.PaperInputAddonBehavior
     ],
 
-    hostAttributes: {
-      'role': 'alert'
-    },
-
     properties: {
-
       /**
        * True if the error is showing.
        */
@@ -85,15 +74,21 @@ Custom property | Description | Default
         reflectToAttribute: true,
         type: Boolean
       }
-
     },
 
+    /**
+     * This overrides the update function in PaperInputAddonBehavior.
+     * @param {{
+     *   inputElement: (Element|undefined),
+     *   value: (string|undefined),
+     *   invalid: boolean
+     * }} state -
+     *     inputElement: The input element.
+     *     value: The input value.
+     *     invalid: True if the input value is invalid.
+     */
     update: function(state) {
       this._setInvalid(state.invalid);
     }
-
-  })
-
-})();
-
+  });
 </script>
