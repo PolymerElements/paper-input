@@ -389,8 +389,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return this.inputElement;
     },
 
+    registered: function() {
+      // These types have some default placeholder text; overlapping
+      // the label on top of it looks terrible. Auto-float the label in this case.
+      this._typesThatHaveText = ["date", "datetime", "datetime-local", "month",
+          "time", "week", "file"];
+    },
+
     attached: function() {
       this._updateAriaLabelledBy();
+
+      if (this.inputElement &&
+          this._typesThatHaveText.indexOf(this.inputElement.type) !== -1) {
+        this.alwaysFloatLabel = true;
+      }
     },
 
     _appendStringWithSpace: function(str, more) {
@@ -403,7 +415,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _onAddonAttached: function(event) {
-      var target = event.path ? event.path[0] : event.target;
+      var eventPath = Polymer.dom(event).path;
+      var target = eventPath ? eventPath[0] : event.target;
       if (target.id) {
         this._ariaDescribedBy = this._appendStringWithSpace(this._ariaDescribedBy, target.id);
       } else {
@@ -429,8 +442,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer.IronControlState._focusBlurHandler.call(this, event);
 
       // Forward the focus to the nested input.
-      if (this.focused && !this._shiftTabPressed)
+      if (this.focused && !this._shiftTabPressed && this._focusableElement) {
         this._focusableElement.focus();
+
+        // If possible, also auto-select the text.
+        if (this._focusableElement.select)
+          this._focusableElement.select();
+      }
     },
 
     /**
@@ -537,7 +555,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
     }
-  }
+  };
 
   /** @polymerBehavior */
   Polymer.PaperInputBehavior = [

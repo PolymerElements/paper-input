@@ -14,19 +14,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-styles/typography.html">
 
 <!--
-`<paper-input-container>` is a container for a `<label>`, an `<input is="iron-input">` or
+`<paper-input-container>` is a container for a `<label>`, an `<iron-input>` or
 `<textarea>` and optional add-on elements such as an error message or character
 counter, used to implement Material Design text fields.
 
 For example:
 
     <paper-input-container>
-      <label>Your name</label>
-      <input is="iron-input">
+      <label slot="label">Your name</label>
+      <iron-input slot="input">
+        <input>
+      </iron-input>
+      // In Polymer 1.0, you would use `<input is="iron-input" slot="input">` instead ov the above.
     </paper-input-container>
 
+You can style the nested <input> however you want; if you want it to look like a
+Material Design input, you can style it with the --paper-input-container-shared-input-style mixin.
+
 Do not wrap `<paper-input-container>` around elements that already include it, such as `<paper-input>`.
-Doing so may cause events to bounce infintely between the container and its contained element.
+Doing so may cause events to bounce infinitely between the container and its contained element.
 
 ### Listening for input changes
 
@@ -42,8 +48,8 @@ compound input field like a social security number input. The custom input eleme
 `Polymer.IronValidatableBehavior` if it is validatable.
 
     <paper-input-container attr-for-value="ssn-value">
-      <label>Social security number</label>
-      <ssn-input class="paper-input-input"></ssn-input>
+      <label slot="label">Social security number</label>
+      <ssn-input slot="input" class="paper-input-input"></ssn-input>
     </paper-input-container>
 
 
@@ -68,10 +74,13 @@ These are child elements of a `<paper-input-container>` with the `prefix`
 or `suffix` attribute, and are displayed inline with the input, before or after.
 
     <paper-input-container>
-      <div prefix>$</div>
-      <label>Total</label>
-      <input is="iron-input">
-      <paper-icon-button suffix icon="clear"></paper-icon-button>
+      <div slot="prefix">$</div>
+      <label slot="label">Total</label>
+      <iron-input slot="input">
+        <input>
+      </iron-input>
+      // In Polymer 1.0, you would use `<input is="iron-input" slot="input">` instead of the above.
+      <paper-icon-button slot="suffix" icon="clear"></paper-icon-button>
     </paper-input-container>
 
 ### Styling
@@ -90,6 +99,7 @@ Custom property | Description | Default
 `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
 `--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}`
 `--paper-input-container-input` | Mixin applied to the input | `{}`
+`--paper-input-container-input-webkit-spinner` | Mixin applied to the webkit spinner | `{}`
 `--paper-input-container-underline` | Mixin applied to the underline | `{}`
 `--paper-input-container-underline-focus` | Mixin applied to the underline when the input is focused | `{}`
 `--paper-input-container-underline-disabled` | Mixin applied to the underline when the input is disabled | `{}`
@@ -151,14 +161,13 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       .underline {
+        height: 2px;
         position: relative;
       }
 
       .focused-line {
         @apply --layout-fit;
-
-        background: var(--paper-input-container-focus-color, var(--primary-color));
-        height: 2px;
+        border-bottom: 2px solid var(--paper-input-container-focus-color, var(--primary-color));
 
         -webkit-transform-origin: center center;
         transform-origin: center center;
@@ -178,7 +187,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       .underline.is-invalid .focused-line {
-        background: var(--paper-input-container-invalid-color, var(--error-color));
+        border-color: var(--paper-input-container-invalid-color, var(--error-color));
         -webkit-transform: none;
         transform: none;
         -webkit-transition: -webkit-transform 0.25s;
@@ -189,32 +198,26 @@ This element is `display:block` by default, but you can set the `inline` attribu
 
       .unfocused-line {
         @apply --layout-fit;
-
-        background: var(--paper-input-container-color, var(--secondary-text-color));
-        height: 1px;
-
+        border-bottom: 1px solid var(--paper-input-container-color, var(--secondary-text-color));
         @apply --paper-input-container-underline;
       }
 
       :host([disabled]) .unfocused-line {
         border-bottom: 1px dashed;
         border-color: var(--paper-input-container-color, var(--secondary-text-color));
-        background: transparent;
-
         @apply --paper-input-container-underline-disabled;
       }
 
-      .label-and-input-container {
-        @apply --layout-flex-auto;
-        @apply --layout-relative;
-        max-width: 100%;
+      .input-wrapper {
+        @apply --layout-horizontal;
+        @apply --layout-center;
+        position: relative;
       }
 
       .input-content {
-        @apply --layout-horizontal;
-        @apply --layout-center;
-
-        position: relative;
+        @apply --layout-flex-auto;
+        @apply --layout-relative;
+        max-width: 100%;
       }
 
       .input-content ::slotted(label),
@@ -285,11 +288,15 @@ This element is `display:block` by default, but you can set the `inline` attribu
         @apply --paper-input-container-input;
       }
 
+      .input-content ::slotted(input)::-webkit-outer-spin-button,
+      .input-content ::slotted(input)::-webkit-inner-spin-button {
+        @apply(--paper-input-container-input-webkit-spinner);
+      }
+
       .prefix ::slotted(*) {
         display: inline-block;
         @apply --paper-font-subhead;
         @apply --layout-flex-none;
-
         @apply --paper-input-prefix;
       }
 
@@ -325,10 +332,10 @@ This element is `display:block` by default, but you can set the `inline` attribu
 
     <div class="floated-label-placeholder" aria-hidden="true" hidden="[[noLabelFloat]]">&nbsp;</div>
 
-    <div class$="[[_computeInputContentClass(noLabelFloat,alwaysFloatLabel,focused,invalid,_inputHasContent)]]">
+    <div class="input-wrapper">
       <span class="prefix"><slot name="prefix"></slot></span>
 
-      <div class="label-and-input-container" id="labelAndInputContainer">
+      <div class$="[[_computeInputContentClass(noLabelFloat,alwaysFloatLabel,focused,invalid,_inputHasContent)]]" id="labelAndInputContainer">
         <slot name="label"></slot>
         <slot name="input"></slot>
       </div>
@@ -478,17 +485,17 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
       this.addEventListener('focus', this._boundOnFocus, true);
       this.addEventListener('blur', this._boundOnBlur, true);
+    },
 
+    attached: function() {
       if (this.attrForValue) {
         this._inputElement.addEventListener(this._valueChangedEvent, this._boundValueChanged);
       } else {
         this.addEventListener('input', this._onInput);
       }
-    },
 
-    attached: function() {
       // Only validate when attached if the input already has a value.
-      if (this._inputElementValue != '') {
+      if (this._inputElementValue && this._inputElementValue != '') {
         this._handleValueAndAutoValidate(this._inputElement);
       } else {
         this._handleValue(this._inputElement);
@@ -522,6 +529,19 @@ This element is `display:block` by default, but you can set the `inline` attribu
     },
 
     _onValueChanged: function(event) {
+      var input = event.target;
+
+      // Problem: if the input is required but has no text entered, we should
+      // only validate it on blur (so that an empty form doesn't come up red
+      // immediately; however, in this handler, we don't know whether this is
+      // the booting up value or a value in the future. I am assuming that the
+      // case  we care about manifests itself when the value is undefined.
+      // If this causes future problems, we need to do something like track whether
+      // the iron-input-ready event has fired, and this handler came before that.
+
+      if (input.value === undefined)
+        return;
+
       this._handleValueAndAutoValidate(event.target);
     },
 
