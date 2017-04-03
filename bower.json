@@ -37,6 +37,7 @@
     "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#2.0-preview"
   },
   "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#2.0-preview",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#2.0-preview",
     "iron-icon": "PolymerElements/iron-icon#2.0-preview",
@@ -60,6 +61,7 @@
         "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#^1.0.0"
       },
       "devDependencies": {
+        "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
         "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
         "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
         "iron-icon": "PolymerElements/iron-icon#^1.0.0",
