@@ -262,10 +262,12 @@ style this element.
 
     _beforeRegister: function() {
       var template = Polymer.DomModule.import('paper-input', 'template');
-      var version = Polymer.Element ? 'v1' : 'v0';
-      var inputTemplate = Polymer.DomModule.import('paper-input', 'template#' + version);
       var inputPlaceholder = template.content.querySelector('#template-placeholder');
-      inputPlaceholder.parentNode.replaceChild(inputTemplate.content, inputPlaceholder);
+      if (inputPlaceholder) {
+        var version = Polymer.Element ? 'v1' : 'v0';
+        var inputTemplate = Polymer.DomModule.import('paper-input', 'template#' + version);
+        inputPlaceholder.parentNode.replaceChild(inputTemplate.content, inputPlaceholder);
+      }
     },
 
     /**
