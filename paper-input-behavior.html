@@ -449,8 +449,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._focusableElement.focus();
 
         // If possible, also auto-select the text.
-        if (this._focusableElement.select)
+        if (this._focusableElement.select) {
           this._focusableElement.select();
+        }
       }
     },
 
