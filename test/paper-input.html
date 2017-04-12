@@ -142,7 +142,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     function ensureDocumentHasFocus() {
-      window.top && window.top.focus();
+      if (document.activeElement)
+        document.activeElement.blur();
+      window.focus();
+      if (window.top)
+        window.top.focus();
     }
 
     suite('basic', function() {
@@ -293,16 +297,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // another focus event for the 'input (which we retarget).
       // This means that in Shady DOM, you get *two* focus events (and a blur)
       // every time a paper-input is focused.
-      // test('focus events fired on host element', function(done) {
-      //   // Mutation observer is async, so wait one tick.
-      //   Polymer.Base.async(function() {
-      //     ensureDocumentHasFocus();
-      //     input.focus();
-      //     assert(input.focused, 'input is focused');
-      //     assert(inputFocusSpy.callCount > 0, 'focus event fired');
-      //     done();
-      //   }, 1);
-      // });
+      test('focus events fired on host element', function(done) {
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async(function() {
+          ensureDocumentHasFocus();
+          input.focus();
+          assert(input.focused, 'input is focused');
+          assert(inputFocusSpy.callCount > 0, 'focus event fired');
+          done();
+        }, 1);
+      });
 
       // TODO(notwaldorf): Re-enable this test when
       // https://github.com/webcomponents/shadydom/issues/124 is fixed.
@@ -394,7 +398,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // });
     });
 
-    suite('focused styling (integration test)', function() {
+    suite('focused styling (integration test)', function(done) {
       test('underline is colored when input is focused', function(done) {
         var input = fixture('basic');
         // Mutation observer is async, so wait one tick.
@@ -405,7 +409,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var line = Polymer.dom(container.root).querySelector('.underline');
           assert.isFalse(line.classList.contains('is-highlighted'), 'line is not highlighted when input is not focused');
 
-          getNativeInput(input).focus();
+          input.focus();
           requestAnimationFrame(function() {
             assert.isTrue(line.classList.contains('is-highlighted'), 'line is highlighted when input is focused');
             done();
