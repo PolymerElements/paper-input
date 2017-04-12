@@ -397,13 +397,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     suite('focused styling (integration test)', function() {
       test('underline is colored when input is focused', function(done) {
         var input = fixture('basic');
-        var container = Polymer.dom(input.root).querySelector('paper-input-container');
-        var line = Polymer.dom(container.root).querySelector('.underline');
-        assert.isFalse(line.classList.contains('is-highlighted'), 'line is not highlighted when input is not focused');
-
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
           ensureDocumentHasFocus();
+
+          var container = Polymer.dom(input.root).querySelector('paper-input-container');
+          var line = Polymer.dom(container.root).querySelector('.underline');
+          assert.isFalse(line.classList.contains('is-highlighted'), 'line is not highlighted when input is not focused');
+
           getNativeInput(input).focus();
           requestAnimationFrame(function() {
             assert.isTrue(line.classList.contains('is-highlighted'), 'line is highlighted when input is focused');
@@ -502,6 +503,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
+          ensureDocumentHasFocus();
           input.focus();
           assert.equal(input.shadowRoot ? input.shadowRoot.activeElement :
                   document.activeElement, input._focusableElement);
