@@ -25,7 +25,7 @@ For example:
       <iron-input slot="input">
         <input>
       </iron-input>
-      // In Polymer 1.0, you would use `<input is="iron-input" slot="input">` instead ov the above.
+      // In Polymer 1.0, you would use `<input is="iron-input" slot="input">` instead of the above.
     </paper-input-container>
 
 You can style the nested <input> however you want; if you want it to look like a
@@ -540,8 +540,9 @@ This element is `display:block` by default, but you can set the `inline` attribu
       // If this causes future problems, we need to do something like track whether
       // the iron-input-ready event has fired, and this handler came before that.
 
-      if (input.value === undefined)
+      if (input.value === undefined) {
         return;
+      }
 
       this._handleValueAndAutoValidate(event.target);
     },
