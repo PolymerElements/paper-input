@@ -249,18 +249,7 @@ style this element.
       Polymer.IronFormElementBehavior
     ],
 
-    // TODO: remove this when 2.0 adds beforeRegister back to legacy
-    registered: function() {
-      if (Polymer.Element) {
-        this._beforeRegister();
-      }
-    },
-
     beforeRegister: function() {
-      this._beforeRegister();
-    },
-
-    _beforeRegister: function() {
       var template = Polymer.DomModule.import('paper-input', 'template');
       var version = Polymer.Element ? 'v1' : 'v0';
       var inputTemplate = Polymer.DomModule.import('paper-input', 'template#' + version);
