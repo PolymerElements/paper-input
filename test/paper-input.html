@@ -142,11 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     function ensureDocumentHasFocus() {
-      if (document.activeElement)
-        document.activeElement.blur();
-      window.focus();
-      if (window.top)
-        window.top.focus();
+      window.top && window.top.focus();
     }
 
     suite('basic', function() {
