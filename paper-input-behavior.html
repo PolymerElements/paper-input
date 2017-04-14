@@ -418,8 +418,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _onAddonAttached: function(event) {
-      var eventPath = Polymer.dom(event).path;
-      var target = eventPath ? eventPath[0] : event.target;
+      var target = Polymer.dom(event).rootTarget;
       if (target.id) {
         this._ariaDescribedBy = this._appendStringWithSpace(this._ariaDescribedBy, target.id);
       } else {
