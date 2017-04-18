@@ -81,7 +81,7 @@ The following custom properties and mixins are available for styling:
 Custom property | Description | Default
 ----------------|-------------|----------
 `--paper-input-container-color` | Label and underline color when the input is not focused | `--secondary-text-color`
-`--paper-input-container-focus-color` | Label and underline color when the input is focused | `--primary-color`
+`--paper-input-container-color-focus` | Label and underline color when the input is focused | `--primary-color`
 `--paper-input-container-invalid-color` | Label and underline color when the input is is invalid | `--error-color`
 `--paper-input-container-input-color` | Input foreground color | `--primary-text-color`
 `--paper-input-container` | Mixin applied to the container | `{}`
@@ -142,7 +142,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .focused-line {
         @apply(--layout-fit);
 
-        border-bottom: 2px solid var(--paper-input-container-focus-color, --primary-color);
+        border-bottom: 2px solid var(--paper-input-container-color-focus, --primary-color);
 
         -webkit-transform-origin: center center;
         transform-origin: center center;
@@ -245,7 +245,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
 
       .input-content.label-is-highlighted ::content label,
       .input-content.label-is-highlighted ::content .paper-input-label {
-        color: var(--paper-input-container-focus-color, --primary-color);
+        color: var(--paper-input-container-color-focus, --primary-color);
 
         @apply(--paper-input-container-label-focus);
       }
@@ -332,7 +332,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       .add-on-content.is-highlighted ::content * {
-        color: var(--paper-input-container-focus-color, --primary-color);
+        color: var(--paper-input-container-color-focus, --primary-color);
       }
     </style>
 
