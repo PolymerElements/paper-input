@@ -38,14 +38,14 @@ Custom property | Description | Default
       :host {
         display: inline-block;
         visibility: hidden;
-        position: absolute;
-        left:0;
-        right:0;
 
         color: var(--paper-input-container-invalid-color, var(--error-color));
 
         @apply --paper-font-caption;
         @apply --paper-input-error;
+        position: absolute;
+        left:0;
+        right:0;
       }
 
       :host([invalid]) {
