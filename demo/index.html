@@ -140,6 +140,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-input-container>
       </template>
     </demo-snippet>
+
+    <h3>You can style a paper-input using custom properties</h3>
+    <demo-snippet>
+      <template>
+        <style is="custom-style">
+          paper-input.custom {
+              --paper-input-container-underline-common: {
+                  display: none;
+              };
+
+              --paper-input-container-label: {
+                  color: var(--paper-pink-500);
+                  font-style: italic;
+                  font-weight: bold;
+              }
+          }
+
+          paper-input.custom-focus {
+              --paper-input-container-underline-common: {
+                  display: none;
+                  background: #737373;
+                  height: 1px;
+              };
+
+              --paper-input-container-underline-focus: {
+                  display: inline;
+                  background: #E91E63;
+                  height: 2px;
+              };
+            }
+        </style>
+        <paper-input class="custom" label="Custom style"></paper-input>
+        <paper-input class="custom-focus" label="Overriden common underline style for focus"></paper-input>
+      </template>
+    </demo-snippet>
   </div>
 
   <script>
