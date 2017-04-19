@@ -123,6 +123,10 @@ style this element.
         color: var(--paper-input-container-color, var(--secondary-text-color));
       }
 
+      input::-ms-clear {
+        @apply(--paper-input-container-ms-clear);
+      }
+
       input:-ms-input-placeholder {
         color: var(--paper-input-container-color, var(--secondary-text-color));
       }
