@@ -280,6 +280,10 @@ This element is `display:block` by default, but you can set the `inline` attribu
         visibility: hidden;
       }
 
+      .input-content ::slotted(iron-input) {
+        @apply --paper-input-container-shared-input-style;
+      }
+      
       .input-content ::slotted(input),
       .input-content ::slotted(textarea),
       .input-content ::slotted(iron-autogrow-textarea),
