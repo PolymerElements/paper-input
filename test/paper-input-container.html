@@ -149,11 +149,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <test-fixture id="required-validate">
+  <test-fixture id="required-validate-1.0">
     <template>
       <paper-input-container>
         <label id="l">label</label>
-        <input is="iron-input" id="i" required>
+        <input is="iron-input" id="i" slot="input" required>
+      </paper-input-container>
+    </template>
+  </test-fixture>
+  <test-fixture id="required-validate-2.0">
+    <template>
+      <paper-input-container>
+        <label id="l">label</label>
+        <iron-input id="i" slot="input">
+          <input required>
+        </iron-input>
       </paper-input-container>
     </template>
   </test-fixture>
@@ -412,16 +422,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }, 1);
       });
 
-      test('styled when the input is manually validated and required', function() {
-        var container = fixture('required-validate');
-        var input = Polymer.dom(container).querySelector('#i');
-        var inputContent = Polymer.dom(container.root).querySelector('.input-content');
-        assert.isFalse(container.invalid, 'invalid is false');
-        input.validate();
-        assert.isTrue(container.invalid, 'invalid is true');
-        assert.isTrue(inputContent.classList.contains('is-invalid'), 'input content has is-invalid class');
-      });
+      test('styled when the input is manually validated and required', function(done) {
+        var container = Polymer.Element ?
+            fixture('required-validate-2.0') :
+            fixture('required-validate-1.0');
 
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async(function() {
+          var input = Polymer.dom(container).querySelector('#i');
+          var inputContent = Polymer.dom(container.root).querySelector('.input-content');
+          var line = Polymer.dom(container.root).querySelector('.underline');
+          assert.isFalse(container.invalid, 'invalid is false');
+          input.validate();
+
+          assert.isTrue(container.invalid, 'invalid is true');
+          assert.isTrue(inputContent.classList.contains('is-invalid'), 'label has invalid styling when input is invalid');
+          assert.isTrue(line.classList.contains('is-invalid'), 'underline has invalid styling when input is invalid');
+          done();
+        }, 1);
+      });
     });
 
   </script>
