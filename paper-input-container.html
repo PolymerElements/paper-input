@@ -304,14 +304,14 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content.focused ::slotted(textarea),
       .input-content.focused ::slotted(iron-autogrow-textarea),
       .input-content.focused ::slotted(.paper-input-input) {
-        @apply(--paper-input-container-input-focus);
+        @apply --paper-input-container-input-focus;
       }
 
       .input-content.is-invalid ::slotted(input),
       .input-content.is-invalid ::slotted(textarea),
       .input-content.is-invalid ::slotted(iron-autogrow-textarea),
       .input-content.is-invalid ::slotted(.paper-input-input) {
-        @apply(--paper-input-container-input-invalid);
+        @apply --paper-input-container-input-invalid;
       }
       
       .prefix ::slotted(*) {
