@@ -441,20 +441,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * Forward focus to inputElement. Overriden from IronControlState.
      */
     _focusBlurHandler: function(event) {
-      // Polymer 2.0 & Shady DOM has this horrible bug:
-      // https://github.com/webcomponents/shadydom/issues/121
-      // If you call paper-input.focus, it needs to focus its inner input, which
-      // in turn fires a blur event on the paper-input. Because of the bug,
-      // there's no way to look at this event and figure out it's not a real
-      // "i'm leaving this paper-input" blur. So, here's a gross hack. I am so sorry.
-      if (!(window.ShadyDOM && this._willFocusInputAndBlurSelf === true)) {
-        Polymer.IronControlState._focusBlurHandler.call(this, event);
-      }
-      this._willFocusInputAndBlurSelf = false;
+      Polymer.IronControlState._focusBlurHandler.call(this, event);
 
       // Forward the focus to the nested input.
       if (this.focused && !this._shiftTabPressed && this._focusableElement) {
-        this._willFocusInputAndBlurSelf = true;
         this._focusableElement.focus();
 
         // If possible, also auto-select the text.
