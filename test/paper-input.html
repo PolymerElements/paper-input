@@ -309,100 +309,102 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }, 1);
       });
 
-      // TODO(notwaldorf): Re-enable this test when
-      // https://github.com/webcomponents/shadydom/issues/124 is fixed.
-      // test('focus events fired on host element if nested element is focused', function(done) {
-      //   ensureDocumentHasFocus();
-      //   // If the document doesn't have focus, we can't test focus.
-      //   if (!window.top.document.hasFocus()) {
-      //     this.skip();
-      //   }
-      //   // Mutation observer is async, so wait one tick.
-      //   Polymer.Base.async(function() {
-      //     getNativeInput(input).focus();
-      //     assert(input.focused, 'input is focused');
-      //     assert(inputFocusSpy.callCount > 0, 'focus event fired');
-      //     done();
-      //   }, 1);
-      // });
+      test('focus events fired on host element if nested element is focused', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async(function() {
+          getNativeInput(input).focus();
+          assert(input.focused, 'input is focused');
+          assert(inputFocusSpy.callCount > 0, 'focus event fired');
+          done();
+        }, 1);
+      });
 
-      // TODO(notwaldorf): Re-enable this test when
-      // https://github.com/webcomponents/shadydom/issues/126 is fixed.
-      // test('blur events fired on host element', function(done) {
-      //   ensureDocumentHasFocus();
-      //   // If the document doesn't have focus, we can't test focus.
-      //   if (!window.top.document.hasFocus()) {
-      //     this.skip();
-      //   }
-      //
-      //   // Mutation observer is async, so wait one tick.
-      //   Polymer.Base.async(function() {
-      //     input.focus();
-      //     assert(input.focused, 'input is focused');
-      //     assert(inputFocusSpy.callCount > 0, 'focus event fired');
-      //     var blursBecauseOfFocus = blurFocusSpy.callCount;
-      //
-      //     // We can't call blur() on the paper-input, because in shady dom
-      //     // it's not actually the element that's focused (the nested <input>)
-      //     // is. So, next best thing, blur the thing that's focused.
-      //     document.activeElement.blur();
-      //     input.blur();
-      //     assert(blurFocusSpy.callCount > blursBecauseOfFocus, 'blur event fired');
-      //     done();
-      //   }, 1);
-      // });
+      test('blur events fired on host element', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
 
-      // TODO(notwaldorf): Re-enable this test when
-      // https://github.com/webcomponents/shadydom/issues/126 is fixed.
-      // test('blur events fired on host element nested element is blurred', function(done) {
-      //   // Mutation observer is async, so wait one tick.
-      //   Polymer.Base.async(function() {
-      //     ensureDocumentHasFocus();
-      //     input.focus();
-      //     assert(inputFocusSpy.callCount > 0, 'focus event fired');
-      //
-      //     var blursBecauseOfFocus = blurFocusSpy.callCount;
-      //     getNativeInput(input).blur();
-      //     assert(blurFocusSpy.callCount > blursBecauseOfFocus, 'blur event fired');
-      //     done();
-      //   }, 1)
-      // });
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async(function() {
+          input.focus();
+          assert(input.focused, 'input is focused');
+          assert(inputFocusSpy.callCount > 0, 'focus event fired');
+          var blursBecauseOfFocus = blurFocusSpy.callCount;
 
-      // TODO(notwaldorf): Re-enable this test when
-      // https://github.com/webcomponents/shadydom/issues/124 and
-      // https://github.com/webcomponents/shadydom/issues/126 are fixed.
-      // test('focusing then bluring sets the focused attribute correctly', function(done) {
-      //   // Mutation observer is async, so wait one tick.
-      //   Polymer.Base.async(function() {
-      //     ensureDocumentHasFocus();
-      //     input.focus();
-      //     assert(input.focused, 'input is focused');
-      //     getNativeInput(input).blur();
-      //     assert(!input.focused, 'input is blurred');
-      //     getNativeInput(input).focus();
-      //     assert(input.focused, 'input is focused');
-      //     getNativeInput(input).blur();
-      //     assert(!input.focused, 'input is blurred');
-      //     done();
-      //   }, 1);
-      // });
+          // We can't call blur() on the paper-input, because in shady dom
+          // it's not actually the element that's focused (the nested <input>)
+          // is. So, next best thing, blur the thing that's focused.
+          document.activeElement.blur();
+          input.blur();
+          assert(blurFocusSpy.callCount > blursBecauseOfFocus, 'blur event fired');
+          done();
+        }, 1);
+      });
 
-      // TODO(notwaldorf): Re-enable this test when
-      // https://github.com/webcomponents/shadydom/issues/126 is fixed.
-      // test('focusing then bluring with shift-tab removes the focused attribute correctly', function(done) {
-      //   // Mutation observer is async, so wait one tick.
-      //   Polymer.Base.async(function() {
-      //     ensureDocumentHasFocus();
-      //     input.focus();
-      //     assert(input.focused, 'input is focused');
-      //
-      //     // Fake a shift-tab induced blur by forcing the flag.
-      //     input._shiftTabPressed = true;
-      //     getNativeInput(input).blur();
-      //     assert(!input.focused, 'input is blurred');
-      //     done();
-      //   }, 1);
-      // });
+      test('blur events fired on host element nested element is blurred', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
+
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async(function() {
+          input.focus();
+          assert(inputFocusSpy.callCount > 0, 'focus event fired');
+
+          var blursBecauseOfFocus = blurFocusSpy.callCount;
+          getNativeInput(input).blur();
+          assert(blurFocusSpy.callCount > blursBecauseOfFocus, 'blur event fired');
+          done();
+        }, 1)
+      });
+
+      test('focusing then bluring sets the focused attribute correctly', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async(function() {
+          input.focus();
+          assert(input.focused, 'input is focused');
+          getNativeInput(input).blur();
+          assert(!input.focused, 'input is blurred');
+          getNativeInput(input).focus();
+          assert(input.focused, 'input is focused');
+          getNativeInput(input).blur();
+          assert(!input.focused, 'input is blurred');
+          done();
+        }, 1);
+      });
+
+      test('focusing then bluring with shift-tab removes the focused attribute correctly', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async(function() {
+          input.focus();
+          assert(input.focused, 'input is focused');
+
+          // Fake a shift-tab induced blur by forcing the flag.
+          input._shiftTabPressed = true;
+          getNativeInput(input).blur();
+          assert(!input.focused, 'input is blurred');
+          done();
+        }, 1);
+      });
     });
 
     suite('focused styling (integration test)', function(done) {
@@ -533,10 +535,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     // TODO(nowaldorf): This currently crashes on Firefox/Safari.
-    // a11ySuite('basic');
-    // a11ySuite('label');
-    // a11ySuite('label-has-value');
-    // a11ySuite('error');
+    a11ySuite('basic');
+    a11ySuite('label');
+    a11ySuite('label-has-value');
+    a11ySuite('error');
   </script>
 
 </body>
