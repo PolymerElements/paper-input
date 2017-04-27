@@ -143,6 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     function ensureDocumentHasFocus() {
       window.top && window.top.focus();
+      window.focus();
     }
 
     suite('basic', function() {
@@ -296,7 +297,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('focus events fired on host element', function(done) {
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-
+          ensureDocumentHasFocus();
+          // If the document doesn't have focus, we can't test focus.
+          if (!window.top.document.hasFocus()) {
+            this.skip();
+          }
           input.focus();
           assert(input.focused, 'input is focused');
           assert(inputFocusSpy.callCount > 0, 'focus event fired');
@@ -305,9 +310,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('focus events fired on host element if nested element is focused', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          ensureDocumentHasFocus();
           getNativeInput(input).focus();
           assert(input.focused, 'input is focused');
           assert(inputFocusSpy.callCount > 0, 'focus event fired');
@@ -316,9 +325,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('blur events fired on host element', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
+
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          ensureDocumentHasFocus();
           input.focus();
           assert(input.focused, 'input is focused');
           assert(inputFocusSpy.callCount > 0, 'focus event fired');
@@ -328,15 +342,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // it's not actually the element that's focused (the nested <input>)
           // is. So, next best thing, blur the thing that's focused.
           document.activeElement.blur();
+          input.blur();
           assert(blurFocusSpy.callCount > blursBecauseOfFocus, 'blur event fired');
           done();
         }, 1);
       });
 
       test('blur events fired on host element nested element is blurred', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
+
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          ensureDocumentHasFocus();
           input.focus();
           assert(inputFocusSpy.callCount > 0, 'focus event fired');
 
@@ -348,9 +368,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('focusing then bluring sets the focused attribute correctly', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          ensureDocumentHasFocus();
           input.focus();
           assert(input.focused, 'input is focused');
           getNativeInput(input).blur();
@@ -364,9 +388,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('focusing then bluring with shift-tab removes the focused attribute correctly', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          ensureDocumentHasFocus();
           input.focus();
           assert(input.focused, 'input is focused');
 
@@ -379,17 +407,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
     });
 
-    suite('focused styling (integration test)', function() {
+    suite('focused styling (integration test)', function(done) {
       test('underline is colored when input is focused', function(done) {
-        var input = fixture('basic');
-        var container = Polymer.dom(input.root).querySelector('paper-input-container');
-        var line = Polymer.dom(container.root).querySelector('.underline');
-        assert.isFalse(line.classList.contains('is-highlighted'), 'line is not highlighted when input is not focused');
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
 
+        var input = fixture('basic');
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
-          ensureDocumentHasFocus();
-          getNativeInput(input).focus();
+          var container = Polymer.dom(input.root).querySelector('paper-input-container');
+          var line = Polymer.dom(container.root).querySelector('.underline');
+          assert.isFalse(line.classList.contains('is-highlighted'), 'line is not highlighted when input is not focused');
+
+          input.focus();
           requestAnimationFrame(function() {
             assert.isTrue(line.classList.contains('is-highlighted'), 'line is highlighted when input is focused');
             done();
@@ -472,12 +505,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Need to wait a tick to stamp the char-counter and error message.
         Polymer.Base.async(function() {
           assert.isTrue(getNativeInput(input).hasAttribute('aria-describedby'));
-          assert.equal(getNativeInput(input).getAttribute('aria-describedby'), getErrorDiv(input).id + ' ' + getCharCounterDiv(input).id, 'aria-describedby points to the error message and character counter');
+          var ariaDescribedBy = getNativeInput(input).getAttribute('aria-describedby');
+
+          assert.notEqual(ariaDescribedBy.indexOf(getErrorDiv(input).id, -1,
+              'aria-describedby points to the error message'));
+          assert.notEqual(ariaDescribedBy.indexOf(getCharCounterDiv(input).id, -1,
+              'aria-describedby points to the character counter'));
           done();
         }, 1);
       });
 
       test('focus an input with tabindex', function(done) {
+        ensureDocumentHasFocus();
+        // If the document doesn't have focus, we can't test focus.
+        if (!window.top.document.hasFocus()) {
+          this.skip();
+        }
+
         var input = fixture('has-tabindex');
 
         // Mutation observer is async, so wait one tick.
@@ -491,10 +535,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     // TODO(nowaldorf): This currently crashes on Firefox/Safari.
-    // a11ySuite('basic');
-    // a11ySuite('label');
-    // a11ySuite('label-has-value');
-    // a11ySuite('error');
+    a11ySuite('basic');
+    a11ySuite('label');
+    a11ySuite('label-has-value');
+    a11ySuite('error');
   </script>
 
 </body>

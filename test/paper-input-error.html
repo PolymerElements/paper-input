@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-input-error slot="add-on">error</paper-input-error>
   </paper-input-container>
 
-  <test-fixture id="auto-validate-numbers-1.0">
+  <test-fixture id="auto-validate-numbers-1">
     <template>
       <paper-input-container auto-validate attr-for-value="bind-value">
         <label slot="label" id="l">label</label>
@@ -42,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <test-fixture id="auto-validate-numbers-2.0">
+  <test-fixture id="auto-validate-numbers-2">
     <template>
       <paper-input-container auto-validate attr-for-value="bind-value">
         <label slot="label" id="l">label</label>
@@ -60,8 +60,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('error message only appears when input is invalid', function(done) {
         var container = Polymer.Element ?
-            fixture('auto-validate-numbers-2.0') :
-            fixture('auto-validate-numbers-1.0');
+            fixture('auto-validate-numbers-2') :
+            fixture('auto-validate-numbers-1');
         var input = Polymer.dom(container).querySelector('#i');
         var error = Polymer.dom(container).querySelector('#e');
 

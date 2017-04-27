@@ -102,6 +102,15 @@ style this element.
         @apply --paper-input-container-input;
       }
 
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        @apply --paper-input-container-input-webkit-spinner;
+      }
+
+      input::-webkit-clear-button {
+        @apply --paper-input-container-input-webkit-clear;
+      }
+
       input::-webkit-input-placeholder {
         color: var(--paper-input-container-color, var(--secondary-text-color));
       }
@@ -112,6 +121,10 @@ style this element.
 
       input::-moz-placeholder {
         color: var(--paper-input-container-color, var(--secondary-text-color));
+      }
+
+      input::-ms-clear {
+        @apply --paper-input-container-ms-clear;
       }
 
       input:-ms-input-placeholder {
@@ -183,7 +196,7 @@ style this element.
         autocapitalize$="[[autocapitalize]]"
         autocorrect$="[[autocorrect]]"
         on-change="_onChange"
-        tabindex$="[[tabindex]]"
+        tabindex$="[[tabIndex]]"
         autosave$="[[autosave]]"
         results$="[[results]]"
         accept$="[[accept]]"
@@ -221,7 +234,7 @@ style this element.
         autocapitalize$="[[autocapitalize]]"
         autocorrect$="[[autocorrect]]"
         on-change="_onChange"
-        tabindex$="[[tabindex]]"
+        tabindex$="[[tabIndex]]"
         autosave$="[[autosave]]"
         results$="[[results]]"
         accept$="[[accept]]"
@@ -240,20 +253,15 @@ style this element.
       Polymer.IronFormElementBehavior
     ],
 
-    // TODO: remove this when 2.0 adds beforeRegister back to legacy
-    registered: function() {
-      if (Polymer.Element) {
-        this._beforeRegister();
-      }
-    },
-
     beforeRegister: function() {
-      this._beforeRegister();
-    },
-
-    _beforeRegister: function() {
+      // We need to tell which kind of of template to stamp based on
+      // what kind of `iron-input` we got, but because of polyfills and
+      // custom elements differences between v0 and v1, the safest bet is
+      // to check a particular method we know the iron-input#2.x can have.
+      // If it doesn't have it, then it's an iron-input#1.x.
+      var ironInput = document.createElement('iron-input');
+      var version = typeof ironInput._initSlottedInput == 'function' ? 'v1' : 'v0';
       var template = Polymer.DomModule.import('paper-input', 'template');
-      var version = Polymer.Element ? 'v1' : 'v0';
       var inputTemplate = Polymer.DomModule.import('paper-input', 'template#' + version);
       var inputPlaceholder = template.content.querySelector('#template-placeholder');
       if (inputPlaceholder) {

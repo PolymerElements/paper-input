@@ -116,18 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.value = ssn1.trim() + '-' + ssn2.trim() + '-' + ssn3.trim();
       },
 
-      // TODO: remove this when 2.0 adds beforeRegister back to legacy
-      registered: function() {
-        if (Polymer.Element) {
-          this._beforeRegister();
-        }
-      },
-
       beforeRegister: function() {
-        this._beforeRegister();
-      },
-
-      _beforeRegister: function() {
         var template = Polymer.DomModule.import('ssn-input', 'template');
         var version = Polymer.Element ? 'v1' : 'v0';
         var inputTemplate = Polymer.DomModule.import('ssn-input', 'template#' + version);

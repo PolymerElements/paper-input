@@ -25,7 +25,7 @@ For example:
       <iron-input slot="input">
         <input>
       </iron-input>
-      // In Polymer 1.0, you would use `<input is="iron-input" slot="input">` instead ov the above.
+      // In Polymer 1.0, you would use `<input is="iron-input" slot="input">` instead of the above.
     </paper-input-container>
 
 You can style the nested <input> however you want; if you want it to look like a
@@ -99,7 +99,11 @@ Custom property | Description | Default
 `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
 `--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}`
 `--paper-input-container-input` | Mixin applied to the input | `{}`
+`--paper-input-container-input-focus` | Mixin applied to the input when focused | `{}`
+`--paper-input-container-input-invalid` | Mixin applied to the input when invalid | `{}`
 `--paper-input-container-input-webkit-spinner` | Mixin applied to the webkit spinner | `{}`
+`--paper-input-container-input-webkit-clear` | Mixin applied to the webkit clear button | `{}`
+`--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer clear button | `{}`
 `--paper-input-container-underline` | Mixin applied to the underline | `{}`
 `--paper-input-container-underline-focus` | Mixin applied to the underline when the input is focused | `{}`
 `--paper-input-container-underline-disabled` | Mixin applied to the underline when the input is disabled | `{}`
@@ -279,7 +283,10 @@ This element is `display:block` by default, but you can set the `inline` attribu
         visibility: hidden;
       }
 
-      .input-content ::slotted(iron-input),
+      .input-content ::slotted(iron-input) {
+        @apply --paper-input-container-shared-input-style;
+      }
+      
       .input-content ::slotted(input),
       .input-content ::slotted(textarea),
       .input-content ::slotted(iron-autogrow-textarea),
@@ -290,9 +297,23 @@ This element is `display:block` by default, but you can set the `inline` attribu
 
       .input-content ::slotted(input)::-webkit-outer-spin-button,
       .input-content ::slotted(input)::-webkit-inner-spin-button {
-        @apply(--paper-input-container-input-webkit-spinner);
+        @apply --paper-input-container-input-webkit-spinner;
+      }
+      
+      .input-content.focused ::slotted(input),
+      .input-content.focused ::slotted(textarea),
+      .input-content.focused ::slotted(iron-autogrow-textarea),
+      .input-content.focused ::slotted(.paper-input-input) {
+        @apply --paper-input-container-input-focus;
       }
 
+      .input-content.is-invalid ::slotted(input),
+      .input-content.is-invalid ::slotted(textarea),
+      .input-content.is-invalid ::slotted(iron-autogrow-textarea),
+      .input-content.is-invalid ::slotted(.paper-input-input) {
+        @apply --paper-input-container-input-invalid;
+      }
+      
       .prefix ::slotted(*) {
         display: inline-block;
         @apply --paper-font-subhead;
@@ -539,8 +560,9 @@ This element is `display:block` by default, but you can set the `inline` attribu
       // If this causes future problems, we need to do something like track whether
       // the iron-input-ready event has fired, and this handler came before that.
 
-      if (input.value === undefined)
+      if (input.value === undefined) {
         return;
+      }
 
       this._handleValueAndAutoValidate(event.target);
     },
@@ -619,11 +641,20 @@ This element is `display:block` by default, but you can set the `inline` attribu
           if (label) {
             this.$.labelAndInputContainer.style.position = 'relative';
           }
+          if (invalid) {
+            cls += ' is-invalid';
+          }
         }
       } else {
         if (_inputHasContent) {
           cls += ' label-is-hidden';
         }
+        if (invalid) {
+          cls += ' is-invalid';
+        }
+      }
+      if (focused) {
+        cls += ' focused';
       }
       return cls;
     },
