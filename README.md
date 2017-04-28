@@ -32,8 +32,8 @@ Material design: [Text fields](https://www.google.com/design/spec/components/tex
 ```html
 <paper-input always-float-label label="Floating label"></paper-input>
 <paper-input label="username">
-  <iron-icon icon="mail" prefix></iron-icon>
-  <div suffix>@email.com</div>
+  <iron-icon icon="mail" slot="prefix"></iron-icon>
+  <div slot="suffix">@email.com</div>
 </paper-input>
 ```
 
