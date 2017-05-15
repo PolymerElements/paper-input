@@ -570,8 +570,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
     _handleValue: function(inputElement) {
       var value = this._inputElementValue;
 
-      // type="number" hack needed because this.value is empty until it's valid
-      if (value || value === 0 || (inputElement.type === 'number' && !inputElement.checkValidity())) {
+      if (value || value === 0) {
         this._inputHasContent = true;
       } else {
         this._inputHasContent = false;
