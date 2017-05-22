@@ -446,11 +446,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // Forward the focus to the nested input.
       if (this.focused && !this._shiftTabPressed && this._focusableElement) {
         this._focusableElement.focus();
-
-        // If possible, also auto-select the text.
-        if (this._focusableElement.select) {
-          this._focusableElement.select();
-        }
       }
     },
 
