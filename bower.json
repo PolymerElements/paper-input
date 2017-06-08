@@ -19,7 +19,6 @@
     "paper-input-addon-behavior.html",
     "paper-input-char-counter.html"
   ],
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/PolymerElements/paper-input.git"
