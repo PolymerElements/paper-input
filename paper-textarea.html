@@ -55,10 +55,10 @@ style this element.
         disabled$="[[disabled]]"
         invalid="[[invalid]]">
 
-      <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
+      <label hidden$="[[!label]]" aria-hidden="true" slot="label">[[label]]</label>
 
       <iron-autogrow-textarea id="input" class="paper-input-input" slot="input"
-        aria-labelledby$="[[_ariaLabelledBy]]"
+        label="[[label]]"
         aria-describedby$="[[_ariaDescribedBy]]"
         bind-value="{{value}}"
         invalid="{{invalid}}"
@@ -100,11 +100,6 @@ style this element.
     ],
 
     properties: {
-      _ariaLabelledBy: {
-        observer: '_ariaLabelledByChanged',
-        type: String
-      },
-
       _ariaDescribedBy: {
         observer: '_ariaDescribedByChanged',
         type: String
@@ -134,10 +129,6 @@ style this element.
        type: Number,
        value: 0
       }
-    },
-
-    _ariaLabelledByChanged: function(ariaLabelledBy) {
-      this.$.input.textarea.setAttribute('aria-labelledby', ariaLabelledBy);
     },
 
     _ariaDescribedByChanged: function(ariaDescribedBy) {

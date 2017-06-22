@@ -397,8 +397,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     attached: function() {
-      this._updateAriaLabelledBy();
-
       // In the 2.0 version of the element, this is handled in `onIronInputReady`,
       // i.e. after the native input has finished distributing. In the 1.0 version,
       // the input is in the shadow tree, so it's already available.
@@ -496,22 +494,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _computeAlwaysFloatLabel: function(alwaysFloatLabel, placeholder) {
       return placeholder || alwaysFloatLabel;
-    },
-
-    _updateAriaLabelledBy: function() {
-      var label = Polymer.dom(this.root).querySelector('label');
-      if (!label) {
-        this._ariaLabelledBy = '';
-        return;
-      }
-      var labelledBy;
-      if (label.id) {
-        labelledBy = label.id;
-      } else {
-        labelledBy = 'paper-input-label-' + Polymer.PaperInputHelper.NextLabelID++;
-        label.id = labelledBy;
-      }
-      this._ariaLabelledBy = labelledBy;
     },
 
     _onChange:function(event) {
