@@ -145,7 +145,7 @@ style this element.
 
       <slot name="prefix" slot="prefix"></slot>
 
-      <label hidden$="[[!label]]" aria-hidden="true" slot="label">[[label]]</label>
+      <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
 
       <span id="template-placeholder"></span>
 
@@ -168,7 +168,7 @@ style this element.
    -->
   <template id="v0">
     <input is="iron-input" id="input" slot="input"
-        aria-label$="[[label]]"
+        aria-labelledby$="[[_ariaLabelledBy]]"
         aria-describedby$="[[_ariaDescribedBy]]"
         disabled$="[[disabled]]"
         title$="[[title]]"
@@ -211,7 +211,7 @@ style this element.
         invalid="{{invalid}}"
         validator="[[validator]]">
       <input id="nativeInput"
-        aria-label$="[[label]]"
+        aria-labelledby$="[[_ariaLabelledBy]]"
         aria-describedby$="[[_ariaDescribedBy]]"
         disabled$="[[disabled]]"
         title$="[[title]]"
