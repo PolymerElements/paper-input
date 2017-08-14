@@ -1,5 +1,8 @@
 language: node_js
-sudo: false
+sudo: required
+before_script:
+  - npm install -g polymer-cli
+  - polymer install --variants
 env:
   global:
     - secure: >-
@@ -9,15 +12,15 @@ env:
 node_js: stable
 addons:
   firefox: latest
-  chrome: stable
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
   sauce_connect: true
-before_script:
-  - polymer lint
-install:
-  - npm install -g polymer-cli
-  - polymer install --variants
 script:
-  - xvfb-run polymer test
+  - xvfb-run polymer test -l chrome
+  - xvfb-run polymer test -l firefox
   - >-
     if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test -s 'default';
     fi
