@@ -203,7 +203,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('error message is displayed', function() {
         var input = fixture('error');
         var errorDiv = getErrorDiv(input);
-        assert.notEqual(getComputedStyle(error).visibility, 'hidden', 'error is not visibility:hidden');
+        assert.notEqual(getComputedStyle(errorDiv).visibility, 'hidden', 'error is not visibility:hidden');
       });
 
       test('character counter is displayed', function(done) {
