@@ -5,7 +5,7 @@
 
 Material design: [Text fields](https://www.google.com/design/spec/components/text-fields.html)
 
-`<paper-input>` is a single-line text field with Material Design styling.
+`<paper-input>` This simple fork of the official repo adds       input::-ms-reveal mixin for style overrides
 
 <!---
 ```
