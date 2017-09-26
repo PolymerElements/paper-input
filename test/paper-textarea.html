@@ -207,7 +207,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     suite('a11y', function() {
 
-      test('has aria-labelledby', function() {
+      test('has aria-label', function() {
         var input = fixture('label');
         assert.isTrue(input.inputElement.textarea.hasAttribute('aria-label'))
         assert.equal(input.inputElement.textarea.getAttribute('aria-label'), input.label, 'paper-textarea passes through label to aria-label');
