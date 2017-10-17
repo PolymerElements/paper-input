@@ -70,19 +70,23 @@ style this element.
 --paper-input-container-ms-clear  | Mixin applied to the Internet Explorer reveal button -aka the eyeball | {}
 
 To hide the default ms clear icon and provide your own
-`--paper-input-container-ms-clear: {
-  display: none;
-}`
+
+paper-input{
+  --paper-input-container-ms-clear: {
+    display: none;
+  };
+}
 
 To hide the default ms reveal icon and provide your own
+
 --paper-input-container-ms-reveal | Mixin applied to the Internet Explorer reveal button -aka the eyeball | {}
-`--paper-input-container-ms-reveal: {
-  display: none;
-}`
+paper-input{
+  --paper-input-container-ms-reveal: {
+    display: none;
+  }
+}
 
 -->
-
-
 
 <dom-module id="paper-input">
   <template>
