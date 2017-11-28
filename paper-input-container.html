@@ -121,6 +121,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       :host {
         display: block;
         padding: 8px 0;
+        overflow: hidden;
 
         --paper-input-container-shared-input-style: {
           position: relative; /* to make a stacking context */
@@ -259,12 +260,10 @@ This element is `display:block` by default, but you can set the `inline` attribu
         @apply --paper-input-container-label-floating;
       }
 
+      :host(:dir(rtl)) .input-content.label-is-floating ::slotted(label),
+      :host(:dir(rtl)) .input-content.label-is-floating ::slotted(.paper-input-label),
       :host-context([dir="rtl"]) .input-content.label-is-floating ::slotted(label),
       :host-context([dir="rtl"]) .input-content.label-is-floating ::slotted(.paper-input-label) {
-        /* TODO(noms): Figure out why leaving the width at 133% before the animation
-         * actually makes
-         * it wider on the right side, not left side, as you would expect in RTL */
-        width: 100%;
         -webkit-transform-origin: right top;
         transform-origin: right top;
       }
@@ -289,7 +288,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content ::slotted(iron-input) {
         @apply --paper-input-container-shared-input-style;
       }
-      
+
       .input-content ::slotted(input),
       .input-content ::slotted(textarea),
       .input-content ::slotted(iron-autogrow-textarea),
@@ -302,7 +301,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content ::slotted(input)::-webkit-inner-spin-button {
         @apply --paper-input-container-input-webkit-spinner;
       }
-      
+
       .input-content.focused ::slotted(input),
       .input-content.focused ::slotted(textarea),
       .input-content.focused ::slotted(iron-autogrow-textarea),
@@ -316,7 +315,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content.is-invalid ::slotted(.paper-input-input) {
         @apply --paper-input-container-input-invalid;
       }
-      
+
       .prefix ::slotted(*) {
         display: inline-block;
         @apply --paper-font-subhead;
