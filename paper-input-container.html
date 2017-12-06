@@ -259,9 +259,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       :host(:dir(rtl)) .input-content.label-is-floating ::slotted(label),
-      :host(:dir(rtl)) .input-content.label-is-floating ::slotted(.paper-input-label),
-      :host-context([dir="rtl"]) .input-content.label-is-floating ::slotted(label),
-      :host-context([dir="rtl"]) .input-content.label-is-floating ::slotted(.paper-input-label) {
+      :host(:dir(rtl)) .input-content.label-is-floating ::slotted(.paper-input-label) {
         right: 0;
         left: auto;
         -webkit-transform-origin: right top;
