@@ -106,12 +106,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       /**
-       * The datalist of the input (if any). This should match the id of an existing `<datalist>`.
+       * The id of a datalist for the input (if any).
+       * If not using Shadow DOM this can match the id of an existing `<datalist>`, otherwise the datalist property must also be set
        * If you're using PaperInputBehavior to implement your own paper-input-like
        * element, bind this to the `<input is="iron-input">`'s `list` property.
        */
       list: {
         type: String
+      },
+
+      /**
+       * Optional values for a datalist for the input.
+       * If the list property is also set that will be used as the id.
+       * If you're using PaperInputBehavior to implement your own paper-input-like
+       * element, use this to generate `<datalist>` in the same shadow root as the `<input>`.
+       */
+      datalist: {
+        type: Array
       },
 
       /**
@@ -554,6 +565,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this._focusableElement.focus();
         }
       }
+    },
+
+    /** Get the ID of any <datalist> and the <input list=""> attribute. */
+    _listId: function (override, values) {
+        if (override)
+            return override;
+
+        if (values && Array.isArray(values) && values.length > 0)
+            return 'values';
     }
   };
 
