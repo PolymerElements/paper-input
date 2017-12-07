@@ -162,7 +162,14 @@ Custom property | Description | Default
       <slot name="prefix" slot="prefix"></slot>
 
       <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
-
+        
+      <template is="dom-if" if="[[datalist]]">
+        <datalist id="[[_listId(list, datalist)]]">
+          <template is="dom-repeat" items=[[datalist]] as="listitem">
+            <option value$=[[listitem]]></option>
+          </template>
+        </datalist>
+      </template>
       <span id="template-placeholder"></span>
 
       <slot name="suffix" slot="suffix"></slot>
@@ -207,7 +214,7 @@ Custom property | Description | Default
         name$="[[name]]"
         placeholder$="[[placeholder]]"
         readonly$="[[readonly]]"
-        list$="[[list]]"
+        list$="[[_listId(list, datalist)]]"
         size$="[[size]]"
         autocapitalize$="[[autocapitalize]]"
         autocorrect$="[[autocorrect]]"
@@ -245,7 +252,7 @@ Custom property | Description | Default
         name$="[[name]]"
         placeholder$="[[placeholder]]"
         readonly$="[[readonly]]"
-        list$="[[list]]"
+        list$="[[_listId(list, datalist)]]"
         size$="[[size]]"
         autocapitalize$="[[autocapitalize]]"
         autocorrect$="[[autocorrect]]"
