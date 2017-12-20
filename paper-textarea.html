@@ -53,7 +53,8 @@ style this element.
 
       <label hidden$="[[!label]]" aria-hidden="true">[[label]]</label>
 
-      <iron-autogrow-textarea id="input" class="paper-input-input"
+      <iron-autogrow-textarea  id$="[[_inputId]]"
+        class="input-element paper-input-input"
         bind-value="{{value}}"
         invalid="{{invalid}}"
         validator$="[[validator]]"
@@ -131,15 +132,19 @@ style this element.
     },
 
     _ariaLabelledByChanged: function(ariaLabelledBy) {
-      this.$.input.textarea.setAttribute('aria-labelledby', ariaLabelledBy);
+      this.textareaElement.setAttribute('aria-labelledby', ariaLabelledBy);
     },
 
     _ariaDescribedByChanged: function(ariaDescribedBy) {
-      this.$.input.textarea.setAttribute('aria-describedby', ariaDescribedBy);
+      this.textareaElement.setAttribute('aria-describedby', ariaDescribedBy);
     },
 
     get _focusableElement() {
-      return this.$.input.textarea;
+      return this.textareaElement;
     },
+
+    get textareaElement() {
+      return this.inputElement.textarea;
+    }
   });
 </script>

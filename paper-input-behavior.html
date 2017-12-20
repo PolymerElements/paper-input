@@ -372,7 +372,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _inputId: {
         type: String,
-        value: ''
+        value: function () {
+          return 'input_' + ( Math.random().toString(36).substring(2) );
+        }
       }
 
     },
@@ -393,7 +395,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * Returns a reference to the input element.
      */
     get inputElement() {
-      return this.querySelector('input');
+      return this.querySelector('.input-element');
     },
 
     /**
@@ -412,7 +414,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     attached: function() {
       this._updateAriaLabelledBy();
-      this._updateInputId();
 
       if (this.inputElement &&
           this._typesThatHaveText.indexOf(this.inputElement.type) !== -1) {
@@ -523,10 +524,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         label.id = labelledBy;
       }
       this._ariaLabelledBy = labelledBy;
-    },
-
-    _updateInputId: function () {
-      this._inputId = 'input_' + Polymer.PaperInputHelper.NextLabelID;
     },
 
     _onChange:function(event) {
