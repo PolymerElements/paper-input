@@ -120,9 +120,10 @@ style this element.
 
       <content select="[prefix]"></content>
 
-      <label hidden$="[[!label]]" aria-hidden="true">[[label]]</label>
+      <label hidden$="[[!label]]" aria-hidden="true" for$="[[_inputId]]">[[label]]</label>
 
       <input is="iron-input"
+        id$="[[_inputId]]"
         class="input-element"
         aria-labelledby$="[[_ariaLabelledBy]]"
         aria-describedby$="[[_ariaDescribedBy]]"

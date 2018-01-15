@@ -51,9 +51,10 @@ style this element.
 
     <paper-input-container no-label-float$="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
 
-      <label hidden$="[[!label]]" aria-hidden="true">[[label]]</label>
+      <label hidden$="[[!label]]" aria-hidden="true" for$="[[_inputId]]">[[label]]</label>
 
       <iron-autogrow-textarea class="input-element paper-input-input"
+        id$="[[_inputId]]"
         bind-value="{{value}}"
         invalid="{{invalid}}"
         validator$="[[validator]]"

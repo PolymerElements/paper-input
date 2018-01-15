@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   Polymer.PaperInputHelper = {};
   Polymer.PaperInputHelper.NextLabelID = 1;
   Polymer.PaperInputHelper.NextAddonID = 1;
+  Polymer.PaperInputHelper.NextInputID = 1;
 
   /**
    * Use `Polymer.PaperInputBehavior` to implement inputs with `<paper-input-container>`. This
@@ -368,6 +369,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _ariaLabelledBy: {
         type: String,
         value: ''
+      },
+
+      _inputId: {
+        type: String,
+        value: ''
       }
 
     },
@@ -388,7 +394,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * Returns a reference to the input element.
      */
     get inputElement() {
-      return this.querySelector('.input-element');
+      if (!this.$) {
+        this.$ = {}
+      }
+      if (!this.$.input) {
+        this.$.input = this.$$('#'+this._inputId);
+      }
+      return this.$.input;
     },
 
     /**
@@ -406,6 +418,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     attached: function() {
+      this._updateInputId();
       this._updateAriaLabelledBy();
 
       if (this.inputElement &&
@@ -517,6 +530,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         label.id = labelledBy;
       }
       this._ariaLabelledBy = labelledBy;
+    },
+
+    _updateInputId: function() {
+      this._inputId =  'input-' + Polymer.PaperInputHelper.NextInputID++;
     },
 
     _onChange:function(event) {
