@@ -132,11 +132,15 @@ style this element.
     },
 
     _ariaLabelledByChanged: function(ariaLabelledBy) {
-      this.textareaElement.setAttribute('aria-labelledby', ariaLabelledBy);
+      if (this.textareaElement) {
+        this.textareaElement.setAttribute('aria-labelledby', ariaLabelledBy);
+      }
     },
 
     _ariaDescribedByChanged: function(ariaDescribedBy) {
-      this.textareaElement.setAttribute('aria-describedby', ariaDescribedBy);
+      if (this.textareaElement) {
+        this.textareaElement.setAttribute('aria-describedby', ariaDescribedBy);
+      }
     },
 
     get _focusableElement() {
@@ -144,7 +148,13 @@ style this element.
     },
 
     get textareaElement() {
-      return this.querySelector('textarea');
+      if (!this.$) {
+        this.$ = {}
+      }
+      if (!this.$.textarea) {
+        this.$.textarea = this.querySelector('textarea');
+      }
+      return this.$.textarea;
     }
   });
 </script>
