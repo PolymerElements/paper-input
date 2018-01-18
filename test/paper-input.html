@@ -535,19 +535,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
     });
 
-    // In the 1.x variant we get this false negative on each input.
-    // Error: AX_ARIA_04 (ARIA state and property values must be valid) failed on the following element:
-    // #input
-    // See https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_aria_04 for more information.
-    // As far as I can see this isn't true; I ran the Lighthouse tests
-    // separately, and they were fine. Disabling these for 1.x, since they
-    // just add noise to Travis, and we don't know how to fix them.
-    if (Polymer.Element) {
-      a11ySuite('basic');
-      a11ySuite('label');
-      a11ySuite('label-has-value');
-      a11ySuite('error');
-    }
+    suite('a11y', function() {
+      // In the 1.x variant we get this false negative on each input.
+      // Error: AX_ARIA_04 (ARIA state and property values must be valid) failed on the following element:
+      // #input
+      // See https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_aria_04 for more information.
+      // As far as I can see this isn't true; I ran the Lighthouse tests
+      // separately, and they were fine. Disabling these for 1.x, since they
+      // just add noise to Travis, and we don't know how to fix them.
+      if (Polymer.Element) {
+        a11ySuite('basic');
+        a11ySuite('label');
+        a11ySuite('label-has-value');
+        a11ySuite('error');
+      }
+    });
   </script>
 
 </body>
