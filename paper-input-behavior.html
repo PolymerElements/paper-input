@@ -398,7 +398,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$ = {}
       }
       if (!this.$.input) {
-        this.$.input = this.$$('#'+this._inputId);
+        this._generateInputId();
+        this.$.input = this.$$('#' + this._inputId);
       }
       return this.$.input;
     },
@@ -418,7 +419,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     attached: function() {
-      this._updateInputId();
       this._updateAriaLabelledBy();
 
       if (this.inputElement &&
@@ -532,8 +532,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this._ariaLabelledBy = labelledBy;
     },
 
-    _updateInputId: function() {
-      this._inputId =  'input-' + Polymer.PaperInputHelper.NextInputID++;
+    _generateInputId: function() {
+      if (!this._inputId || this._inputId === '') {
+        this._inputId =  'input-' + Polymer.PaperInputHelper.NextInputID++;
+      }
     },
 
     _onChange:function(event) {

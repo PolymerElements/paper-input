@@ -132,29 +132,15 @@ style this element.
     },
 
     _ariaLabelledByChanged: function(ariaLabelledBy) {
-      if (this.textareaElement) {
-        this.textareaElement.setAttribute('aria-labelledby', ariaLabelledBy);
-      }
+      this._focusableElement.setAttribute('aria-labelledby', ariaLabelledBy);
     },
 
     _ariaDescribedByChanged: function(ariaDescribedBy) {
-      if (this.textareaElement) {
-        this.textareaElement.setAttribute('aria-describedby', ariaDescribedBy);
-      }
+      this._focusableElement.setAttribute('aria-describedby', ariaDescribedBy);
     },
 
     get _focusableElement() {
-      return this.textareaElement;
-    },
-
-    get textareaElement() {
-      if (!this.$) {
-        this.$ = {}
-      }
-      if (!this.$.textarea) {
-        this.$.textarea = this.querySelector('textarea');
-      }
-      return this.$.textarea;
+      return this.inputElement.textarea;
     }
   });
 </script>
