@@ -141,12 +141,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return Polymer.dom(paperInput.root).querySelector('paper-input-char-counter')
     }
 
-    function ensureDocumentHasFocus() {
-      window.top && window.top.focus();
-      window.focus();
-    }
-
     function shouldSkipFocusBlurTest() {
+      // At the moment focus/blur tests don't pass in IE11 (because of
+      // relatedTarget issues and Shady DOM), and it doesn't seem possible to
+      // fix them, which means Travis is always on fire. Skip them in this case. 
       var isIE11 = /Trident/.test(navigator.userAgent);
       return isIE11;
     }
@@ -314,11 +312,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('focus events fired on host element if nested element is focused', function(done) {
-        ensureDocumentHasFocus();
-        // If the document doesn't have focus, we can't test focus.
-        if (!window.top.document.hasFocus()) {
-          this.skip();
-        }
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
           getNativeInput(input).focus();
@@ -329,12 +322,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('blur events fired on host element', function(done) {
-        ensureDocumentHasFocus();
-        // If the document doesn't have focus, we can't test focus.
-        if (!window.top.document.hasFocus()) {
-          this.skip();
-        }
-
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
           input.focus();
@@ -353,12 +340,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('blur events fired on host element nested element is blurred', function(done) {
-        ensureDocumentHasFocus();
-        // If the document doesn't have focus, we can't test focus.
-        if (!window.top.document.hasFocus()) {
-          this.skip();
-        }
-
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
           input.focus();
@@ -372,11 +353,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('focusing then bluring sets the focused attribute correctly', function(done) {
-        ensureDocumentHasFocus();
-        // If the document doesn't have focus, we can't test focus.
-        if (!window.top.document.hasFocus()) {
-          this.skip();
-        }
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
           input.focus();
@@ -392,11 +368,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('focusing then bluring with shift-tab removes the focused attribute correctly', function(done) {
-        ensureDocumentHasFocus();
-        // If the document doesn't have focus, we can't test focus.
-        if (!window.top.document.hasFocus()) {
-          this.skip();
-        }
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
           input.focus();
@@ -413,12 +384,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     suite('focused styling (integration test)', function() {
       test('underline is colored when input is focused', function(done) {
-        ensureDocumentHasFocus();
-        // If the document doesn't have focus, we can't test focus.
-        if (!window.top.document.hasFocus()) {
-          this.skip();
-        }
-
         var input = fixture('basic');
         // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
@@ -520,7 +485,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('focus an input with tabindex', function(done) {
-        ensureDocumentHasFocus();
         if (shouldSkipFocusBlurTest() || !window.top.document.hasFocus()) {
           this.skip();
         }
@@ -545,14 +509,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // As far as I can see this isn't true; I ran the Lighthouse tests
       // separately, and they were fine. Disabling these for 1.x, since they
       // just add noise to Travis, and we don't know how to fix them.
-      test('run suite only for Polymer 2.x', function(done) {
-        if (Polymer.Element) {
-          a11ySuite('basic');
-          a11ySuite('label');
-          a11ySuite('label-has-value');
-          a11ySuite('error');
+      test('run suite only for Polymer 2.x', function() {
+        if (!Polymer.Element) {
+          this.skip();
         }
-        done();
+        a11ySuite('basic');
+        a11ySuite('label');
+        a11ySuite('label-has-value');
+        a11ySuite('error');
       });
     });
   </script>
