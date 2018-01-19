@@ -146,6 +146,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       window.focus();
     }
 
+    function shouldSkipFocusBlurTest() {
+      var isIE11 = /Trident/.test(navigator.userAgent);
+      return isIE11;
+    }
+
     suite('basic', function() {
       test('setting value sets the input value', function(done) {
         var input = fixture('basic');
@@ -274,6 +279,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var inputFocusSpy, blurFocusSpy;
 
       setup(function() {
+        if (shouldSkipFocusBlurTest()) {
+          this.skip();
+        }
         input = fixture('basic');
         inputFocusSpy = sinon.spy();
         blurFocusSpy = sinon.spy();
@@ -408,7 +416,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
     });
 
-    suite('focused styling (integration test)', function(done) {
+    suite('focused styling (integration test)', function() {
       test('underline is colored when input is focused', function(done) {
         ensureDocumentHasFocus();
         // If the document doesn't have focus, we can't test focus.
@@ -518,11 +526,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('focus an input with tabindex', function(done) {
         ensureDocumentHasFocus();
-        // If the document doesn't have focus, we can't test focus.
-        if (!window.top.document.hasFocus()) {
+        if (shouldSkipFocusBlurTest() || !window.top.document.hasFocus()) {
           this.skip();
         }
-
+        
         var input = fixture('has-tabindex');
 
         // Mutation observer is async, so wait one tick.
