@@ -144,7 +144,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     function shouldSkipFocusBlurTest() {
       // At the moment focus/blur tests don't pass in IE11 (because of
       // relatedTarget issues and Shady DOM), and it doesn't seem possible to
-      // fix them, which means Travis is always on fire. Skip them in this case. 
+      // fix them, which means Travis is always on fire. Skip them in this case.
       var isIE11 = /Trident/.test(navigator.userAgent);
       return isIE11;
     }
@@ -502,7 +502,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     suite('a11ySuite', function() {
-      // In the 1.x variant we get this false negative on each input.
+      // Note(notwaldorf): In the 1.x variant we get this false negative on each input.
       // Error: AX_ARIA_04 (ARIA state and property values must be valid) failed on the following element:
       // #input
       // See https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_aria_04 for more information.
