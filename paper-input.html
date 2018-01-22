@@ -230,7 +230,7 @@ Custom property | Description | Default
         allowed-pattern="[[allowedPattern]]"
         invalid="{{invalid}}"
         validator="[[validator]]">
-      <input id="nativeInput"
+      <input
         aria-labelledby$="[[_ariaLabelledBy]]"
         aria-describedby$="[[_ariaDescribedBy]]"
         disabled$="[[disabled]]"
@@ -307,7 +307,7 @@ Custom property | Description | Default
 
     _onIronInputReady: function() {
       if (this.inputElement &&
-          this._typesThatHaveText.indexOf(this.$.nativeInput.type) !== -1) {
+          this._typesThatHaveText.indexOf(this.$$('input').type) !== -1) {
         this.alwaysFloatLabel = true;
       }
 
