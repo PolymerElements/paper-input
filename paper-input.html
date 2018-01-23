@@ -306,8 +306,13 @@ Custom property | Description | Default
     },
 
     _onIronInputReady: function() {
+      // Even though this is only used in the next line, save this for
+      // backwards compatibility, since the native input had this ID until 2.0.5.
+      if (!this.$.nativeInput) {
+        this.$.nativeInput = this.$$('input');
+      }
       if (this.inputElement &&
-          this._typesThatHaveText.indexOf(this.$$('input').type) !== -1) {
+          this._typesThatHaveText.indexOf(this.$.nativeInput.type) !== -1) {
         this.alwaysFloatLabel = true;
       }
 
