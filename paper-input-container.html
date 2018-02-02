@@ -563,13 +563,11 @@ This element is `display:block` by default, but you can set the `inline` attribu
       // the rest of the time (specifically: it does not validate it at startup, but
       // it does after that. If this is in fact the bootup case, ignore validation,
       // just this once.
-      if (this.__isFirstValueUpdate && input.value === undefined) {
-        this.__isFirstValueUpdate = false;
-        return;
-      }
-      // If we booted up with a defined value, reset the flag correctly.
       if (this.__isFirstValueUpdate) {
         this.__isFirstValueUpdate = false;
+        if (input.value === undefined) {
+          return;
+        }
       }
 
       this._handleValueAndAutoValidate(event.target);
