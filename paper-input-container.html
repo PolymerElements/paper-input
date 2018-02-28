@@ -116,30 +116,35 @@ This element is `display:block` by default, but you can set the `inline` attribu
 `display:inline-block`.
 -->
 
+<custom-style>
+  <style is="custom-style">
+    html {
+      --paper-input-container-shared-input-style: {
+        position: relative; /* to make a stacking context */
+        outline: none;
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        background: transparent;
+        border: none;
+        color: var(--paper-input-container-input-color, var(--primary-text-color));
+        -webkit-appearance: none;
+        text-align: inherit;
+        vertical-align: bottom;
+
+        @apply --paper-font-subhead;
+      };
+    }
+  </style>
+</custom-style>
+
 <dom-module id="paper-input-container">
   <template>
     <style>
       :host {
         display: block;
         padding: 8px 0;
-
-        --paper-input-container-shared-input-style: {
-          position: relative; /* to make a stacking context */
-          outline: none;
-          box-shadow: none;
-          padding: 0;
-          width: 100%;
-          max-width: 100%;
-          background: transparent;
-          border: none;
-          color: var(--paper-input-container-input-color, var(--primary-text-color));
-          -webkit-appearance: none;
-          text-align: inherit;
-          vertical-align: bottom;
-
-          @apply --paper-font-subhead;
-        };
-
         @apply --paper-input-container;
       }
 
