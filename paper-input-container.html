@@ -198,8 +198,12 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content {
         @apply(--layout-horizontal);
         @apply(--layout-center);
+        @apply(--paper-input-container-input-content);
 
         position: relative;
+      }
+      .input-content.focused {
+        @apply(--paper-input-container-input-content-focus);
       }
 
       .input-content ::content label,
