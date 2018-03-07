@@ -86,6 +86,8 @@ Custom property | Description | Default
 `--paper-input-container-input-color` | Input foreground color | `--primary-text-color`
 `--paper-input-container` | Mixin applied to the container | `{}`
 `--paper-input-container-disabled` | Mixin applied to the container when it's disabled | `{}`
+`--paper-input-container-input-content` | Mixin applied to the .input-content | `{}`
+`--paper-input-container-input-content-focus` | Mixin applied to the .input-content when the input is focused | `{}`
 `--paper-input-container-label` | Mixin applied to the label | `{}`
 `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
 `--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}`
@@ -198,8 +200,12 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content {
         @apply(--layout-horizontal);
         @apply(--layout-center);
+        @apply(--paper-input-container-input-content);
 
         position: relative;
+      }
+      .input-content.focused {
+        @apply(--paper-input-container-input-content-focus);
       }
 
       .input-content ::content label,
