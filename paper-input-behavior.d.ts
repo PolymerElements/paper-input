@@ -253,22 +253,16 @@ declare namespace Polymer {
      * used with type=file.
      */
     multiple: boolean|null|undefined;
-    _ariaDescribedBy: string|null|undefined;
-    _ariaLabelledBy: string|null|undefined;
-    _inputId: string|null|undefined;
-    hostAttributes: object|null;
 
     /**
      * Returns a reference to the input element.
-     *      
      */
-    readonly inputElement: any;
+    readonly inputElement: HTMLElement;
 
     /**
      * Returns a reference to the focusable element.
-     *      
      */
-    readonly _focusableElement: any;
+    readonly _focusableElement: HTMLElement;
 
     /**
      * Forward focus to inputElement. Overriden from IronControlState.

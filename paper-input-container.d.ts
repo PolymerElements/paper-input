@@ -59,15 +59,6 @@ interface PaperInputContainerElement extends Polymer.Element {
   readonly _inputElementValue: any;
   ready(): void;
   attached(): void;
-  _onAddonAttached(event: any): void;
-  _onFocus(): void;
-  _onBlur(): void;
-  _onInput(event: any): void;
-  _onValueChanged(event: any): void;
-  _handleValue(inputElement: any): void;
-  _handleValueAndAutoValidate(inputElement: any): void;
-  _onIronInputValidate(event: any): void;
-  _invalidChanged(): void;
 
   /**
    * Call this to update the state of add-ons.
@@ -75,9 +66,6 @@ interface PaperInputContainerElement extends Polymer.Element {
    * @param state Add-on state.
    */
   updateAddons(state: object|null): void;
-  _computeInputContentClass(noLabelFloat: any, alwaysFloatLabel: any, focused: any, invalid: any, _inputHasContent: any): any;
-  _computeUnderlineClass(focused: any, invalid: any): any;
-  _computeAddOnContentClass(focused: any, invalid: any): any;
 }
 
 interface HTMLElementTagNameMap {

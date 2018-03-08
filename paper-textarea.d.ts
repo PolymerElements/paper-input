@@ -47,8 +47,8 @@ interface PaperTextareaElement extends Polymer.Element, Polymer.PaperInputBehavi
    * scrolls. 0 means no maximum.
    */
   maxRows: number|null|undefined;
-  selectionStart: any;
-  selectionEnd: any;
+  selectionStart: number;
+  selectionEnd: number;
   _ariaLabelledByChanged(ariaLabelledBy: any): void;
   _ariaDescribedByChanged(ariaDescribedBy: any): void;
 }

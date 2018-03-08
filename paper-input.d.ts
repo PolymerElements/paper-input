@@ -71,9 +71,8 @@ interface PaperInputElement extends Polymer.Element, Polymer.PaperInputBehavior,
   /**
    * Returns a reference to the focusable element. Overridden from PaperInputBehavior
    * to correctly focus the native input.
-   *      
    */
-  readonly _focusableElement: any;
+  readonly _focusableElement: HTMLElement;
   beforeRegister(): void;
   _onIronInputReady(): void;
 }

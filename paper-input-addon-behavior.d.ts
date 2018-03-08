@@ -27,7 +27,7 @@ declare namespace Polymer {
      *     value: The input value.
      *     invalid: True if the input value is invalid.
      */
-    update(state: {inputElement?: Element|null, value?: string, invalid: boolean}): void;
+    update(state: {invalid: boolean, inputElement?: Element|null, value?: string}): void;
   }
 
   const PaperInputAddonBehavior: object;
