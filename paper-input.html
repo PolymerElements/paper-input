@@ -91,13 +91,21 @@ Custom property | Description | Default
       input {
         /* Firefox sets a min-width on the input, which can cause layout issues */
         min-width: 0;
-        @apply --paper-input-container-shared-input-style;
-        @apply --paper-input-container-input;
       }
 
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        @apply --paper-input-container-input-webkit-spinner;
+      /* In 1.x, the <input> is distributed to paper-input-container, which styles it.
+      In 2.x the <iron-input> is distributed to paper-input-container, which styles
+      it, but in order for this to work correctly, we need to reset some
+      of the native input's properties to inherit (from the iron-input) */
+      iron-input input {
+        @apply --paper-input-container-shared-input-style;
+        font-family: inherit;
+        font-weight: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+        word-spacing: inherit;
+        line-height: inherit;
+        text-shadow: inherit;
       }
 
       input:disabled {
