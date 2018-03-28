@@ -97,7 +97,7 @@ Custom property | Description | Default
       In 2.x the <iron-input> is distributed to paper-input-container, which styles
       it, but in order for this to work correctly, we need to reset some
       of the native input's properties to inherit (from the iron-input) */
-      iron-input input {
+      iron-input > input {
         @apply --paper-input-container-shared-input-style;
         font-family: inherit;
         font-weight: inherit;
