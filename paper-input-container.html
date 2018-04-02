@@ -296,6 +296,9 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content ::slotted(iron-autogrow-textarea),
       .input-content ::slotted(.paper-input-input) {
         @apply --paper-input-container-shared-input-style;
+        /* The apply shim doesn't apply the nested color custom property,
+          so we have to re-apply it here. */
+        color: var(--paper-input-container-input-color, var(--primary-text-color));
         @apply --paper-input-container-input;
       }
 
