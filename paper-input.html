@@ -99,16 +99,14 @@ Custom property | Description | Default
       of the native input's properties to inherit (from the iron-input) */
       iron-input > input {
         @apply --paper-input-container-shared-input-style;
-        /* The apply shim doesn't apply the nested color custom property,
-          so we have to re-apply it here. */
-        color: var(--paper-input-container-input-color, var(--primary-text-color));
         font-family: inherit;
         font-weight: inherit;
         font-size: inherit;
         letter-spacing: inherit;
         word-spacing: inherit;
         line-height: inherit;
-        text-shadow: inherit;    
+        text-shadow: inherit;
+        color: inherit;
       }
 
       input:disabled {
