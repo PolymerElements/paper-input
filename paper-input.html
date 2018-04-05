@@ -276,6 +276,13 @@ Custom property | Description | Default
       Polymer.IronFormElementBehavior
     ],
 
+    properties: {
+      value: {
+        // Required for the correct TypeScript type-generation
+        type: String
+      }
+    },
+
     beforeRegister: function() {
       // We need to tell which kind of of template to stamp based on
       // what kind of `iron-input` we got, but because of polyfills and
