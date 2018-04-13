@@ -524,10 +524,21 @@ This element is `display:block` by default, but you can set the `inline` attribu
     },
 
     attached: function() {
-      if (this.attrForValue) {
-        this._inputElement.addEventListener(this._valueChangedEvent, this._boundValueChanged);
-      } else {
-        this.addEventListener('input', this._onInput);
+      if (!this._listenersAttached) {
+        if (this.attrForValue) {
+          this._inputElement.addEventListener(this._valueChangedEvent, this._boundValueChanged);
+        } else {
+          this.addEventListener('input', this._onInput);
+        }
+
+        if (this._inputElement) {
+          this._htmlInput = this._inputElement;
+          if (this._inputElement.nodeName === 'IRON-INPUT') {
+            this._htmlInput = this._inputElement.inputElement;
+          }
+        }
+        this._htmlInput.addEventListener("keyup", (e) => this._handleValue(this._inputElement));
+        this._listenersAttached = true;
       }
 
       // Only validate when attached if the input already has a value.
@@ -591,7 +602,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       var value = this._inputElementValue;
 
       // type="number" hack needed because this.value is empty until it's valid
-      if (value || value === 0 || (inputElement.type === 'number' && !inputElement.checkValidity())) {
+      if (value || value === 0 || ( this._htmlInput.type === 'number' && !this._htmlInput.checkValidity())) {
         this._inputHasContent = true;
       } else {
         this._inputHasContent = false;
