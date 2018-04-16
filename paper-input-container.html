@@ -657,8 +657,6 @@ This element is `display:block` by default, but you can set the `inline` attribu
 
           if (invalid) {
             cls += ' is-invalid';
-          } else if (focused) {
-            cls += " label-is-highlighted";
           }
         } else {
           // When the label is not floating, it should overlap the input element.
@@ -679,6 +677,9 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
       if (focused) {
         cls += ' focused';
+      }
+      if (focused) {
+        cls += " label-is-highlighted";
       }
       return cls;
     },
