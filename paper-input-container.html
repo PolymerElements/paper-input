@@ -556,7 +556,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       // validation, just this once.
       if (this.__isFirstValueUpdate) {
         this.__isFirstValueUpdate = false;
-        if (input.value === undefined) {
+        if (input.value === undefined || input.value === '') {
           return;
         }
       }
