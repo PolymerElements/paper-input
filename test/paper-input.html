@@ -502,7 +502,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('invalid input is not initially validated', function(done) {
         var input = fixture('required');
 
-        // Need to wait a tick to stamp the error message.
+        // Mutation observer is async, so wait one tick.
         Polymer.Base.async(function() {
           var error = getErrorDiv(input);
           assert.ok(error, 'paper-input-error exists');
