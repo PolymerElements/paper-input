@@ -48,7 +48,7 @@ declare namespace Polymer {
      * the `<iron-input>`'s `bindValue`
      * property, or the value property of your input that is `notify:true`.
      */
-    value: string|null|undefined;
+    value: any;
 
     /**
      * Returns true if the value is invalid. If you're using PaperInputBehavior
