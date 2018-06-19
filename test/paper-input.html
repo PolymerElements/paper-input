@@ -499,6 +499,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     suite('validation', function() {
+      test('invalid input is not initially validated', function(done) {
+        var input = fixture('required');
+
+        // Need to wait a tick to stamp the error message.
+        Polymer.Base.async(function() {
+          var error = getErrorDiv(input);
+          assert.ok(error, 'paper-input-error exists');
+          assert.equal(
+              getComputedStyle(error).visibility,
+              'hidden',
+              'error is visibility:hidden');
+
+          // If we now validate it, the input will be red.
+          input.validate();
+
+          // Need to wait a tick to stamp the error message.
+          Polymer.Base.async(function() {
+            var error = getErrorDiv(input);
+            assert.ok(error, 'paper-input-error exists');
+            assert.notEqual(
+                getComputedStyle(error).visibility,
+                'hidden',
+                'error is not visibility:hidden');
+            assert.isTrue(input.invalid, 'invalid is true');
+            done();
+          }, 1);
+
+        }, 1);
+      });
+
       test('invalid attribute updated after calling validate()', function(done) {
         var input = fixture('required-no-auto-validate');
 
