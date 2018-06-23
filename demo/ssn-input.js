@@ -1,4 +1,4 @@
-<!--
+/**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -6,13 +6,20 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-<link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../../iron-input/iron-input.html">
-<link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="ssn-validator.html">
+*/
+import '@polymer/polymer/polymer-legacy.js';
 
-<dom-module id="ssn-input">
+import '@polymer/iron-input/iron-input.js';
+import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import './ssn-validator.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import { IronValidatableBehavior } from '@polymer/iron-validatable-behavior/iron-validatable-behavior.js';
+import { DomModule } from '@polymer/polymer/lib/elements/dom-module.js';
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+const $_documentContainer = document.createElement('template');
+$_documentContainer.setAttribute('style', 'display: none;');
+
+$_documentContainer.innerHTML = `<dom-module id="ssn-input">
   <template>
     <style>
       :host {
@@ -54,9 +61,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template id="v0">
     <input is="iron-input" bind-value="{{_ssn1}}" maxlength="3" size="3" aria-label="First 3 digits of social security number">
     -
-    <input is="iron-input"  bind-value="{{_ssn2}}" maxlength="2" size="2" aria-label="Middle 2 digits of social security number">
+    <input is="iron-input" bind-value="{{_ssn2}}" maxlength="2" size="2" aria-label="Middle 2 digits of social security number">
     -
-    <input is="iron-input"  bind-value="{{_ssn3}}" maxlength="4" size="4" aria-label="Last 4 digits of social security number">
+    <input is="iron-input" bind-value="{{_ssn3}}" maxlength="4" size="4" aria-label="Last 4 digits of social security number">
   </template>
 
   <template id="v1">
@@ -73,40 +80,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </iron-input>
   </template>
 
-  <script>
-    Polymer({
-      is: 'ssn-input',
+  
+</dom-module>`;
 
-      behaviors: [Polymer.IronValidatableBehavior],
+document.head.appendChild($_documentContainer.content);
+Polymer({
+  is: 'ssn-input',
 
-      properties: {
-        value: {notify: true, type: String},
+  behaviors: [IronValidatableBehavior],
 
-        _ssn1: {type: String, value: ''},
+  properties: {
+    value: {notify: true, type: String},
 
-        _ssn2: {type: String, value: ''},
+    _ssn1: {type: String, value: ''},
 
-        _ssn3: {type: String, value: ''},
+    _ssn2: {type: String, value: ''},
 
-        validator: {type: String, value: 'ssn-validator'}
-      },
+    _ssn3: {type: String, value: ''},
 
-      observers: ['_computeValue(_ssn1,_ssn2,_ssn3)'],
+    validator: {type: String, value: 'ssn-validator'}
+  },
 
-      _computeValue: function(ssn1, ssn2, ssn3) {
-        this.value = ssn1.trim() + '-' + ssn2.trim() + '-' + ssn3.trim();
-      },
+  observers: ['_computeValue(_ssn1,_ssn2,_ssn3)'],
 
-      beforeRegister: function() {
-        var template = Polymer.DomModule.import('ssn-input', 'template');
-        var version = Polymer.Element ? 'v1' : 'v0';
-        var inputTemplate =
-            Polymer.DomModule.import('ssn-input', 'template#' + version);
-        var inputPlaceholder =
-            template.content.querySelector('#template-placeholder');
-        inputPlaceholder.parentNode.replaceChild(
-            inputTemplate.content, inputPlaceholder);
-      },
-    });
-  </script>
-</dom-module>
+  _computeValue: function(ssn1, ssn2, ssn3) {
+    this.value = ssn1.trim() + '-' + ssn2.trim() + '-' + ssn3.trim();
+  },
+
+  beforeRegister: function() {
+    var template = DomModule.import('ssn-input', 'template');
+    var version = PolymerElement ? 'v1' : 'v0';
+    var inputTemplate =
+        DomModule.import('ssn-input', 'template#' + version);
+    var inputPlaceholder =
+        template.content.querySelector('#template-placeholder');
+    inputPlaceholder.parentNode.replaceChild(
+        inputTemplate.content, inputPlaceholder);
+  },
+});

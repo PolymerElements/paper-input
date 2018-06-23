@@ -1,4 +1,4 @@
-<!--
+/**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -6,14 +6,8 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-styles/default-theme.html">
-<link rel="import" href="../paper-styles/typography.html">
-<link rel="import" href="paper-input-addon-behavior.html">
-
-<!--
+*/
+/*
 `<paper-input-error>` is an error message for use with `<paper-input-container>`. The error is
 displayed when the `<paper-input-container>` is `invalid`.
 
@@ -30,10 +24,21 @@ Custom property | Description | Default
 ----------------|-------------|----------
 `--paper-input-container-invalid-color` | The foreground color of the error | `--error-color`
 `--paper-input-error`                   | Mixin applied to the error        | `{}`
--->
+*/
+/*
+  FIXME(polymer-modulizer): the above comments were extracted
+  from HTML and may be out of place here. Review them and
+  then delete this comment!
+*/
+import '@polymer/polymer/polymer-legacy.js';
 
-<dom-module id="paper-input-error">
-  <template>
+import '@polymer/paper-styles/default-theme.js';
+import '@polymer/paper-styles/typography.js';
+import { PaperInputAddonBehavior } from './paper-input-addon-behavior.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+Polymer({
+  _template: html`
     <style>
       :host {
         display: inline-block;
@@ -54,35 +59,30 @@ Custom property | Description | Default
     </style>
 
     <slot></slot>
-  </template>
-</dom-module>
+`,
 
-<script>
-  Polymer({
-    is: 'paper-input-error',
+  is: 'paper-input-error',
+  behaviors: [PaperInputAddonBehavior],
 
-    behaviors: [Polymer.PaperInputAddonBehavior],
-
-    properties: {
-      /**
-       * True if the error is showing.
-       */
-      invalid: {readOnly: true, reflectToAttribute: true, type: Boolean}
-    },
-
+  properties: {
     /**
-     * This overrides the update function in PaperInputAddonBehavior.
-     * @param {{
-     *   inputElement: (Element|undefined),
-     *   value: (string|undefined),
-     *   invalid: boolean
-     * }} state -
-     *     inputElement: The input element.
-     *     value: The input value.
-     *     invalid: True if the input value is invalid.
+     * True if the error is showing.
      */
-    update: function(state) {
-      this._setInvalid(state.invalid);
-    }
-  });
-</script>
+    invalid: {readOnly: true, reflectToAttribute: true, type: Boolean}
+  },
+
+  /**
+   * This overrides the update function in PaperInputAddonBehavior.
+   * @param {{
+   *   inputElement: (Element|undefined),
+   *   value: (string|undefined),
+   *   invalid: boolean
+   * }} state -
+   *     inputElement: The input element.
+   *     value: The input value.
+   *     invalid: True if the input value is invalid.
+   */
+  update: function(state) {
+    this._setInvalid(state.invalid);
+  }
+});
