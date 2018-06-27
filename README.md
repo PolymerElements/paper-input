@@ -2,10 +2,10 @@
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://beta.webcomponents.org/element/PolymerElements/paper-input)
 
 ## &lt;paper-input&gt;
-
-Material design: [Text fields](https://www.google.com/design/spec/components/text-fields.html)
-
 `<paper-input>` is a single-line text field with Material Design styling.
+
+See: [Documentation](https://www.webcomponents.org/element/PolymerElements/paper-input),
+  [Demo](https://www.webcomponents.org/element/PolymerElements/paper-input/demo/demo/index.html).
 
 <!---
 ```
@@ -29,16 +29,56 @@ Material design: [Text fields](https://www.google.com/design/spec/components/tex
 </custom-element-demo>
 ```
 -->
-```html
-<paper-input always-float-label label="Floating label"></paper-input>
-<paper-input label="username">
-  <iron-icon icon="mail" slot="prefix"></iron-icon>
-  <div slot="suffix">@email.com</div>
-</paper-input>
+
+## Usage
+
+### Installation
+```
+npm install --save @polymer/paper-input
 ```
 
-### Changes in 2.0
-- Distribution is now done with slots, so things have changed because of that (before: <label>foo</label>, now <label slot="label">foo</label>; same for input, prefix and suffix)
-- Since type extensions are not available, any use of `<input is="iron-input">` has been replaced by `<iron-input><input></iron-input>`. See [iron-input](https://github.com/PolymerElements/iron-input) for more details about that change
-- `prevent-invalid-input` and `allowed-pattern` had to be always used together; deleted `prevent-invalid-input`, so that only `allowed-pattern` is needed
+### In an html file
+```html
+<html>
+  <head>
+    <script type="module" src="node_modules/polymer/paper-input/paper-input.js"></script>
+  </head>
+  <body>
+    <paper-input always-float-label label="Floating label"></paper-input>
+  </body>
+</html>
+```
+### In a Polymer 3 element
+```js
+import '@polymer/paper-input/paper-input.js';
+import {PolymerElement, html} from '@polymer/polymer';
 
+class SampleElement extends PolymerElement {
+  static get template() {
+    return html`
+      <paper-input always-float-label label="Floating label"></paper-input>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
+```
+
+## Contributing
+If you want to send a PR to this element, here are
+the instructions for running the tests and demo locally:
+
+### Installation
+```
+git clone https://github.com/PolymerElements/paper-input
+cd paper-input
+```
+
+### Running the demo locally
+???
+
+### Running the tests
+???
+
+## Changes in 3.0
+- ...
+- ...
