@@ -5,31 +5,8 @@
 ## &lt;paper-input&gt;
 `<paper-input>` is a single-line text field with Material Design styling.
 
-See: [Documentation](https://www.webcomponents.org/element/PolymerElements/paper-input),
-  [Demo](https://www.webcomponents.org/element/PolymerElements/paper-input/demo/demo/index.html).
-
-<!---
-```
-<custom-element-demo>
-  <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="paper-input.html">
-    <link rel="import" href="../iron-icons/iron-icons.html">
-    <style>
-      paper-input {
-        max-width: 400px;
-        margin: auto;
-      }
-      iron-icon, div[suffix] {
-        color: hsl(0, 0%, 50%);
-        margin-right: 12px;
-      }
-    </style>
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
-```
--->
+See: [Documentation](https://www.webcomponents.org/element/@polymer/paper-input),
+  [Demo](https://www.webcomponents.org/element/@polymer/paper-input/demo/demo/index.html).
 
 ## Usage
 
@@ -42,7 +19,9 @@ npm install --save @polymer/paper-input
 ```html
 <html>
   <head>
-    <script type="module" src="node_modules/polymer/paper-input/paper-input.js"></script>
+    <script type="module">
+      import '@polymer/paper-input/paper-input.js';
+    </script>
   </head>
   <body>
     <paper-input always-float-label label="Floating label"></paper-input>
@@ -51,8 +30,8 @@ npm install --save @polymer/paper-input
 ```
 ### In a Polymer 3 element
 ```js
-import '@polymer/paper-input/paper-input.js';
 import {PolymerElement, html} from '@polymer/polymer';
+import '@polymer/paper-input/paper-input.js';
 
 class SampleElement extends PolymerElement {
   static get template() {
@@ -69,17 +48,20 @@ If you want to send a PR to this element, here are
 the instructions for running the tests and demo locally:
 
 ### Installation
-```
+```sh
 git clone https://github.com/PolymerElements/paper-input
 cd paper-input
+npm install
+npm install -g polymer-cli
 ```
 
 ### Running the demo locally
-???
+```sh
+polymer serve --npm
+open http://127.0.0.1:<port>/demo/
+```
 
 ### Running the tests
-???
-
-## Changes in 3.0
-- ...
-- ...
+```sh
+polymer test --npm
+```
