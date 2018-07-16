@@ -16,20 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <title>paper-input demo</title>
 
-  <script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-
-  <script type="module" src="../../iron-demo-helpers/demo-pages-shared-styles.js"></script>
-  <script type="module" src="../../iron-demo-helpers/demo-snippet.js"></script>
-  <script type="module" src="../../iron-icon/iron-icon.js"></script>
-  <script type="module" src="../../iron-icons/iron-icons.js"></script>
-  <script type="module" src="../../iron-input/iron-input.js"></script>
-  <script type="module" src="../../paper-icon-button/paper-icon-button.js"></script>
-  <script type="module" src="../../paper-styles/color.js"></script>
-  <script type="module" src="../paper-input-container.js"></script>
-  <script type="module" src="../paper-input-error.js"></script>
-  <script type="module" src="../paper-input.js"></script>
-  <script type="module" src="../paper-textarea.js"></script>
-  <script type="module" src="./ssn-input.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2.0.0/webcomponents-loader.js"></script>
 
   <script type="module">
     import {html} from '@polymer/polymer/lib/utils/html-tag.js';
@@ -78,11 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </script>
 </head>
 <body unresolved>
-  <script type="module">
-    const $_documentContainer = document.createElement('template');
-
-    $_documentContainer.innerHTML =
-        `<div class="vertical-section-container centered">
+  <div class="vertical-section-container centered">
     <h3>Inputs can have different types, and be disabled</h3>
     <demo-snippet>
       <template>
@@ -230,10 +213,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </template>
     </demo-snippet>
-  </div>`;
-
-    document.body.appendChild($_documentContainer.content);
-  </script>
+  </div>
 
   <script type="module">
     import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';

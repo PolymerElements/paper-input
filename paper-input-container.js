@@ -17,8 +17,6 @@ import {Polymer} from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import {dom} from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import {dashToCamelCase} from '@polymer/polymer/lib/utils/case-map.js';
 import {html} from '@polymer/polymer/lib/utils/html-tag.js';
-
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 const template = html`
 <custom-style>
   <style is="custom-style">
