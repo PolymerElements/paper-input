@@ -55,42 +55,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </test-fixture>
 
   <script type="module">
-import '@polymer/iron-input/iron-input.js';
-import '../paper-input-container.js';
-import '../paper-input-error.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
-import { Base } from '@polymer/polymer/polymer-legacy.js';
-suite('basic', function() {
-  test('error message only appears when input is invalid', function(done) {
-    var container = PolymerElement ? fixture('auto-validate-numbers-2') :
-                                      fixture('auto-validate-numbers-1');
-    var input = dom(container).querySelector('#i');
-    var error = dom(container).querySelector('#e');
+    import '@polymer/iron-input/iron-input.js';
+    import '../paper-input-container.js';
+    import '../paper-input-error.js';
 
-    // Need to wait a tick to stamp the error message.
-    Base.async(function() {
-      assert.equal(
-          getComputedStyle(error).visibility,
-          'hidden',
-          'error is visibility:hidden');
-      input.bindValue = 'foobar';
-      assert.equal(
-          getComputedStyle(error).visibility,
-          'visible',
-          'error is visibility:visible');
-      done();
-    }, 1);
-  });
+    import {dom} from '@polymer/polymer/lib/legacy/polymer.dom.js';
+    import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+    import {Base} from '@polymer/polymer/polymer-legacy.js';
 
-  test('error message add on is registered', function() {
-    var container = document.getElementById('container');
-    assert.isTrue(
-        container._addons && container._addons.length === 1,
-        'add on is registered');
-  });
-});
-</script>
+    suite('basic', function() {
+      test('error message only appears when input is invalid', function(done) {
+        var container = PolymerElement ? fixture('auto-validate-numbers-2') :
+                                         fixture('auto-validate-numbers-1');
+        var input = dom(container).querySelector('#i');
+        var error = dom(container).querySelector('#e');
+
+        // Need to wait a tick to stamp the error message.
+        Base.async(function() {
+          assert.equal(
+              getComputedStyle(error).visibility,
+              'hidden',
+              'error is visibility:hidden');
+          input.bindValue = 'foobar';
+          assert.equal(
+              getComputedStyle(error).visibility,
+              'visible',
+              'error is visibility:visible');
+          done();
+        }, 1);
+      });
+
+      test('error message add on is registered', function() {
+        var container = document.getElementById('container');
+        assert.isTrue(
+            container._addons && container._addons.length === 1,
+            'add on is registered');
+      });
+    });
+  </script>
 
 </body>
 </html>

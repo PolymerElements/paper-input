@@ -31,65 +31,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script type="module" src="../paper-textarea.js"></script>
   <script type="module" src="./ssn-input.js"></script>
 
-  <!-- FIXME(polymer-modulizer):
-        These imperative modules that innerHTML your HTML are
-        a hacky way to be sure that any mixins in included style
-        modules are ready before any elements that reference them are
-        instantiated, otherwise the CSS @apply mixin polyfill won't be
-        able to expand the underlying CSS custom properties.
-        See: https://github.com/Polymer/polymer-modulizer/issues/154
-        -->
-    <script type="module">
-const $_documentContainer = document.createElement('template');
+  <script type="module">
+    import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+    const template = html`
+        <custom-style>
+           <style is="custom-style" include="demo-pages-shared-styles">
+             paper-input {
+               display: block;
+             }
 
-$_documentContainer.innerHTML = `<custom-style>
-    <style is="custom-style" include="demo-pages-shared-styles">
-      paper-input {
-        display: block;
-      }
+             button {
+               width: 70px;
+             }
 
-      button {
-        width: 70px;
-      }
+             paper-icon-button {
+               color: var(--paper-red-300);
+               --paper-icon-button-ink-color: var(--paper-red-a100);
+               width: 23px; /* 15px + 2*4px for padding */
+               height: 23px;
+               padding: 0px 4px;
+             }
 
-      paper-icon-button {
-        color: var(--paper-red-300);
-        --paper-icon-button-ink-color: var(--paper-red-a100);
-        width: 23px; /* 15px + 2*4px for padding */
-        height: 23px;
-        padding: 0px 4px;
-      }
+             iron-icon {
+               padding-right: 5px;
+             }
 
-      iron-icon {
-        padding-right: 5px;
-      }
+             #inputForValidation {
+               display: inline-block;
+               width: calc(100% - 75px);
+             }
 
-      #inputForValidation {
-        display: inline-block;
-        width: calc(100% - 75px);
-      }
-
-      demo-snippet.horizontal {
-        --demo-snippet-demo: {
-          @apply --layout-horizontal;
-          @apply --layout-justified;
-          @apply --layout-wrap;
-        }
-      }
-      demo-snippet.horizontal paper-input {
-        display: inline-block;
-      }
-    </style>
-  </custom-style>`;
-
-document.body.appendChild($_documentContainer.content);
-</script>
+             demo-snippet.horizontal {
+               --demo-snippet-demo: {
+                 @apply --layout-horizontal;
+                 @apply --layout-justified;
+                 @apply --layout-wrap;
+               }
+             }
+             demo-snippet.horizontal paper-input {
+               display: inline-block;
+             }
+           </style>
+         </custom-style>
+         `;
+    document.body.appendChild(template.content);
+  </script>
 </head>
 <body unresolved>
   <script type="module">
-const $_documentContainer = document.createElement('template');
+    const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
+    $_documentContainer.innerHTML =
+        `<div class="vertical-section-container centered">
     <h3>Inputs can have different types, and be disabled</h3>
     <demo-snippet>
       <template>
@@ -239,29 +232,29 @@ $_documentContainer.innerHTML = `<div class="vertical-section-container centered
     </demo-snippet>
   </div>`;
 
-document.body.appendChild($_documentContainer.content);
-</script>
+    document.body.appendChild($_documentContainer.content);
+  </script>
 
   <script type="module">
-import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
-import '@polymer/iron-demo-helpers/demo-snippet.js';
-import '@polymer/iron-icon/iron-icon.js';
-import '@polymer/iron-icons/iron-icons.js';
-import '@polymer/iron-input/iron-input.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
-import '@polymer/paper-styles/color.js';
-import '../paper-input-container.js';
-import '../paper-input-error.js';
-import '../paper-input.js';
-import '../paper-textarea.js';
-import './ssn-input.js';
-function validate() {
-  document.getElementById('inputForValidation').validate();
-}
+    import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+    import '@polymer/iron-demo-helpers/demo-snippet.js';
+    import '@polymer/iron-icon/iron-icon.js';
+    import '@polymer/iron-icons/iron-icons.js';
+    import '@polymer/iron-input/iron-input.js';
+    import '@polymer/paper-icon-button/paper-icon-button.js';
+    import '@polymer/paper-styles/color.js';
+    import '../paper-input-container.js';
+    import '../paper-input-error.js';
+    import '../paper-input.js';
+    import '../paper-textarea.js';
+    import './ssn-input.js';
+    function validate() {
+      document.getElementById('inputForValidation').validate();
+    }
 
-function clearInput() {
-  document.getElementById('inputWithButton').value = '';
-}
-</script>
+    function clearInput() {
+      document.getElementById('inputWithButton').value = '';
+    }
+  </script>
 </body>
 </html>

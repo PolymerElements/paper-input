@@ -1,21 +1,23 @@
 /**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+This code may only be used under the BSD style license found at
+http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
+http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
+found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
+part of the polymer project is also subject to an additional IP rights grant
+found at http://polymer.github.io/PATENTS.txt
 */
 import '@polymer/polymer/polymer-legacy.js';
-
 import '@polymer/iron-input/iron-input.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import './ssn-validator.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import { IronValidatableBehavior } from '@polymer/iron-validatable-behavior/iron-validatable-behavior.js';
-import { DomModule } from '@polymer/polymer/lib/elements/dom-module.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+
+import {IronValidatableBehavior} from '@polymer/iron-validatable-behavior/iron-validatable-behavior.js';
+import {DomModule} from '@polymer/polymer/lib/elements/dom-module.js';
+import {Polymer} from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+
 const $_documentContainer = document.createElement('template');
 $_documentContainer.setAttribute('style', 'display: none;');
 
@@ -110,8 +112,7 @@ Polymer({
   beforeRegister: function() {
     var template = DomModule.import('ssn-input', 'template');
     var version = PolymerElement ? 'v1' : 'v0';
-    var inputTemplate =
-        DomModule.import('ssn-input', 'template#' + version);
+    var inputTemplate = DomModule.import('ssn-input', 'template#' + version);
     var inputPlaceholder =
         template.content.querySelector('#template-placeholder');
     inputPlaceholder.parentNode.replaceChild(

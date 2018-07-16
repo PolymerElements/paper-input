@@ -1,88 +1,26 @@
 /**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
-/**
-Material design: [Text fields](https://www.google.com/design/spec/components/text-fields.html)
-
-`<paper-input>` is a single-line text field with Material Design styling.
-
-    <paper-input label="Input label"></paper-input>
-
-It may include an optional error message or character counter.
-
-    <paper-input error-message="Invalid input!" label="Input label"></paper-input>
-    <paper-input char-counter label="Input label"></paper-input>
-
-It can also include custom prefix or suffix elements, which are displayed
-before or after the text input itself. In order for an element to be
-considered as a prefix, it must have the `prefix` attribute (and similarly
-for `suffix`).
-
-    <paper-input label="total">
-      <div prefix>$</div>
-      <paper-icon-button slot="suffix" icon="clear"></paper-icon-button>
-    </paper-input>
-
-A `paper-input` can use the native `type=search` or `type=file` features.
-However, since we can't control the native styling of the input (search icon,
-file button, date placeholder, etc.), in these cases the label will be
-automatically floated. The `placeholder` attribute can still be used for
-additional informational text.
-
-    <paper-input label="search!" type="search"
-        placeholder="search for cats" autosave="test" results="5">
-    </paper-input>
-
-See `Polymer.PaperInputBehavior` for more API docs.
-
-### Focus
-
-To focus a paper-input, you can call the native `focus()` method as long as the
-paper input has a tab index. Similarly, `blur()` will blur the element.
-
-### Styling
-
-See `Polymer.PaperInputContainer` for a list of custom properties used to
-style this element.
-
-The following custom properties and mixins are available for styling:
-
-Custom property | Description | Default
-----------------|-------------|----------
-`--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer reveal button (the eyeball) | {}
-
-@group Paper Elements
-@element paper-input
-@hero hero.svg
-@demo demo/index.html
-
-*/
-/* This is a fresh new hell to make this element hybrid. Basically, in 2.0
-    we lost is=, so the example same template can't be used with iron-input 1.0 and 2.0.
-    Expect some conditional code (especially in the tests).
-   */
-/*
-  FIXME(polymer-modulizer): the above comments were extracted
-  from HTML and may be out of place here. Review them and
-  then delete this comment!
+This code may only be used under the BSD style license found at
+http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
+http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
+found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
+part of the polymer project is also subject to an additional IP rights grant
+found at http://polymer.github.io/PATENTS.txt
 */
 import '@polymer/polymer/polymer-legacy.js';
-
-import { IronFormElementBehavior } from '@polymer/iron-form-element-behavior/iron-form-element-behavior.js';
 import '@polymer/iron-input/iron-input.js';
-import { PaperInputBehavior } from './paper-input-behavior.js';
 import './paper-input-char-counter.js';
 import './paper-input-container.js';
 import './paper-input-error.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import { DomModule } from '@polymer/polymer/lib/elements/dom-module.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+
+import {IronFormElementBehavior} from '@polymer/iron-form-element-behavior/iron-form-element-behavior.js';
+import {DomModule} from '@polymer/polymer/lib/elements/dom-module.js';
+import {Polymer} from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+
+import {PaperInputBehavior} from './paper-input-behavior.js';
+
 const $_documentContainer = document.createElement('template');
 $_documentContainer.setAttribute('style', 'display: none;');
 
@@ -208,6 +146,70 @@ $_documentContainer.innerHTML = `<dom-module id="paper-input">
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
+
+/**
+Material design: [Text
+fields](https://www.google.com/design/spec/components/text-fields.html)
+
+`<paper-input>` is a single-line text field with Material Design styling.
+
+    <paper-input label="Input label"></paper-input>
+
+It may include an optional error message or character counter.
+
+    <paper-input error-message="Invalid input!" label="Input
+label"></paper-input> <paper-input char-counter label="Input
+label"></paper-input>
+
+It can also include custom prefix or suffix elements, which are displayed
+before or after the text input itself. In order for an element to be
+considered as a prefix, it must have the `prefix` attribute (and similarly
+for `suffix`).
+
+    <paper-input label="total">
+      <div prefix>$</div>
+      <paper-icon-button slot="suffix" icon="clear"></paper-icon-button>
+    </paper-input>
+
+A `paper-input` can use the native `type=search` or `type=file` features.
+However, since we can't control the native styling of the input (search icon,
+file button, date placeholder, etc.), in these cases the label will be
+automatically floated. The `placeholder` attribute can still be used for
+additional informational text.
+
+    <paper-input label="search!" type="search"
+        placeholder="search for cats" autosave="test" results="5">
+    </paper-input>
+
+See `Polymer.PaperInputBehavior` for more API docs.
+
+### Focus
+
+To focus a paper-input, you can call the native `focus()` method as long as the
+paper input has a tab index. Similarly, `blur()` will blur the element.
+
+### Styling
+
+See `Polymer.PaperInputContainer` for a list of custom properties used to
+style this element.
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer
+reveal button (the eyeball) | {}
+
+@group Paper Elements
+@element paper-input
+@hero hero.svg
+@demo demo/index.html
+
+*/
+/* This is a fresh new hell to make this element hybrid. Basically, in 2.0
+    we lost is=, so the example same template can't be used with iron-input 1.0
+   and 2.0. Expect some conditional code (especially in the tests).
+   */
 Polymer({
   is: 'paper-input',
 
@@ -230,8 +232,7 @@ Polymer({
     var version =
         typeof ironInput._initSlottedInput == 'function' ? 'v1' : 'v0';
     var template = DomModule.import('paper-input', 'template');
-    var inputTemplate =
-        DomModule.import('paper-input', 'template#' + version);
+    var inputTemplate = DomModule.import('paper-input', 'template#' + version);
     var inputPlaceholder =
         template.content.querySelector('#template-placeholder');
     if (inputPlaceholder) {
@@ -248,8 +249,7 @@ Polymer({
    * @return {!HTMLElement}
    */
   get _focusableElement() {
-    return PolymerElement ? this.inputElement._inputElement :
-                             this.inputElement;
+    return PolymerElement ? this.inputElement._inputElement : this.inputElement;
   },
 
   // Note: This event is only available in the 1.0 version of this element.
