@@ -19,7 +19,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2.0.0/webcomponents-loader.js"></script>
 
   <script type="module">
+    import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+    import '@polymer/iron-demo-helpers/demo-snippet.js';
+    import '@polymer/iron-icon/iron-icon.js';
+    import '@polymer/iron-icons/iron-icons.js';
+    import '@polymer/iron-input/iron-input.js';
+    import '@polymer/paper-icon-button/paper-icon-button.js';
+    import '@polymer/paper-styles/color.js';
+    import '../paper-input-container.js';
+    import '../paper-input-error.js';
+    import '../paper-input.js';
+    import '../paper-textarea.js';
+    import './ssn-input.js';
+
     import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+
     const template = html`
         <custom-style>
            <style is="custom-style" include="demo-pages-shared-styles">
@@ -103,8 +117,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-input label="this input requires letters only" auto-validate="" pattern="[a-zA-Z]*" error-message="letters only!" value="pre-filled 123"></paper-input>
         <paper-input label="this input will only let you type letters" auto-validate="" allowed-pattern="[a-zA-Z]"></paper-input>
         <paper-input id="inputForValidation" required="" label="this input is manually validated" pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
-
         <button onclick="validate()">Validate!</button>
+
+        <script>
+          function validate() {
+            document.getElementById('inputForValidation').validate();
+          }
+          function clearInput() {
+            document.getElementById('inputWithButton').value = '';
+          }
+        </script>
       </template>
     </demo-snippet>
 
@@ -112,7 +134,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <demo-snippet class="horizontal">
       <template>
         <paper-input label="total" type="number">
-          <div slot="prefix">\$</div>
+          <div slot="prefix">$</div>
         </paper-input>
 
         <paper-input label="username" id="inputWithButton">
@@ -214,27 +236,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </demo-snippet>
   </div>
-
-  <script type="module">
-    import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
-    import '@polymer/iron-demo-helpers/demo-snippet.js';
-    import '@polymer/iron-icon/iron-icon.js';
-    import '@polymer/iron-icons/iron-icons.js';
-    import '@polymer/iron-input/iron-input.js';
-    import '@polymer/paper-icon-button/paper-icon-button.js';
-    import '@polymer/paper-styles/color.js';
-    import '../paper-input-container.js';
-    import '../paper-input-error.js';
-    import '../paper-input.js';
-    import '../paper-textarea.js';
-    import './ssn-input.js';
-    function validate() {
-      document.getElementById('inputForValidation').validate();
-    }
-
-    function clearInput() {
-      document.getElementById('inputWithButton').value = '';
-    }
-  </script>
 </body>
 </html>
