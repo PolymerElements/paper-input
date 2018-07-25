@@ -1,18 +1,19 @@
 /**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+This code may only be used under the BSD style license found at
+http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
+http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
+found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
+part of the polymer project is also subject to an additional IP rights grant
+found at http://polymer.github.io/PATENTS.txt
 */
 import '@polymer/polymer/polymer-legacy.js';
 
-import { IronA11yKeysBehavior } from '@polymer/iron-a11y-keys-behavior/iron-a11y-keys-behavior.js';
-import { IronControlState } from '@polymer/iron-behaviors/iron-control-state.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import {IronA11yKeysBehavior} from '@polymer/iron-a11y-keys-behavior/iron-a11y-keys-behavior.js';
+import {IronControlState} from '@polymer/iron-behaviors/iron-control-state.js';
+import {dom} from '@polymer/polymer/lib/legacy/polymer.dom.js';
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
 
 // Generate unique, monotonically increasing IDs for labels (needed by
 // aria-labelledby) and add-ons.
@@ -460,8 +461,7 @@ export const PaperInputBehaviorImpl = {
     if (label.id) {
       labelledBy = label.id;
     } else {
-      labelledBy =
-          'paper-input-label-' + PaperInputHelper.NextLabelID++;
+      labelledBy = 'paper-input-label-' + PaperInputHelper.NextLabelID++;
       label.id = labelledBy;
     }
     this._ariaLabelledBy = labelledBy;
@@ -514,8 +514,5 @@ export const PaperInputBehaviorImpl = {
 };
 
 /** @polymerBehavior */
-export const PaperInputBehavior = [
-  IronControlState,
-  IronA11yKeysBehavior,
-  PaperInputBehaviorImpl
-];
+export const PaperInputBehavior =
+    [IronControlState, IronA11yKeysBehavior, PaperInputBehaviorImpl];

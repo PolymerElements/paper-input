@@ -1,14 +1,28 @@
 /**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+This code may only be used under the BSD style license found at
+http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
+http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
+found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
+part of the polymer project is also subject to an additional IP rights grant
+found at http://polymer.github.io/PATENTS.txt
 */
+import '@polymer/polymer/polymer-legacy.js';
+import '@polymer/iron-input/iron-input.js';
+import './paper-input-char-counter.js';
+import './paper-input-container.js';
+import './paper-input-error.js';
+
+import {IronFormElementBehavior} from '@polymer/iron-form-element-behavior/iron-form-element-behavior.js';
+import {DomModule} from '@polymer/polymer/lib/elements/dom-module.js';
+import {Polymer} from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+import {PaperInputBehavior} from './paper-input-behavior.js';
+
 /**
-Material design: [Text fields](https://www.google.com/design/spec/components/text-fields.html)
+Material design: [Text
+fields](https://www.google.com/design/spec/components/text-fields.html)
 
 `<paper-input>` is a single-line text field with Material Design styling.
 
@@ -16,8 +30,9 @@ Material design: [Text fields](https://www.google.com/design/spec/components/tex
 
 It may include an optional error message or character counter.
 
-    <paper-input error-message="Invalid input!" label="Input label"></paper-input>
-    <paper-input char-counter label="Input label"></paper-input>
+    <paper-input error-message="Invalid input!" label="Input
+label"></paper-input> <paper-input char-counter label="Input
+label"></paper-input>
 
 It can also include custom prefix or suffix elements, which are displayed
 before or after the text input itself. In order for an element to be
@@ -55,39 +70,18 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer reveal button (the eyeball) | {}
+`--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer
+reveal button (the eyeball) | {}
 
 @group Paper Elements
 @element paper-input
 @hero hero.svg
 @demo demo/index.html
-
 */
-/* This is a fresh new hell to make this element hybrid. Basically, in 2.0
-    we lost is=, so the example same template can't be used with iron-input 1.0 and 2.0.
-    Expect some conditional code (especially in the tests).
-   */
-/*
-  FIXME(polymer-modulizer): the above comments were extracted
-  from HTML and may be out of place here. Review them and
-  then delete this comment!
-*/
-import '@polymer/polymer/polymer-legacy.js';
+Polymer({
+  is: 'paper-input',
 
-import { IronFormElementBehavior } from '@polymer/iron-form-element-behavior/iron-form-element-behavior.js';
-import '@polymer/iron-input/iron-input.js';
-import { PaperInputBehavior } from './paper-input-behavior.js';
-import './paper-input-char-counter.js';
-import './paper-input-container.js';
-import './paper-input-error.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
-import { DomModule } from '@polymer/polymer/lib/elements/dom-module.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-const $_documentContainer = document.createElement('template');
-$_documentContainer.setAttribute('style', 'display: none;');
-
-$_documentContainer.innerHTML = `<dom-module id="paper-input">
-  <template>
+  _template: html`
     <style>
       :host {
         display: block;
@@ -175,7 +169,10 @@ $_documentContainer.innerHTML = `<dom-module id="paper-input">
 
       <label hidden\$="[[!label]]" aria-hidden="true" for\$="[[_inputId]]" slot="label">[[label]]</label>
 
-      <span id="template-placeholder"></span>
+      <!-- Need to bind maxlength so that the paper-input-char-counter works correctly -->
+      <iron-input bind-value="{{value}}" slot="input" class="input-element" id\$="[[_inputId]]" maxlength\$="[[maxlength]]" allowed-pattern="[[allowedPattern]]" invalid="{{invalid}}" validator="[[validator]]">
+        <input aria-labelledby\$="[[_ariaLabelledBy]]" aria-describedby\$="[[_ariaDescribedBy]]" disabled\$="[[disabled]]" title\$="[[title]]" type\$="[[type]]" pattern\$="[[pattern]]" required\$="[[required]]" autocomplete\$="[[autocomplete]]" autofocus\$="[[autofocus]]" inputmode\$="[[inputmode]]" minlength\$="[[minlength]]" maxlength\$="[[maxlength]]" min\$="[[min]]" max\$="[[max]]" step\$="[[step]]" name\$="[[name]]" placeholder\$="[[placeholder]]" readonly\$="[[readonly]]" list\$="[[list]]" size\$="[[size]]" autocapitalize\$="[[autocapitalize]]" autocorrect\$="[[autocorrect]]" on-change="_onChange" tabindex\$="[[tabIndex]]" autosave\$="[[autosave]]" results\$="[[results]]" accept\$="[[accept]]" multiple\$="[[multiple]]">
+      </iron-input>
 
       <slot name="suffix" slot="suffix"></slot>
 
@@ -188,28 +185,7 @@ $_documentContainer.innerHTML = `<dom-module id="paper-input">
       </template>
 
     </paper-input-container>
-  </template>
-
-  <!-- This is a fresh new hell to make this element hybrid. Basically, in 2.0
-    we lost is=, so the example same template can't be used with iron-input 1.0 and 2.0.
-    Expect some conditional code (especially in the tests).
-   -->
-  <template id="v0">
-    <input is="iron-input" slot="input" class="input-element" id\$="[[_inputId]]" aria-labelledby\$="[[_ariaLabelledBy]]" aria-describedby\$="[[_ariaDescribedBy]]" disabled\$="[[disabled]]" title\$="[[title]]" bind-value="{{value}}" invalid="{{invalid}}" prevent-invalid-input="[[preventInvalidInput]]" allowed-pattern="[[allowedPattern]]" validator="[[validator]]" type\$="[[type]]" pattern\$="[[pattern]]" required\$="[[required]]" autocomplete\$="[[autocomplete]]" autofocus\$="[[autofocus]]" inputmode\$="[[inputmode]]" minlength\$="[[minlength]]" maxlength\$="[[maxlength]]" min\$="[[min]]" max\$="[[max]]" step\$="[[step]]" name\$="[[name]]" placeholder\$="[[placeholder]]" readonly\$="[[readonly]]" list\$="[[list]]" size\$="[[size]]" autocapitalize\$="[[autocapitalize]]" autocorrect\$="[[autocorrect]]" on-change="_onChange" tabindex\$="[[tabIndex]]" autosave\$="[[autosave]]" results\$="[[results]]" accept\$="[[accept]]" multiple\$="[[multiple]]">
-  </template>
-
-  <template id="v1">
-    <!-- Need to bind maxlength so that the paper-input-char-counter works correctly -->
-    <iron-input bind-value="{{value}}" slot="input" class="input-element" id\$="[[_inputId]]" maxlength\$="[[maxlength]]" allowed-pattern="[[allowedPattern]]" invalid="{{invalid}}" validator="[[validator]]">
-      <input aria-labelledby\$="[[_ariaLabelledBy]]" aria-describedby\$="[[_ariaDescribedBy]]" disabled\$="[[disabled]]" title\$="[[title]]" type\$="[[type]]" pattern\$="[[pattern]]" required\$="[[required]]" autocomplete\$="[[autocomplete]]" autofocus\$="[[autofocus]]" inputmode\$="[[inputmode]]" minlength\$="[[minlength]]" maxlength\$="[[maxlength]]" min\$="[[min]]" max\$="[[max]]" step\$="[[step]]" name\$="[[name]]" placeholder\$="[[placeholder]]" readonly\$="[[readonly]]" list\$="[[list]]" size\$="[[size]]" autocapitalize\$="[[autocapitalize]]" autocorrect\$="[[autocorrect]]" on-change="_onChange" tabindex\$="[[tabIndex]]" autosave\$="[[autosave]]" results\$="[[results]]" accept\$="[[accept]]" multiple\$="[[multiple]]">
-    </iron-input>
-  </template>
-
-</dom-module>`;
-
-document.head.appendChild($_documentContainer.content);
-Polymer({
-  is: 'paper-input',
+  `,
 
   behaviors: [PaperInputBehavior, IronFormElementBehavior],
 
@@ -220,27 +196,6 @@ Polymer({
     }
   },
 
-  beforeRegister: function() {
-    // We need to tell which kind of of template to stamp based on
-    // what kind of `iron-input` we got, but because of polyfills and
-    // custom elements differences between v0 and v1, the safest bet is
-    // to check a particular method we know the iron-input#2.x can have.
-    // If it doesn't have it, then it's an iron-input#1.x.
-    var ironInput = document.createElement('iron-input');
-    var version =
-        typeof ironInput._initSlottedInput == 'function' ? 'v1' : 'v0';
-    var template = DomModule.import('paper-input', 'template');
-    var inputTemplate =
-        DomModule.import('paper-input', 'template#' + version);
-    var inputPlaceholder =
-        template.content.querySelector('#template-placeholder');
-    if (inputPlaceholder) {
-      inputPlaceholder.parentNode.replaceChild(
-          inputTemplate.content, inputPlaceholder);
-    }
-    // else it's already been processed, probably in superclass
-  },
-
   /**
    * Returns a reference to the focusable element. Overridden from
    * PaperInputBehavior to correctly focus the native input.
@@ -248,8 +203,7 @@ Polymer({
    * @return {!HTMLElement}
    */
   get _focusableElement() {
-    return PolymerElement ? this.inputElement._inputElement :
-                             this.inputElement;
+    return this.inputElement._inputElement;
   },
 
   // Note: This event is only available in the 1.0 version of this element.
