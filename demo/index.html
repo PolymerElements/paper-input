@@ -87,15 +87,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-input label="text input" value="pre-filled"></paper-input>
         <paper-textarea label="autoresizing textarea input"></paper-textarea>
         <paper-input label="password input" type="password"></paper-input>
-        <paper-input label="disabled input" disabled="" value="batman"></paper-input>
+        <paper-input label="disabled input" disabled value="batman"></paper-input>
       </template>
     </demo-snippet>
 
     <h3>Inputs can have character counters</h3>
     <demo-snippet>
       <template>
-        <paper-input label="simple character counter" char-counter=""></paper-input>
-        <paper-input label="input with at most 10 characters" char-counter="" maxlength="10"></paper-input>
+        <paper-input label="simple character counter" char-counter></paper-input>
+        <paper-input label="input with at most 10 characters" char-counter maxlength="10"></paper-input>
       </template>
     </demo-snippet>
 
@@ -103,20 +103,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <demo-snippet>
       <template>
         <paper-input label="this label floats after typing"></paper-input>
-        <paper-input label="this label is always floating" always-float-label=""></paper-input>
-        <paper-input label="this label never floats" no-label-float=""></paper-input>
-        <paper-input label="this label is always floating" always-float-label="" placeholder="placeholder text"></paper-input>
+        <paper-input label="this label is always floating" always-float-label></paper-input>
+        <paper-input label="this label never floats" no-label-float></paper-input>
+        <paper-input label="this label is always floating" always-float-label placeholder="placeholder text"></paper-input>
       </template>
     </demo-snippet>
 
     <h3>Inputs can validate automatically or on demand, and can have custom error messages</h3>
     <demo-snippet>
       <template>
-        <paper-input label="this input requires some text" required="" auto-validate="" error-message="needs some text!"></paper-input>
-        <paper-input label="this input requires letters only" auto-validate="" pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
-        <paper-input label="this input requires letters only" auto-validate="" pattern="[a-zA-Z]*" error-message="letters only!" value="pre-filled 123"></paper-input>
-        <paper-input label="this input will only let you type letters" auto-validate="" allowed-pattern="[a-zA-Z]"></paper-input>
-        <paper-input id="inputForValidation" required="" label="this input is manually validated" pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
+        <paper-input label="this input requires some text" required auto-validate error-message="needs some text!"></paper-input>
+        <paper-input label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
+        <paper-input label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="pre-filled 123"></paper-input>
+        <paper-input label="this input will only let you type letters" auto-validate allowed-pattern="[a-zA-Z]"></paper-input>
+        <paper-input id="inputForValidation" required label="this input is manually validated" pattern="[a-zA-Z]*" error-message="letters only!"></paper-input>
         <button onclick="validate()">Validate!</button>
 
         <script>
@@ -149,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h3>Inputs can have custom logic</h3>
     <demo-snippet>
       <template>
-        <paper-input-container always-float-label="" auto-validate="" attr-for-value="value">
+        <paper-input-container always-float-label auto-validate attr-for-value="value">
           <label slot="label">Social Security Number</label>
           <ssn-input class="paper-input-input" slot="input"></ssn-input>
           <paper-input-error slot="add-on">SSN invalid!</paper-input-error>
@@ -228,9 +228,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </style>
         </custom-style>
         <div class="custom-parent">
-          <paper-input class="custom" label="Name" value="Batman" always-float-label="">
+          <paper-input class="custom" label="Name" value="Batman" always-float-label>
           </paper-input>
-          <paper-input class="custom" label="Address (letters only, will autovalidate)" always-float-label="" auto-validate="" pattern="[a-zA-Z]*">
+          <paper-input class="custom" label="Address (letters only, will autovalidate)" always-float-label auto-validate pattern="[a-zA-Z]*">
           </paper-input>
         </div>
       </template>
