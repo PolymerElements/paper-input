@@ -34,10 +34,8 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--paper-input-container-invalid-color` | The foreground color of the error |
-`--error-color`
-`--paper-input-error`                   | Mixin applied to the error        |
-`{}`
+`--paper-input-container-invalid-color` | The foreground color of the error | `--error-color`
+`--paper-input-error` | Mixin applied to the error | `{}`
 */
 Polymer({
   _template: html`
