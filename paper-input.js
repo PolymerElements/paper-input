@@ -70,8 +70,7 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer
-reveal button (the eyeball) | {}
+`--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer reveal button (the eyeball) | {}
 
 @group Paper Elements
 @element paper-input
