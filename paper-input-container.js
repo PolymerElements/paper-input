@@ -129,42 +129,26 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--paper-input-container-color` | Label and underline color when the input is
-not focused | `--secondary-text-color`
-`--paper-input-container-focus-color` | Label and underline color when the input
-is focused | `--primary-color`
-`--paper-input-container-invalid-color` | Label and underline color when the
-input is is invalid | `--error-color`
-`--paper-input-container-input-color` | Input foreground color |
-`--primary-text-color`
+`--paper-input-container-color` | Label and underline color when the input is not focused | `--secondary-text-color`
+`--paper-input-container-focus-color` | Label and underline color when the input is focused | `--primary-color`
+`--paper-input-container-invalid-color` | Label and underline color when the input is is invalid | `--error-color`
+`--paper-input-container-input-color` | Input foreground color | `--primary-text-color`
 `--paper-input-container` | Mixin applied to the container | `{}`
-`--paper-input-container-disabled` | Mixin applied to the container when it's
-disabled | `{}`
+`--paper-input-container-disabled` | Mixin applied to the container when it's disabled | `{}`
 `--paper-input-container-label` | Mixin applied to the label | `{}`
-`--paper-input-container-label-focus` | Mixin applied to the label when the
-input is focused | `{}`
-`--paper-input-container-label-floating` | Mixin applied to the label when
-floating | `{}`
+`--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
+`--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}`
 `--paper-input-container-input` | Mixin applied to the input | `{}`
-`--paper-input-container-input-disabled` | Mixin applied to the input when the
-component is disabled | `{}`
-`--paper-input-container-input-focus` | Mixin applied to the input when focused
-| `{}`
-`--paper-input-container-input-invalid` | Mixin applied to the input when
-invalid | `{}`
-`--paper-input-container-input-webkit-spinner` | Mixin applied to the webkit
-spinner | `{}`
-`--paper-input-container-input-webkit-clear` | Mixin applied to the webkit clear
-button | `{}`
-`--paper-input-container-input-webkit-calendar-picker-indicator` | Mixin applied
-to the webkit calendar picker indicator | `{}`
-`--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer
-clear button | `{}`
+`--paper-input-container-input-disabled` | Mixin applied to the input when the component is disabled | `{}`
+`--paper-input-container-input-focus` | Mixin applied to the input when focused | `{}`
+`--paper-input-container-input-invalid` | Mixin applied to the input when invalid | `{}`
+`--paper-input-container-input-webkit-spinner` | Mixin applied to the webkit spinner | `{}`
+`--paper-input-container-input-webkit-clear` | Mixin applied to the webkit clear button | `{}`
+`--paper-input-container-input-webkit-calendar-picker-indicator` | Mixin applied to the webkit calendar picker indicator | `{}`
+`--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer clear button | `{}`
 `--paper-input-container-underline` | Mixin applied to the underline | `{}`
-`--paper-input-container-underline-focus` | Mixin applied to the underline when
-the input is focused | `{}`
-`--paper-input-container-underline-disabled` | Mixin applied to the underline
-when the input is disabled | `{}`
+`--paper-input-container-underline-focus` | Mixin applied to the underline when the input is focused | `{}`
+`--paper-input-container-underline-disabled` | Mixin applied to the underline when the input is disabled | `{}`
 `--paper-input-prefix` | Mixin applied to the input prefix | `{}`
 `--paper-input-suffix` | Mixin applied to the input suffix | `{}`
 
