@@ -24,15 +24,14 @@ PaperInputHelper.NextAddonID = 1;
 PaperInputHelper.NextInputID = 1;
 
 /**
- * Use `Polymer.PaperInputBehavior` to implement inputs with
- * `<paper-input-container>`. This behavior is implemented by `<paper-input>`.
- * It exposes a number of properties from
- * `<paper-input-container>` and `<input is="iron-input">` and they should be
- * bound in your template.
+ * Use `PaperInputBehavior` to implement inputs with `<paper-input-container>`.
+ * This behavior is implemented by `<paper-input>`. It exposes a number of
+ * properties from `<paper-input-container>` and `<input is="iron-input">` and
+ * they should be bound in your template.
  *
  * The input element can be accessed by the `inputElement` property if you need
  * to access properties or methods that are not exposed.
- * @polymerBehavior Polymer.PaperInputBehavior
+ * @polymerBehavior PaperInputBehavior
  */
 export const PaperInputBehaviorImpl = {
 
