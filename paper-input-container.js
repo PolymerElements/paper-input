@@ -34,7 +34,7 @@ const template = html`
         color: var(--paper-input-container-input-color, var(--primary-text-color));
         -webkit-appearance: none;
         text-align: inherit;
-        vertical-align: bottom;
+        vertical-align: var(--paper-input-container-input-align, bottom);
 
         @apply --paper-font-subhead;
       };
@@ -139,6 +139,7 @@ Custom property | Description | Default
 `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
 `--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}`
 `--paper-input-container-input` | Mixin applied to the input | `{}`
+`--paper-input-container-input-align` | The vertical-align property of the input | `bottom`
 `--paper-input-container-input-disabled` | Mixin applied to the input when the component is disabled | `{}`
 `--paper-input-container-input-focus` | Mixin applied to the input when focused | `{}`
 `--paper-input-container-input-invalid` | Mixin applied to the input when invalid | `{}`
