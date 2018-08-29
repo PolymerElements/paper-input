@@ -31,7 +31,7 @@
     "generate-types": "gen-typescript-declarations --deleteExisting --outDir . --verify",
     "prepack": "npm run generate-types"
   },
-  "version": "3.0.0-pre.23",
+  "version": "3.0.0-pre.24",
   "author": "The Polymer Authors",
   "dependencies": {
     "@polymer/polymer": "^3.0.0",
