@@ -43,7 +43,7 @@ const template = html`
 </custom-style>
 `;
 template.setAttribute('style', 'display: none;');
-document.body.appendChild(template.content);
+document.head.appendChild(template.content);
 
 /*
 `<paper-input-container>` is a container for a `<label>`, an `<iron-input>` or
