@@ -134,15 +134,15 @@ Polymer({
       }
 
       input::-webkit-input-placeholder {
-        color: var(--paper-input-container-color, var(--secondary-text-color));
+        color: var(--paper-input-container-input-placeholder-color, var(--paper-input-container-color, var(--secondary-text-color)));
       }
 
       input:-moz-placeholder {
-        color: var(--paper-input-container-color, var(--secondary-text-color));
+        color: var(--paper-input-container-input-placeholder-color, var(--paper-input-container-color, var(--secondary-text-color)));
       }
 
       input::-moz-placeholder {
-        color: var(--paper-input-container-color, var(--secondary-text-color));
+        color: var(--paper-input-container-input-placeholder-color, var(--paper-input-container-color, var(--secondary-text-color)));
       }
 
       input::-ms-clear {
