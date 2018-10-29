@@ -155,7 +155,7 @@ Polymer({
       }
 
       input:-ms-input-placeholder {
-        color: var(--paper-input-container-color, var(--secondary-text-color));
+        color: var(--paper-input-container-input-placeholder-color, var(--paper-input-container-color, var(--secondary-text-color)));
       }
 
       label {
