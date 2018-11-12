@@ -381,7 +381,7 @@ Polymer({
     <div class="input-wrapper">
       <span class="prefix"><slot name="prefix"></slot></span>
 
-      <div class\$="[[_computeInputContentClass(noLabelFloat,alwaysFloatLabel,focused,invalid,_inputHasContent)]]" id="labelAndInputContainer">
+      <div class$="[[_computeInputContentClass(noLabelFloat,alwaysFloatLabel,focused,invalid,_inputHasContent)]]" id="labelAndInputContainer">
         <slot name="label"></slot>
         <slot name="input"></slot>
       </div>
@@ -389,12 +389,12 @@ Polymer({
       <span class="suffix"><slot name="suffix"></slot></span>
     </div>
 
-    <div class\$="[[_computeUnderlineClass(focused,invalid)]]">
+    <div class$="[[_computeUnderlineClass(focused,invalid)]]">
       <div class="unfocused-line"></div>
       <div class="focused-line"></div>
     </div>
 
-    <div class\$="[[_computeAddOnContentClass(focused,invalid)]]">
+    <div class$="[[_computeAddOnContentClass(focused,invalid)]]">
       <slot name="add-on"></slot>
     </div>
 `,
