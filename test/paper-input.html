@@ -408,10 +408,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // calling `blur` on an element with a shadow root containing the true
         // focused node doesn't blur the node.
         const div = document.createElement('div');
-        const input = document.createElement('input');
-        div.attachShadow({mode: 'open'}).appendChild(input);
+        const shadowInput = document.createElement('input');
+        div.attachShadow({mode: 'open'}).appendChild(shadowInput);
         document.body.appendChild(div);
-        input.focus();
+        shadowInput.focus();
         // If we're in native Shadow DOM, `document.activeElement` will be the
         // div because we just focused an element in its shadow root.
         if (document.activeElement === div) {
