@@ -404,6 +404,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
 
       test('blur events fired on host element', function(done) {
+        // Firefox's Shadow DOM implementation seems to have a bug where
+        // calling `blur` on an element with a shadow root containing the true
+        // focused node doesn't blur the node.
+        const div = document.createElement('div');
+        const shadowInput = document.createElement('input');
+        div.attachShadow({mode: 'open'}).appendChild(shadowInput);
+        document.body.appendChild(div);
+        shadowInput.focus();
+        // If we're in native Shadow DOM, `document.activeElement` will be the
+        // div because we just focused an element in its shadow root.
+        if (document.activeElement === div) {
+          div.blur();
+          // If `document.activeElement` hasn't changed, then the bug exists
+          // and we shouldn't run this test.
+          const shouldSkip = document.activeElement === div;
+          if (shouldSkip) {
+            document.body.removeChild(div);
+            this.skip();
+            return;
+          }
+        }
+        document.body.removeChild(div);
+
         // Mutation observer is async, so wait one tick.
         Base.async(function() {
           input.focus();
