@@ -419,12 +419,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // If `document.activeElement` hasn't changed, then the bug exists
           // and we shouldn't run this test.
           const shouldSkip = document.activeElement === div;
-          document.body.removeChild(div);
           if (shouldSkip) {
+            document.body.removeChild(div);
             this.skip();
             return;
           }
         }
+        document.body.removeChild(div);
 
         // Mutation observer is async, so wait one tick.
         Base.async(function() {
