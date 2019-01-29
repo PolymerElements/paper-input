@@ -31,8 +31,8 @@ fields](https://www.google.com/design/spec/components/text-fields.html)
 It may include an optional error message or character counter.
 
     <paper-input error-message="Invalid input!" label="Input
-label"></paper-input> <paper-input char-counter label="Input
-label"></paper-input>
+    label"></paper-input> <paper-input char-counter label="Input
+    label"></paper-input>
 
 It can also include custom prefix or suffix elements, which are displayed
 before or after the text input itself. In order for an element to be
