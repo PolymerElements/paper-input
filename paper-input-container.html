@@ -521,7 +521,7 @@ This element is `display:block` by default, but you can set the `inline` attribu
       if (!this._addons) {
         this._addons = [];
       }
-      var target = event.target;
+      var target = event.composedPath ? event.composedPath()[0] : event.target;
       if (this._addons.indexOf(target) === -1) {
         this._addons.push(target);
         if (this.isAttached) {
