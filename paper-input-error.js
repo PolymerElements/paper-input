@@ -55,10 +55,29 @@ Polymer({
 
       :host([invalid]) {
         visibility: visible;
-      };
+      }
+
+      #a11yWrapper {
+        visibility: hidden;
+      }
+
+      :host([invalid]) #a11yWrapper {
+        visibility: visible;
+      }
     </style>
 
-    <slot></slot>
+    <!--
+    If the paper-input-error element is directly referenced by an
+    \`aria-describedby\` attribute, such as when used as a paper-input add-on,
+    then applying \`visibility: hidden;\` to the paper-input-error element itself
+    does not hide the error.
+
+    For more information, see:
+    https://www.w3.org/TR/accname-1.1/#mapping_additional_nd_description
+    -->
+    <div id="a11yWrapper">
+      <slot></slot>
+    </div>
 `,
 
   is: 'paper-input-error',
