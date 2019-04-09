@@ -17,7 +17,8 @@ addons:
   firefox: latest
   chrome: stable
 script:
-  - xvfb-run polymer test --module-resolution=node --npm
+  - xvfb-run polymer test --module-resolution=node --npm --local chrome
+  - xvfb-run polymer test --module-resolution=node --npm --local firefox
   - >-
     if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test
     --module-resolution=node --npm -s 'default'; fi
