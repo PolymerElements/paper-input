@@ -214,7 +214,7 @@ Polymer({
     // Even though this is only used in the next line, save this for
     // backwards compatibility, since the native input had this ID until 2.0.5.
     if (!this.$.nativeInput) {
-      this.$.nativeInput = this.$$('input');
+      this.$.nativeInput = /** @type {!Element} */ (this.$$('input'));
     }
     if (this.inputElement &&
         this._typesThatHaveText.indexOf(this.$.nativeInput.type) !== -1) {
