@@ -72,14 +72,12 @@ Custom property | Description | Default
 ----------------|-------------|----------
 `--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer reveal button (the eyeball) | {}
 
-@group Paper Elements
 @element paper-input
-@hero hero.svg
 @demo demo/index.html
 */
 Polymer({
   is: 'paper-input',
-
+  /** @override */
   _template: html`
     <style>
       :host {

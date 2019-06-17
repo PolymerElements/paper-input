@@ -35,6 +35,7 @@ Custom property | Description | Default
 `--paper-input-char-counter` | Mixin applied to the element | `{}`
 */
 Polymer({
+  /** @override */
   _template: html`
     <style>
       :host {
