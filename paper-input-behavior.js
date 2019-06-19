@@ -341,6 +341,7 @@ export const PaperInputBehaviorImpl = {
     return this.inputElement;
   },
 
+  /** @override */
   created: function() {
     // These types have some default placeholder text; overlapping
     // the label on top of it looks terrible. Auto-float the label in this case.
@@ -348,6 +349,7 @@ export const PaperInputBehaviorImpl = {
         ['date', 'datetime', 'datetime-local', 'month', 'time', 'week', 'file'];
   },
 
+  /** @override */
   attached: function() {
     this._updateAriaLabelledBy();
 

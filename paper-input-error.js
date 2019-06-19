@@ -38,6 +38,7 @@ Custom property | Description | Default
 `--paper-input-error` | Mixin applied to the error | `{}`
 */
 Polymer({
+  /** @override */
   _template: html`
     <style>
       :host {

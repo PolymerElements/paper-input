@@ -157,6 +157,7 @@ This element is `display:block` by default, but you can set the `inline`
 attribute to make it `display:inline-block`.
 */
 Polymer({
+  /** @override */
   _template: html`
     <style>
       :host {
@@ -498,6 +499,7 @@ Polymer({
         this._inputElement.value;
   },
 
+  /** @override */
   ready: function() {
     // Paper-input treats a value of undefined differently at startup than
     // the rest of the time (specifically: it does not validate it at startup,
@@ -513,6 +515,7 @@ Polymer({
     this.addEventListener('blur', this._boundOnBlur, true);
   },
 
+  /** @override */
   attached: function() {
     if (this.attrForValue) {
       this._inputElement.addEventListener(

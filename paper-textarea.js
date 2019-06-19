@@ -37,6 +37,7 @@ See `Polymer.PaperInputContainer` for a list of custom properties used to
 style this element.
 */
 Polymer({
+  /** @override */
   _template: html`
     <style>
       :host {
@@ -94,8 +95,6 @@ Polymer({
 
     /**
      * The initial number of rows.
-     *
-     * @attribute rows
      * @type {number}
      * @default 1
      */
@@ -107,8 +106,6 @@ Polymer({
     /**
      * The maximum number of rows this element can grow to until it
      * scrolls. 0 means no maximum.
-     *
-     * @attribute maxRows
      * @type {number}
      * @default 0
      */
