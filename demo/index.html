@@ -123,9 +123,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           function validate() {
             document.getElementById('inputForValidation').validate();
           }
-          function clearInput() {
-            document.getElementById('inputWithButton').value = '';
-          }
         </script>
       </template>
     </demo-snippet>
@@ -142,6 +139,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div slot="suffix">@email.com</div>
           <paper-icon-button slot="suffix" onclick="clearInput()" icon="clear" alt="clear" title="clear">
           </paper-icon-button>
+          <script>
+            function clearInput() {
+              document.getElementById('inputWithButton').value = '';
+            }
+          </script>
         </paper-input>
       </template>
     </demo-snippet>
