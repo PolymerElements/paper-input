@@ -51,6 +51,14 @@ Polymer({
       label {
         pointer-events: none;
       }
+
+      label:before {
+        @apply --paper-input-container-label-before;
+      }
+
+      label:after {
+        @apply --paper-input-container-label-after;
+      }
     </style>
 
     <paper-input-container no-label-float$="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">

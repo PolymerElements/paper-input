@@ -152,6 +152,8 @@ Custom property | Description | Default
 `--paper-input-container-underline-disabled` | Mixin applied to the underline when the input is disabled | `{}`
 `--paper-input-prefix` | Mixin applied to the input prefix | `{}`
 `--paper-input-suffix` | Mixin applied to the input suffix | `{}`
+`--paper-input-container-label-before` | Mixin applied to label before pseudo element | {}
+`--paper-input-container-label-after` | Mixin applied to label after pseudo element (useful for required asterisk) | {}
 
 This element is `display:block` by default, but you can set the `inline`
 attribute to make it `display:inline-block`.
