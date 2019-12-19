@@ -152,6 +152,8 @@ Custom property | Description | Default
 `--paper-input-container-underline-disabled` | Mixin applied to the underline when the input is disabled | `{}`
 `--paper-input-prefix` | Mixin applied to the input prefix | `{}`
 `--paper-input-suffix` | Mixin applied to the input suffix | `{}`
+`--paper-input-container-label-before` | Mixin applied to label before pseudo element | {}
+`--paper-input-container-label-after` | Mixin applied to label after pseudo element (useful for required asterisk) | {}
 
 This element is `display:block` by default, but you can set the `inline`
 attribute to make it `display:inline-block`.
@@ -268,6 +270,17 @@ Polymer({
         @apply --paper-font-subhead;
         @apply --paper-input-container-label;
         @apply --paper-transition-easing;
+      }
+
+
+      .input-content ::slotted(label):before,
+      .input-content ::slotted(.paper-input-label):before {
+        @apply --paper-input-container-label-before;
+      }
+
+      .input-content ::slotted(label):after,
+      .input-content ::slotted(.paper-input-label):after {
+        @apply --paper-input-container-label-after;
       }
 
       .input-content.label-is-floating ::slotted(label),
