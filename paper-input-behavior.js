@@ -170,6 +170,8 @@ export const PaperInputBehaviorImpl = {
      * If you're using PaperInputBehavior to implement your own paper-input-like
      * element, bind this to the `<input is="iron-input">`'s `autofocus`
      * property.
+     *
+     * @type {boolean}
      */
     autofocus: {type: Boolean, observer: '_autofocusChanged'},
 
