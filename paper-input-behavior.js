@@ -171,7 +171,7 @@ export const PaperInputBehaviorImpl = {
      * element, bind this to the `<input is="iron-input">`'s `autofocus`
      * property.
      *
-     * @type {boolean}
+     * @type {!boolean}
      */
     autofocus: {type: Boolean, observer: '_autofocusChanged'},
 
