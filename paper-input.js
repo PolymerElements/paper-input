@@ -71,6 +71,7 @@ The following custom properties and mixins are available for styling:
 Custom property | Description | Default
 ----------------|-------------|----------
 `--paper-input-container-ms-clear` | Mixin applied to the Internet Explorer reveal button (the eyeball) | {}
+`--paper-input-container-input-placeholder-color` | The foreground color of the placeholder | `--paper-input-container-color`, `--secondary-text-color`
 
 @element paper-input
 @demo demo/index.html
@@ -132,15 +133,15 @@ Polymer({
       }
 
       input::-webkit-input-placeholder {
-        color: var(--paper-input-container-color, var(--secondary-text-color));
+        color: var(--paper-input-container-input-placeholder-color, var(--paper-input-container-color, var(--secondary-text-color)));
       }
 
       input:-moz-placeholder {
-        color: var(--paper-input-container-color, var(--secondary-text-color));
+        color: var(--paper-input-container-input-placeholder-color, var(--paper-input-container-color, var(--secondary-text-color)));
       }
 
       input::-moz-placeholder {
-        color: var(--paper-input-container-color, var(--secondary-text-color));
+        color: var(--paper-input-container-input-placeholder-color, var(--paper-input-container-color, var(--secondary-text-color)));
       }
 
       input::-ms-clear {
@@ -152,7 +153,7 @@ Polymer({
       }
 
       input:-ms-input-placeholder {
-        color: var(--paper-input-container-color, var(--secondary-text-color));
+        color: var(--paper-input-container-input-placeholder-color, var(--paper-input-container-color, var(--secondary-text-color)));
       }
 
       label {
