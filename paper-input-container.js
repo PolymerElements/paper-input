@@ -138,6 +138,7 @@ Custom property | Description | Default
 `--paper-input-container-label` | Mixin applied to the label | `{}`
 `--paper-input-container-label-focus` | Mixin applied to the label when the input is focused | `{}`
 `--paper-input-container-label-floating` | Mixin applied to the label when floating | `{}`
+`--paper-input-container-floated-label-placeholder-display` | Display of the placeholder of the floating label | `block`
 `--paper-input-container-input` | Mixin applied to the input | `{}`
 `--paper-input-container-input-align` | The vertical-align property of the input | `bottom`
 `--paper-input-container-input-disabled` | Mixin applied to the input when the component is disabled | `{}`
@@ -188,6 +189,7 @@ Polymer({
       }
 
       .floated-label-placeholder {
+        display: var(--paper-input-container-floated-label-placeholder-display, block);
         @apply --paper-font-caption;
       }
 
